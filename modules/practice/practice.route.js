@@ -1,6 +1,6 @@
 //Package Imports
 const express  =require("express");
-const path  =require("path");
+const path = require("path");
 
 //const imports
 const { printMessage, createHTML, printName } = require("./practice.controller");
