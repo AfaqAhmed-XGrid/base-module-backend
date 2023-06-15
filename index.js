@@ -1,27 +1,17 @@
+// package imports
 const express = require('express');
+//const imports
+const practiceRouter = require("./modules/practice/practice.route")
+
+//creating instance
 const app = express();
-const path = require('path');
 
+//Adding middleware
 app.use(express.json())
+app.use('/api/practice/', practiceRouter)
 
-app.get('/', (req, res) => {
-    res.status(200);
-    res.json({message: 'Welcome to the root URL of the server'})
-})
-
-app.get('/hello', (req, res) => {
-    res.set('Content-Type', 'text/html')
-    res.send('<h1>Welcome to the hello URL of the server</h1>')
-})
-
-app.post('/api/post', (req, res) => {
-    const {name} = req.body
-    res.send(`Hello ${name}`)
-})
-
-app.use('/pic', express.static(path.join(__dirname, 'staticFiles')))
-
-const PORT = process.env.PORT || 4000;
+//Starting the application on port 4000
+const PORT = 4000;
 app.listen(PORT, (error) => {
     if(!error) {
         console.log('App is successfully running on', PORT)
