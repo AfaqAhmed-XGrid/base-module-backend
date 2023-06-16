@@ -4,17 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AfaqAhmed-XGrid/base-module-backend.git"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AfaqAhmed-XGrid/base-module-backend/issues"
+  "dependencies": {
+    "express": "4.18.2"
   },
-  "homepage": "https://github.com/AfaqAhmed-XGrid/base-module-backend#readme"
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.22"
+  }
 }
