@@ -1,0 +1,16 @@
+module.exports = {
+  DB_CONNECTED_MSG: 'db is connected successfully',
+  DB_NOT_CONNECTED_MSG: 'DB could not be connected: ',
+  LOGGED_IN_MSG: 'You are loggedin successfully',
+  FAILED_LOGGED_IN_MSG: 'Login failed. Check your internet and try again!',
+  EMAIL_MSG: 'Update you email',
+  WRONG_EMAIL_MSG: 'Wrong email address',
+  WRONG_PASS_MSG: 'Wrong password',
+  SIGNUP_CATCH_ERROR_MSG: 'Signup Catch error',
+  LOGIN_CATCH_ERROR_MSG: 'Login Catch error',
+  ACCOUNT_CREATED_MSG: 'Account is created successfully',
+  USER_EXIST_MSG: 'User is already existed. Please sign in!',
+  SIGN_UP_FAILED_MSG: 'Sign up failed. Please try again!',
+  GITHUB_SIGN_CATCH_PRBLM: 'Github signin catch problem: ',
+  GOOGLE_SIGN_CATCH_PRBLM: 'Google signin problem: ',
+};

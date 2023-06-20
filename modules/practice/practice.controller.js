@@ -28,7 +28,7 @@ const createHTML = async (req, res) => {
  * @param {Object} res
  */
 const printName = async (req, res) => {
-  res.status(200)
+  res.status(200);
   res.json({success: 1, message: `Hello ${req.body.name}`, data: {name}});
 };
 
