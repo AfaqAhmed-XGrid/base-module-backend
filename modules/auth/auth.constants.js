@@ -2,35 +2,121 @@
 const env = require('dotenv').config();
 
 module.exports = {
-  NOT_AUTHORIZED_MSG: 'You are not authorized. Please login first',
-  SESSION: 'session: ',
-  SESSION_ID: 'sessionId: ',
-  USER: 'user: ',
-  ERROR: 'error: ',
-  INFO: 'info: ',
-  FAILED_LOGGED_IN_MSG: 'Login failed. Please try again!',
-  LOGGED_IN_MSG: 'You are logged in successfully.',
-  FAILED_SIGN_UP_MSG: 'Signup failed. Please try again!',
-  SIGN_UP_MSG: 'You account is created successfully.',
-  FAILED_LOG_OUT_MSG: 'Failed logging out. Please try again!',
-  LOG_OUT_MSG: 'You are logged out successfully',
-  LOGIN_CATCH_ERROR_MSG: 'Login Catch error',
-  SIGNUP_CATCH_ERROR_MSG: 'Signup Catch error',
-  MIDDLE_WARE: 'middleware: ',
-  WRONG_OLD_PASS: 'Wong old password!',
-  WRONG_EMAIL: 'Wong email address!',
-  ERROR_MSG: 'Something went wrong! Try again!',
-  PASS_CHANGED_MSG: 'You password is changed successfully',
-  PASS_RESET_EMAIL_SUBJECT: 'Reset you password!',
-  PASS_RESET_EMAIL_TEXT: `Please click on the link to reset your password. The link is active for 5 minuts only!`,
-  PASS_EMAIL_SENT: 'Password reset mail is sent to your account',
-  PASS_EMAIL_FAIL: 'Password reset mail could not be sent! Check your network connectivity!',
-  PASS_REST_MSG: 'Your password is reset successfully',
-  PASS_RESET_FAIL: 'Password could not be reset! please try again',
-  PASS_TOKEN_EXPIRED: 'Your token has expired. Please try again',
-  PROFILE_FETCHED: 'Your profile has been fetched',
-  PROFILE_DATA_ERROR: 'There is some error. please login again!',
-  PROFILE_UPDATED: 'Your profile has been updated successfully',
-  PROFILE_UPDATED_FAIL: 'Your profile could not be edited. Please try again!',
-  THIRD_PARTY_LOGIN_SUCCESS: `<h1>You are logged in successfully.</h1><a href=${process.env.CLIENT_URL}>Go to App</a>`,
+  responseMessages: {
+    authorizedUser: {
+      failure: 'You are not authorized. Please login first',
+    },
+    logOutUser: {
+      success: 'You are logged out successfully.',
+      failure: 'Failed logging out. Please try again!',
+    },
+    changePassword: {
+      wrongCredentails: 'Wrong Crendentials. Please try again!',
+      success: 'Your password is changed successfully',
+      failure: 'Failed to change password. Please login again and then try!',
+    },
+    generalErrorMessage: 'Something went wrong! Try again!',
+    forgotPassword: {
+      resetPassword: {
+        success: 'Your password has been reset successfully',
+        failure: 'Failed to reset password. Please try again!',
+        tokenExpiredMessage: 'Your token has expired. Please try again',
+        wrongCredentails: 'Wrong Crendentials. Please try again!',
+      },
+      resetPasswordEmail: {
+        success: 'Password reset mail is sent to your account',
+        failure: 'Password reset mail could not be sent! Check your network connectivity!',
+        emailText: `Please click on the link to reset your password. The link is active for 5 minuts only!`,
+        emailSubject: 'Reset you password!',
+      },
+    },
+    userProfileData: {
+      success: 'Your data has been fetched successfully',
+      failure: 'Failed to fetch data. Please try again!',
+    },
+    updateUserProfile: {
+      success: 'Your data has been updated successfully',
+      failure: 'Failed to update data. Please try again!',
+    },
+  },
+  labels: {
+    session: 'session: ',
+    sessiodId: 'sessionId: ',
+    user: 'user: ',
+    error: 'error: ',
+    info: 'info: ',
+    middleware: 'middleware: ',
+    loginCtrl: {
+      noUserInReq: 'user is not found in request. login() problem. (loginCtrl)',
+    },
+    signupCtrl: {
+      noUserInReq: 'user is not found in request. login() problem. (signupCtrl)',
+    },
+    logoutCtrl: {
+      error: 'Error while logging out the user (logoutCtrl)',
+    },
+    changePasswordCtrl: {
+      noUserInReq: 'user is not found in request. login() problem. (changePasswrodCtrl)',
+      findingUser: {
+        error: 'Error while finding user (changePasswordCtrl)',
+      },
+      savingNewPassword: {
+        error: 'Error while saving new password (changePasswordCtrl)',
+        failure: 'New password could not be saved despite having no error (savingNewPassword',
+      },
+    },
+    forgotPasswordCtrl: {
+      findingUser: {
+        error: 'Error while finding user (forgotPasswordCtrl)',
+      },
+      token: {
+        generatingError: 'Error in generating token through model defined method. (forgotPasswordCtrl)',
+        savingError: 'Error in saving user after generating token. (forgotPasswordCtrl)',
+        savingFailure: 'Token could not be saved despite having no error (forgotPasswordCtrl)',
+      },
+      emailSendingError: 'Error while sending email (forgotPasswordCtrl)',
+      emailSendingUnkownError: 'Check info (forgotPasswordCtrl)',
+    },
+    resetPasswordCtrl: {
+      findingUser: {
+        error: 'Error while finding user (resetPasswordCtrl)',
+      },
+      savingPassword: {
+        error: 'Something wrong while saving the reset password (resetPasswordCtrl)',
+      },
+    },
+    getProfileDataCtrl: {
+      noUserInReq: 'user is not found in request. login() problem. (changePasswrodCtrl)',
+    },
+    updateProfileDataCtrl: {
+      noUserInReq: 'user is not found in request. login() problem. (changePasswrodCtrl)',
+      updatingUser: {
+        error: 'error in saving user profile. login() problem. (updateProfileCtrl)',
+        failure: 'user is not saved despite having not error. login() problem. (updateProfileCtrl)',
+      },
+    },
+    iaAuthenticatedMiddleware: {
+      false: 'something wrong with re.login() or req.isAuthenticated() (isAuthenticatedMiddleware)',
+    },
+    loginMiddleware: {
+      strategyError: 'error passed in middleware through login strategy (loginMiddleware)',
+      noUserStrategyError: 'no user passed in middleware through login strategy (loginMiddleware)',
+      loginError: 'error in logging in (loginMiddleware)',
+    },
+    signupMiddleware: {
+      strategyError: 'error passed in middleware through signup strategy (signupMiddleware)',
+      noUserStrategyError: 'no user passed in middleware through signup strategy (signupMiddleware)',
+      loginError: 'error in logging in (signupMiddleware)',
+    },
+    googleMiddleware: {
+      strategyError: 'error passed in middleware through google strategy (googleMiddleware)',
+      noUserStrategyError: 'no user passed in middleware through google strategy (googleMiddleware)',
+      loginError: 'error in logging in (googleMiddleware)',
+    },
+    githubMiddleware: {
+      strategyError: 'error passed in middleware through github strategy (githubMiddleware)',
+      noUserStrategyError: 'no user passed in middleware through github strategy (githubMiddleware)',
+      loginError: 'error in logging in (githubMiddleware)',
+    },
+  },
 };

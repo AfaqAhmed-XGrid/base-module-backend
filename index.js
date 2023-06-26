@@ -9,12 +9,17 @@ const env = require('dotenv').config();
 
 // const imports
 const dbConnect = require('./config/db.connect');
+const passportLocalConfigure = require('./config/passport/passport.local.config');
+const passportGoogleConfig = require('./config/passport/passport.google.config');
+const passportGithubConfig = require('./config/passport/passport.github.config');
+const constants = require('./constants/constants');
+
+// Routes import
 const practiceRouter = require('./modules/practice/practice.route');
 const authRouter = require('./modules/auth/auth.route');
-const passportLocalConfigure = require('./config/passport.local.config');
-const passportGoogleConfig = require('./config/passport.google.config');
-const passportGithubConfig = require('./config/passport.github.config');
-const constants = require('./constants/constants');
+
+// Logger imports
+const logger = require('./config/logger/logger');
 
 // creating instance
 const app = express();
@@ -25,12 +30,13 @@ dbConnect();
 // Adding middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(
-    cors({
-      origin: process.env.CLIENT_URL,
-      credentials: true,
-    }),
-);
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 app.use(
     session({
       secret: process.env.SESSION_CODE,
@@ -53,8 +59,8 @@ app.use('/api/auth/', authRouter);
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, (error) => {
   if (!error) {
-    console.log(constants.RUNNING_APP_MSG, PORT);
+    logger.info(constants.startServer.success, PORT);
   } else {
-    console.log(constants.FAILED_RUNNING_APP_MSG, error);
+    logger.error(constants.startServer.failure, error);
   }
 });

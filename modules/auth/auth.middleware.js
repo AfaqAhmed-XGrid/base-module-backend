@@ -2,7 +2,11 @@
 const passport = require('passport');
 
 // Constant imports
-const constants = require('./auth.constants.js');
+const authConstants = require('./auth.constants');
+const globalConstants = require('../../constants/constants.js');
+
+// Logger import
+const logger = require('../../config/logger/logger');
 
 /**
  * Created middleware to check if the user is loggedin and then allow him to the route
@@ -12,13 +16,14 @@ const constants = require('./auth.constants.js');
  * @return {callback}
  */
 const isAuthenticated = (req, res, next) => {
-  console.log(constants.SESSION_ID, req.sessionID);
-  console.log(constants.SESSION, req.session);
-  console.log(constants.USER, req.user);
+  logger.info(authConstants.labels.sessiodId, req.sessionID);
+  logger.info(authConstants.labels.session, req.session);
+  logger.info(authConstants.labels.user, req.user);
   if (req.isAuthenticated()) {
     return next();
   }
-  res.status(401).json({success: 0, message: constants.NOT_AUTHORIZED_MSG, data: null});
+  logger.error(authConstants.labels.iaAuthenticatedMiddleware.false, req);
+  res.status(401).json({success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null});
 };
 
 /**
@@ -27,33 +32,32 @@ const isAuthenticated = (req, res, next) => {
  * @param {Object} res
  * @param {callback} next
  * @return {callback}
- */
+*/
 const loginMiddleware = (req, res, next) => {
   try {
     passport.authenticate('login', (err, user, info) => {
-      console.log(constants.ERROR, err);
-      console.log(constants.USER, user);
-      console.log(constants.INFO, info);
-
       if (err) {
+        logger.error(authConstants.labels.loginMiddleware.strategyError, err, info);
         return res.status(409).json({success: 0, message: info?.message, data: {err}});
       }
 
       if (!user) {
+        logger.error(authConstants.labels.loginMiddleware.noUserStrategyError, err, info);
         return res.status(409).json({success: 0, message: info?.message, data: {err}});
       }
 
       req.logIn(user, function(err) {
         if (err) {
-          return res.status(409).json({success: 0, message: constants.FAILED_LOGGED_IN_MSG, data: {err}});
+          logger.error(authConstants.labels.loginMiddleware.loginError, err);
+          return res.status(409).json({success: 0, message: globalConstants.responseMessages.logInUser.failure, data: {err}});
         }
-        console.log(constants.MIDDLE_WARE, req.user);
+        logger.info(authConstants.labels.middleware, req.user);
         next();
       });
     })(req, res, next);
   } catch (error) {
-    console.log(constants.LOGIN_CATCH_ERROR_MSG, error);
-    return res.status(500).json({success: 0, message: constants.FAILED_LOGGED_IN_MSG, error: error.message});
+    logger.info(globalConstants.labels.logIn, error);
+    return res.status(500).json({success: 0, message: globalConstants.responseMessages.logInUser.failure, error: error.message});
   }
 };
 
@@ -67,28 +71,27 @@ const loginMiddleware = (req, res, next) => {
 const signupMiddleware = (req, res, next) => {
   try {
     passport.authenticate('signup', (err, user, info) => {
-      console.log(constants.ERROR, err);
-      console.log(constants.USER, user);
-      console.log(constants.INFO, info);
-
       if (err) {
+        logger.error(authConstants.labels.signupMiddleware.strategyError, err, info);
         return res.status(409).json({success: 0, message: info?.message, data: {err}});
       }
 
       if (!user) {
+        logger.error(authConstants.labels.signupMiddleware.noUserStrategyError, err, info, user);
         return res.status(409).json({success: 0, message: info?.message, data: {err}});
       }
 
       req.logIn(user, function(err) {
         if (err) {
-          return res.status(409).json({success: 0, message: constants.FAILED_SIGN_UP_MSG, data: {err}});
+          logger.error(authConstants.labels.signupMiddleware.loginError, err);
+          return res.status(409).json({success: 0, message: globalConstants.responseMessages.signUpUser.failure, data: {err}});
         }
         next();
       });
     })(req, res, next);
   } catch (error) {
-    console.log(constants.SIGNUP_CATCH_ERROR_MSG, error);
-    return res.status(500).json({success: 0, message: constants.FAILED_SIGN_UP_MSG, error: error.message});
+    logger.info(globalConstants.labels.signUp, error);
+    return res.status(500).json({success: 0, message: globalConstants.responseMessages.signUpUser.failure, error: error.message});
   }
 };
 
@@ -97,36 +100,28 @@ const signupMiddleware = (req, res, next) => {
  * @param {Object} req
  * @param {Object} res
  * @param {callback} next
- * @return {callback}
  */
 const googleMiddleware = (req, res, next) => {
-  try {
-    passport.authenticate('google', (err, user, info) => {
-      console.log(constants.ERROR, err);
-      console.log(constants.USER, user);
-      console.log(constants.INFO, info);
+  passport.authenticate('google', (err, user, info) => {
+    if (err) {
+      logger.error(authConstants.labels.googleMiddleware.strategyError, err, info);
+      return res.status(409).json({success: 0, message: info?.message, data: {err}});
+    }
 
+    if (!user) {
+      logger.error(authConstants.labels.googleMiddleware.noUserStrategyError, err, info, user);
+      return res.status(409).json({success: 0, message: info?.message, data: {err}});
+    }
+
+    req.logIn(user, function(err) {
       if (err) {
-        return res.status(409).json({success: 0, message: info?.message, data: {err}});
+        logger.error(authConstants.labels.googleMiddleware.loginError, err);
+        return res.status(409).json({success: 0, message: globalConstants.responseMessages.logInUser.socialLogin.failure, data: {err}});
       }
-
-      if (!user) {
-        return res.status(409).json({success: 0, message: info?.message, data: {err}});
-      }
-
-      req.logIn(user, function(err) {
-        if (err) {
-          return res.status(409).json({success: 0, message: constants.FAILED_LOGGED_IN_MSG, data: {err}});
-        }
-        console.log(constants.MIDDLE_WARE, req.user);
-        next();
-      });
-    })(req, res, next);
-  } catch (error) {
-    console.log('03');
-    console.log(constants.LOGIN_CATCH_ERROR_MSG, error);
-    return res.status(500).json({success: 0, message: constants.FAILED_LOGGED_IN_MSG, error: error.message});
-  }
+      logger.info(authConstants.labels.middleware, req.user);
+      next();
+    });
+  })(req, res, next);
 };
 
 /**
@@ -134,35 +129,29 @@ const googleMiddleware = (req, res, next) => {
  * @param {Object} req
  * @param {Object} res
  * @param {callback} next
- * @return {callback}
  */
 const githubMiddleware = (req, res, next) => {
-  try {
-    passport.authenticate('github', (err, user, info) => {
-      console.log(constants.ERROR, err);
-      console.log(constants.USER, user);
-      console.log(constants.INFO, info);
+  passport.authenticate('github', (err, user, info) => {
+    logger.info(authConstants.labels.error, err);
 
+    if (err) {
+      logger.error(authConstants.labels.githubMiddleware.strategyError, err, info);
+      return res.status(409).json({success: 0, message: info?.message, data: {err}});
+    }
+
+    if (!user) {
+      logger.error(authConstants.labels.githubMiddleware.noUserStrategyError, err, info, user);
+      return res.status(409).json({success: 0, message: info?.message, data: {err}});
+    }
+
+    req.logIn(user, function(err) {
       if (err) {
-        return res.status(409).json({success: 0, message: info?.message, data: {err}});
+        logger.error(authConstants.labels.githubMiddleware.loginError, err);
+        return res.status(409).json({success: 0, message: globalConstants.responseMessages.logInUser.failure, data: {err}});
       }
-
-      if (!user) {
-        return res.status(409).json({success: 0, message: info?.message, data: {err}});
-      }
-
-      req.logIn(user, function(err) {
-        if (err) {
-          return res.status(409).json({success: 0, message: constants.FAILED_LOGGED_IN_MSG, data: {err}});
-        }
-        console.log(constants.MIDDLE_WARE, req.user);
-        next();
-      });
-    })(req, res, next);
-  } catch (error) {
-    console.log(constants.LOGIN_CATCH_ERROR_MSG, error);
-    return res.status(500).json({success: 0, message: constants.FAILED_LOGGED_IN_MSG, error: error.message});
-  }
+      next();
+    });
+  })(req, res, next);
 };
 
 module.exports = {isAuthenticated, loginMiddleware, signupMiddleware, googleMiddleware, githubMiddleware};
