@@ -44,7 +44,7 @@ const passportGoogleConfig = (passport) => {
 
             // If user is already existed in database, just log it in without saving it in db
             if (existingUser) {
-              logger.info(googleConstants.labels.googlePassportStrategy.findingUser.found, existingUser);
+              logger.info(googleConstants.labels.googlePassportStrategy.findingUser.success, existingUser);
               return done(null, existingUser, {message: constants.responseMessages.logInUser.success});
             }
 
@@ -52,7 +52,6 @@ const passportGoogleConfig = (passport) => {
               googleId: profile?.id,
               displayName: profile?.displayName,
               profilePicture: profile?.photos[0]?.value,
-              email: profile?.id + '@email.com',
             });
             const [newUserSavedError, newUserSaved] = await to(newUser.save());
 
@@ -62,7 +61,7 @@ const passportGoogleConfig = (passport) => {
             }
 
             if (newUserSaved) {
-              logger.error(googleConstants.labels.googlePassportStrategy.savingNewUser.success, newUserSaved);
+              logger.info(googleConstants.labels.googlePassportStrategy.savingNewUser.success, newUserSaved);
               done(null, newUser, {message: constants.responseMessages.logInUser.success});
             } else {
               logger.error(googleConstants.labels.googlePassportStrategy.savingNewUser.failure, newUserSaved);

@@ -56,7 +56,7 @@ const loginMiddleware = (req, res, next) => {
       });
     })(req, res, next);
   } catch (error) {
-    logger.info(globalConstants.labels.logIn, error);
+    logger.error(globalConstants.labels.logIn, error);
     return res.status(500).json({success: 0, message: globalConstants.responseMessages.logInUser.failure, error: error.message});
   }
 };
@@ -90,7 +90,7 @@ const signupMiddleware = (req, res, next) => {
       });
     })(req, res, next);
   } catch (error) {
-    logger.info(globalConstants.labels.signUp, error);
+    logger.error(globalConstants.labels.signUp, error);
     return res.status(500).json({success: 0, message: globalConstants.responseMessages.signUpUser.failure, error: error.message});
   }
 };

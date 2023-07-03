@@ -43,7 +43,7 @@ const passportGithubConfig = (passport) => {
 
             // If user is already existed in database, just log it in without saving it in db
             if (existingUser) {
-              logger.info(githubConstants.labels.githubPassportStrategy.findingUser.found, existingUser);
+              logger.info(githubConstants.labels.githubPassportStrategy.findingUser.success, existingUser);
               return done(null, existingUser, {message: constants.responseMessages.logInUser.success});
             };
 
@@ -51,7 +51,6 @@ const passportGithubConfig = (passport) => {
               githubId: profile?.id,
               displayName: profile?.displayName,
               profilePicture: profile?.photos[0]?.value,
-              email: profile?.id + '@email.com',
             });
 
             const [newUserSavedError, newUserSaved] = await to(newUser.save());
@@ -62,7 +61,7 @@ const passportGithubConfig = (passport) => {
             }
 
             if (newUserSaved) {
-              logger.error(githubConstants.labels.githubPassportStrategy.savingNewUser.success, newUserSaved);
+              logger.info(githubConstants.labels.githubPassportStrategy.savingNewUser.success, newUserSaved);
               done(null, newUser, {message: constants.responseMessages.logInUser.success});
             } else {
               logger.error(githubConstants.labels.githubPassportStrategy.savingNewUser.failure, newUserSaved);

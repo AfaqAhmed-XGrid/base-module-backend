@@ -3,6 +3,9 @@ module.exports = {
     success: 'db is connected successfully',
     failure: 'db could not be connected',
   },
+  logger: {
+    dateFormat: 'YYYY-MM-DD HH:mm:ss',
+  },
   labels: {
     githubPassportStrategy: {
       githubProfile: {
@@ -10,7 +13,7 @@ module.exports = {
       },
       findingUser: {
         failure: 'Error while finding the user if its already existed in db (github)',
-        found: 'User is existed in db (github)',
+        success: 'User is existed in db (github)',
       },
       savingNewUser: {
         failure: 'Error in saving user through (github strategy)',
@@ -23,7 +26,7 @@ module.exports = {
       },
       findingUser: {
         failure: 'Error while finding the user if its already existed in db (Google)',
-        found: 'User is existed in db (Google)',
+        success: 'User is existed in db (Google)',
       },
       savingNewUser: {
         failure: 'Error in saving user through (Google strategy)',

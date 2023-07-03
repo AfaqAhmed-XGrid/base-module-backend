@@ -12,6 +12,7 @@ module.exports = {
     },
     changePassword: {
       wrongCredentails: 'Wrong Crendentials. Please try again!',
+      conflict: 'You are signed in through google/github.',
       success: 'Your password is changed successfully',
       failure: 'Failed to change password. Please login again and then try!',
     },
@@ -47,13 +48,16 @@ module.exports = {
     info: 'info: ',
     middleware: 'middleware: ',
     loginCtrl: {
-      noUserInReq: 'user is not found in request. login() problem. (loginCtrl)',
+      failure: 'user is not found in request. login() problem. (loginCtrl)',
+      success: 'User is loggedin',
     },
     signupCtrl: {
-      noUserInReq: 'user is not found in request. login() problem. (signupCtrl)',
+      success: 'User is signed ip',
+      failure: 'user is not found in request. login() problem. (signupCtrl)',
     },
     logoutCtrl: {
       failure: 'Error while logging out the user (logoutCtrl)',
+      success: 'User is loggedout',
     },
     changePasswordCtrl: {
       noUserInReq: 'user is not found in request. login() problem. (changePasswrodCtrl)',
@@ -62,6 +66,8 @@ module.exports = {
       },
       savingNewPassword: {
         failure: 'Error while saving new password (changePasswordCtrl)',
+        success: 'saved new password in db',
+        savingMsg: 'Saving new password in db',
       },
     },
     forgotPasswordCtrl: {
@@ -70,10 +76,13 @@ module.exports = {
       },
       token: {
         generatingError: 'Error in generating token through model defined method. (forgotPasswordCtrl)',
-        savingError: 'Error in saving user after generating token. (forgotPasswordCtrl)',
+        failure: 'Error in saving user after generating token. (forgotPasswordCtrl)',
+        success: 'Token is saved in db successfully',
       },
-      emailSendingError: 'Error while sending email (forgotPasswordCtrl)',
-      emailSendingUnkownError: 'Check info (forgotPasswordCtrl)',
+      sendingEmail: {
+        failure: 'Error while sending email (forgotPasswordCtrl)',
+        success: 'Sending email to user (forgotPasswordCtrl)',
+      },
     },
     resetPasswordCtrl: {
       findingUser: {
@@ -81,6 +90,7 @@ module.exports = {
       },
       savingPassword: {
         failure: 'Something wrong while saving the reset password (resetPasswordCtrl)',
+        success: 'Passsword is reset',
       },
     },
     getProfileDataCtrl: {
@@ -90,10 +100,11 @@ module.exports = {
       noUserInReq: 'user is not found in request. login() problem. (changePasswrodCtrl)',
       updatingUser: {
         failure: 'error in saving user profile. login() problem. (updateProfileCtrl)',
+        success: 'user profile data is updated successfully',
       },
     },
     iaAuthenticatedMiddleware: {
-      false: 'something wrong with re.login() or req.isAuthenticated() (isAuthenticatedMiddleware)',
+      false: 'something wrong with req.login() or req.isAuthenticated() (isAuthenticatedMiddleware)',
     },
     loginMiddleware: {
       strategyError: 'error passed in middleware through login strategy (loginMiddleware)',

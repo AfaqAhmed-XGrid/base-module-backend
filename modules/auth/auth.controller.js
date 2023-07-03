@@ -22,9 +22,10 @@ const logger = require('../../config/logger/logger');
  */
 const loginCtrl = async (req, res) => {
   if (req.user) {
+    logger.info(authConstants.labels.loginCtrl.success, req.user);
     return res.status(200).json({success: 1, message: globalConstants.responseMessages.logInUser.success, data: req.user});
   } else {
-    logger.error(authConstants.labels.loginCtrl.noUserInReq, req);
+    logger.error(authConstants.labels.loginCtrl.failure, req);
     return res.status(200).json({success: 0, message: globalConstants.responseMessages.logInUser.failure, data: null});
   }
 };
@@ -38,9 +39,10 @@ const loginCtrl = async (req, res) => {
 */
 const signupCtrl = async (req, res, next) => {
   if (req.user) {
+    logger.error(authConstants.labels.signupCtrl.success, req);
     return res.status(200).json({success: 1, message: globalConstants.responseMessages.signUpUser.success, data: req.user});
   } else {
-    logger.error(authConstants.labels.signupCtrl.noUserInReq, req);
+    logger.error(authConstants.labels.signupCtrl.failure, req);
     return res.status(200).json({success: 0, message: globalConstants.responseMessages.signUpUser.failure, data: null});
   }
 };
@@ -56,6 +58,7 @@ const logoutCtrl = (req, res) => {
       logger.error(authConstants.labels.logoutCtrl.failure, req, err);
       return res.status(406).json({success: 0, message: authConstants.responseMessages.logOutUser.failure, data: null});
     }
+    logger.info(authConstants.labels.logoutCtrl.success);
     return res.status(200).json({success: 1, message: authConstants.responseMessages.logOutUser.success, data: null});
   });
 };
@@ -85,16 +88,15 @@ const changePasswordCtrl = async (req, res) => {
     return res.status(406).json({success: 0, message: authConstants.responseMessages.changePassword.wrongCredentails, data: null});
   }
 
-  if ((user.githubId || user.googleId) && user.password) {
-    if (!(await user.isPasswordMatched(password))) {
-      return res.status(406).json({success: 0, message: authConstants.responseMessages.changePassword.wrongCredentails, data: null});
-    }
-  }
   if (user.password) {
     if (!(await user.isPasswordMatched(password))) {
       return res.status(406).json({success: 0, message: authConstants.responseMessages.changePassword.wrongCredentails, data: null});
     }
+  } else {
+    return res.status(409).json({success: 0, message: authConstants.responseMessages.changePassword.conflict, data: null});
   }
+
+  logger.info(authConstants.labels.changePasswordCtrl.savingNewPassword.savingMsg, req.user);
   user.password = newPassword;
   const [passwordSavingErr, passwordSaved] = await to(user.save());
 
@@ -104,6 +106,7 @@ const changePasswordCtrl = async (req, res) => {
   }
 
   if (passwordSaved) {
+    logger.info(authConstants.labels.changePasswordCtrl.savingNewPassword.success, req.user);
     return res.status(200).json({success: 1, message: authConstants.responseMessages.changePassword.success, data: user});
   } else {
     logger.error(authConstants.labels.changePasswordCtrl.savingNewPassword.failure, passwordSaved);
@@ -144,9 +147,11 @@ const forgotPasswordCtrl = async (req, res) => {
   }
 
   if (!savedToken) {
-    logger.error(authConstants.labels.forgotPasswordCtrl.token.savingError, savedToken);
+    logger.error(authConstants.labels.forgotPasswordCtrl.token.failure, savedToken);
     return res.status(409).json({success: 0, message: authConstants.responseMessages.generalErrorMessage, data: null});
   }
+
+  logger.info(authConstants.labels.forgotPasswordCtrl.token.success);
 
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -170,14 +175,15 @@ const forgotPasswordCtrl = async (req, res) => {
   }));
 
   if (emailTransportErr) {
-    logger.error(authConstants.labels.forgotPasswordCtrl.emailSendingError, emailTransportErr);
+    logger.error(authConstants.labels.forgotPasswordCtrl.sendingEmail.failure, emailTransportErr);
     return res.status(501).json({success: 0, message: authConstants.responseMessages.forgotPassword.failure, data: null});
   }
 
   if (info.accepted[0] === req.body.email) {
+    logger.info(authConstants.labels.forgotPasswordCtrl.sendingEmail.success);
     return res.status(200).json({success: 1, message: authConstants.responseMessages.forgotPassword.resetPasswordEmail.success, data: null});
   } else {
-    logger.error(authConstants.labels.forgotPasswordCtrl.emailSendingUnkownError, info);
+    logger.error(authConstants.labels.forgotPasswordCtrl.sendingEmail.failure, info);
     return res.status(500).json({success: 0, message: authConstants.responseMessages.forgotPassword.resetPasswordEmail.failure, data: null});
   }
 };
@@ -208,6 +214,7 @@ const resetPasswordCtrl = async (req, res) => {
     logger.error(authConstants.labels.resetPasswordCtrl.savingPassword.failure, userSavingErr, savedUser);
     return res.status(409).send({success: 0, message: authConstants.responseMessages.forgotPassword.resetPassword.failure, data: userSavingErr});
   } else {
+    logger.info(authConstants.labels.resetPasswordCtrl.savingPassword.success, savedUser);
     return res.status(200).send(authConstants.responseMessages.forgotPassword.resetPassword.success);
   }
 };
@@ -244,8 +251,13 @@ const updateProfileCtrl = async (req, res) => {
     return res.status(406).json({success: 0, message: globalConstants.responseMessages.loggedInUser.failure, data: null});
   }
   const user = req.user;
+  const profileData = {...req.body};
 
-  const [updatingUserErr, updatedUser]= await to(User.findByIdAndUpdate(user._id, {...req.body}, {new: true}));
+  if (user.googleId || user.githubId) {
+    delete profileData.email;
+  }
+
+  const [updatingUserErr, updatedUser]= await to(User.findByIdAndUpdate(user._id, {...profileData}, {new: true}));
 
   if (updatingUserErr) {
     logger.error(authConstants.labels.updateProfileDataCtrl.updatingUser.failure, updatingUserErr);
@@ -253,6 +265,7 @@ const updateProfileCtrl = async (req, res) => {
   }
 
   if (updatedUser) {
+    logger.info(authConstants.labels.updateProfileDataCtrl.updatingUser.success, updatedUser);
     return res.status(200).send({success: 1, message: authConstants.responseMessages.updateUserProfile.success, data: updatedUser});
   } else {
     logger.error(authConstants.labels.updateProfileDataCtrl.updatingUser.failure, updatedUser, updatingUserErr);
