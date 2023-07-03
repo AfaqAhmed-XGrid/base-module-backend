@@ -3,8 +3,8 @@ const localStrategy = require('passport-local').Strategy;
 const to = require('await-to-js').default;
 
 // Constant imports
-const globalConstants = require('../../constants/constants');
-const configConstants = require('../constants');
+const constants = require('../../constants/constants');
+const localConstants = require('../constants');
 
 // Model imports
 const User = require('../../modules/auth/auth.model');
@@ -23,18 +23,18 @@ const passportLocalConfigure = (passport) => {
         const [err, user] = await to(User.findOne({email}));
 
         if (err) {
-          logger.error(configConstants.labels.localPassportStrategy.login.findingUser.error, err);
-          return done(null, false, {message: globalConstants.responseMessages.logInUser.failure});
+          logger.error(localConstants.labels.localPassportStrategy.login.findingUser.failure, err);
+          return done(null, false, {message: constants.responseMessages.logInUser.failure});
         }
 
         if (user) {
           if ((await user.isPasswordMatched(password))) {
-            return done(null, user, {message: globalConstants.responseMessages.logInUser.success});
+            return done(null, user, {message: constants.responseMessages.logInUser.success});
           } else {
-            return done(null, false, {message: globalConstants.responseMessages.logInUser.wrongCredentails});
+            return done(null, false, {message: constants.responseMessages.logInUser.wrongCredentails});
           }
         } else {
-          return done(null, false, {message: globalConstants.responseMessages.logInUser.wrongCredentails});
+          return done(null, false, {message: constants.responseMessages.logInUser.wrongCredentails});
         }
       }),
   );
@@ -47,12 +47,13 @@ const passportLocalConfigure = (passport) => {
             const [err, user] = await to(User.findOne({email}));
 
             if (err) {
-              logger.error(configConstants.labels.localPassportStrategy.signup.findingUser.error, err);
-              return done(null, false, {message: globalConstants.responseMessages.signUpUser.failure});
+              logger.error(localConstants.labels.localPassportStrategy.signup.findingUser.failure, err);
+              return done(null, false, {message: constants.responseMessages.signUpUser.failure});
             }
 
+            // If user is already existed in database, just log it in without saving it in db
             if (user) {
-              return done(null, user, {message: globalConstants.responseMessages.signUpUser.userAlreadyExisted});
+              return done(null, user, {message: constants.responseMessages.signUpUser.userAlreadyExisted});
             }
 
             if (!user) {
@@ -60,18 +61,18 @@ const passportLocalConfigure = (passport) => {
               const [newUserSavingError, newUserSaved] = await to(newUser.save());
 
               if (newUserSavingError) {
-                logger.error(configConstants.labels.localPassportStrategy.signup.savingNewUser.error, newUserSavingError);
-                return done(null, false, {message: globalConstants.responseMessages.signUpUser.failure});
+                logger.error(localConstants.labels.localPassportStrategy.signup.savingNewUser.failure, newUserSavingError);
+                return done(null, false, {message: constants.responseMessages.signUpUser.failure});
               };
 
               if (newUserSaved) {
-                logger.error(configConstants.labels.localPassportStrategy.signup.savingNewUser.success, newUserSavingError);
+                logger.error(localConstants.labels.localPassportStrategy.signup.savingNewUser.success, newUserSavingError);
                 return done(null, newUser, {
-                  message: globalConstants.responseMessages.signUpUser.success,
+                  message: constants.responseMessages.signUpUser.success,
                 });
               } else {
-                logger.error(configConstants.labels.localPassportStrategy.signup.savingNewUser.failure, newUserSavingError);
-                return done(null, false, {message: globalConstants.responseMessages.signUpUser.failure});
+                logger.error(localConstants.labels.localPassportStrategy.signup.savingNewUser.failure, newUserSavingError);
+                return done(null, false, {message: constants.responseMessages.signUpUser.failure});
               }
             }
           },

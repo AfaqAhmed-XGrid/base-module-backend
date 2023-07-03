@@ -4,8 +4,8 @@ const env = require('dotenv').config();
 const to = require('await-to-js').default;
 
 // Constant imports
-const globalConstants = require('../../constants/constants');
-const configConstants = require('../constants');
+const constants = require('../../constants/constants');
+const githubConstants = require('../constants');
 
 // Model imports
 const User = require('../../modules/auth/auth.model');
@@ -31,19 +31,20 @@ const passportGithubConfig = (passport) => {
           },
           async (accessToken, refreshToken, profile, done) => {
             if (!profile.id) {
-              logger.error(configConstants.labels.githubPassportStrategy.githubProfile.failure, profile);
-              return done(null, false, {message: globalConstants.responseMessages.logInUser.socialLogin.networkError});
+              logger.error(githubConstants.labels.githubPassportStrategy.githubProfile.failure, profile);
+              return done(null, false, {message: constants.responseMessages.logInUser.socialLogin.networkError});
             }
             const [userError, existingUser] = await to(User.findOne({githubId: profile.id}));
 
             if (userError) {
-              logger.error(configConstants.labels.githubPassportStrategy.findingUser.error, userError);
-              return done(null, false, {message: globalConstants.responseMessages.logInUser.failure});
+              logger.error(githubConstants.labels.githubPassportStrategy.findingUser.failure, userError);
+              return done(null, false, {message: constants.responseMessages.logInUser.failure});
             }
 
+            // If user is already existed in database, just log it in without saving it in db
             if (existingUser) {
-              logger.info(configConstants.labels.githubPassportStrategy.findingUser.found, existingUser);
-              return done(null, existingUser, {message: globalConstants.responseMessages.logInUser.success});
+              logger.info(githubConstants.labels.githubPassportStrategy.findingUser.found, existingUser);
+              return done(null, existingUser, {message: constants.responseMessages.logInUser.success});
             };
 
             const newUser = new User({
@@ -56,16 +57,16 @@ const passportGithubConfig = (passport) => {
             const [newUserSavedError, newUserSaved] = await to(newUser.save());
 
             if (newUserSavedError) {
-              logger.error(configConstants.labels.githubPassportStrategy.savingNewUser.error, newUserSavedError);
-              done(null, false, {message: globalConstants.responseMessages.logInUser.failure});
+              logger.error(githubConstants.labels.githubPassportStrategy.savingNewUser.failure, newUserSavedError);
+              done(null, false, {message: constants.responseMessages.logInUser.failure});
             }
 
             if (newUserSaved) {
-              logger.error(configConstants.labels.githubPassportStrategy.savingNewUser.success, newUserSaved);
-              done(null, newUser, {message: globalConstants.responseMessages.logInUser.success});
+              logger.error(githubConstants.labels.githubPassportStrategy.savingNewUser.success, newUserSaved);
+              done(null, newUser, {message: constants.responseMessages.logInUser.success});
             } else {
-              logger.error(configConstants.labels.githubPassportStrategy.savingNewUser.failure, newUserSaved);
-              done(null, false, {message: globalConstants.responseMessages.logInUser.failure});
+              logger.error(githubConstants.labels.githubPassportStrategy.savingNewUser.failure, newUserSaved);
+              done(null, false, {message: constants.responseMessages.logInUser.failure});
             }
           },
       ),

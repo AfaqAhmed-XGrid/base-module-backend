@@ -9,13 +9,12 @@ module.exports = {
         failure: 'Github profile.id is not found!',
       },
       findingUser: {
-        error: 'Error while finding the user if its already existed in db (github)',
+        failure: 'Error while finding the user if its already existed in db (github)',
         found: 'User is existed in db (github)',
       },
       savingNewUser: {
-        error: 'Error in saving user through (github strategy)',
+        failure: 'Error in saving user through (github strategy)',
         success: 'New user is saved in db through (github strategy)',
-        failure: 'New user could not be saved in db through (github strategy)',
       },
     },
     googlePassportStrategy: {
@@ -23,29 +22,27 @@ module.exports = {
         failure: 'Google profile.id is not found!',
       },
       findingUser: {
-        error: 'Error while finding the user if its already existed in db (Google)',
+        failure: 'Error while finding the user if its already existed in db (Google)',
         found: 'User is existed in db (Google)',
       },
       savingNewUser: {
-        error: 'Error in saving user through (Google strategy)',
+        failure: 'Error in saving user through (Google strategy)',
         success: 'New user is saved in db through (Google strategy)',
-        failure: 'New user could not be saved in db through (Google strategy)',
       },
     },
     localPassportStrategy: {
       login: {
         findingUser: {
-          error: 'error while finding whether user is already existed (local-login)',
+          failure: 'error while finding whether user is already existed (local-login)',
         },
       },
       signup: {
         findingUser: {
-          error: 'error while finding whether user is already existed (local-signup)',
+          failure: 'error while finding whether user is already existed (local-signup)',
         },
         savingNewUser: {
-          error: 'error while saving user in db (local-signup)',
+          failure: 'error while saving user in db (local-signup)',
           success: 'New user is saved in db through (local-signup)',
-          failure: 'New user could not be saved in db despite having no error (local-signup)',
         },
       },
     },

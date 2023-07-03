@@ -4,8 +4,8 @@ const env = require('dotenv').config();
 const to = require('await-to-js').default;
 
 // Constant imports
-const globalConstants = require('../../constants/constants');
-const configConstants = require('../constants');
+const constants = require('../../constants/constants');
+const googleConstants = require('../constants');
 
 // Model imports
 const User = require('../../modules/auth/auth.model');
@@ -31,20 +31,21 @@ const passportGoogleConfig = (passport) => {
           },
           async (accessToken, refreshToken, profile, done) => {
             if (!profile.id) {
-              logger.error(configConstants.labels.googlePassportStrategy.googleProfile.failure, profile);
-              return done(null, false, {message: globalConstants.responseMessages.logInUser.socialLogin.networkError});
+              logger.error(googleConstants.labels.googlePassportStrategy.googleProfile.failure, profile);
+              return done(null, false, {message: constants.responseMessages.logInUser.socialLogin.networkError});
             }
 
             const [existingUserError, existingUser] = await to(User.findOne({googleId: profile.id}));
 
             if (existingUserError) {
-              logger.error(configConstants.labels.googlePassportStrategy.findingUser.error, existingUserError);
-              done(null, false, {message: globalConstants.responseMessages.logInUser.failure});
+              logger.error(googleConstants.labels.googlePassportStrategy.findingUser.failure, existingUserError);
+              done(null, false, {message: constants.responseMessages.logInUser.failure});
             }
 
+            // If user is already existed in database, just log it in without saving it in db
             if (existingUser) {
-              logger.info(configConstants.labels.googlePassportStrategy.findingUser.found, existingUser);
-              return done(null, existingUser, {message: globalConstants.responseMessages.logInUser.success});
+              logger.info(googleConstants.labels.googlePassportStrategy.findingUser.found, existingUser);
+              return done(null, existingUser, {message: constants.responseMessages.logInUser.success});
             }
 
             const newUser = new User({
@@ -56,16 +57,16 @@ const passportGoogleConfig = (passport) => {
             const [newUserSavedError, newUserSaved] = await to(newUser.save());
 
             if (newUserSavedError) {
-              logger.error(configConstants.labels.googlePassportStrategy.savingNewUser.error, newUserSavedError);
-              done(null, false, {message: globalConstants.responseMessages.logInUser.failure});
+              logger.error(googleConstants.labels.googlePassportStrategy.savingNewUser.failure, newUserSavedError);
+              done(null, false, {message: constants.responseMessages.logInUser.failure});
             }
 
             if (newUserSaved) {
-              logger.error(configConstants.labels.googlePassportStrategy.savingNewUser.success, newUserSaved);
-              done(null, newUser, {message: globalConstants.responseMessages.logInUser.success});
+              logger.error(googleConstants.labels.googlePassportStrategy.savingNewUser.success, newUserSaved);
+              done(null, newUser, {message: constants.responseMessages.logInUser.success});
             } else {
-              logger.error(configConstants.labels.googlePassportStrategy.savingNewUser.failure, newUserSaved);
-              done(null, false, {message: globalConstants.responseMessages.logInUser.failure});
+              logger.error(googleConstants.labels.googlePassportStrategy.savingNewUser.failure, newUserSaved);
+              done(null, false, {message: constants.responseMessages.logInUser.failure});
             }
           },
       ),

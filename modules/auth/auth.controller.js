@@ -53,7 +53,7 @@ const signupCtrl = async (req, res, next) => {
 const logoutCtrl = (req, res) => {
   req.logOut(function(err) {
     if (err) {
-      logger.error(authConstants.labels.logoutCtrl.error, req, err);
+      logger.error(authConstants.labels.logoutCtrl.failure, req, err);
       return res.status(406).json({success: 0, message: authConstants.responseMessages.logOutUser.failure, data: null});
     }
     return res.status(200).json({success: 1, message: authConstants.responseMessages.logOutUser.success, data: null});
@@ -77,7 +77,7 @@ const changePasswordCtrl = async (req, res) => {
   const [err, user] = await to(User.findById({_id: req.user._id}));
 
   if (err) {
-    logger.error(authConstants.labels.changePasswordCtrl.findingUser.error, err);
+    logger.error(authConstants.labels.changePasswordCtrl.findingUser.failure, err);
     return res.status(406).json({success: 0, message: authConstants.responseMessages.changePassword.failure, data: null});
   }
 
@@ -99,7 +99,7 @@ const changePasswordCtrl = async (req, res) => {
   const [passwordSavingErr, passwordSaved] = await to(user.save());
 
   if (passwordSavingErr) {
-    logger.error(authConstants.labels.changePasswordCtrl.savingNewPassword.error, passwordSavingErr);
+    logger.error(authConstants.labels.changePasswordCtrl.savingNewPassword.failure, passwordSavingErr);
     return res.status(501).json({success: 0, message: authConstants.responseMessages.changePassword.failure, data: null});
   }
 
@@ -121,7 +121,7 @@ const forgotPasswordCtrl = async (req, res) => {
   const [err, user] = await to(User.findOne({email: req.body.email}));
 
   if (err) {
-    logger.error(authConstants.labels.forgotPasswordCtrl.findingUser.error, err);
+    logger.error(authConstants.labels.forgotPasswordCtrl.findingUser.failure, err);
     return res.status(406).json({success: 0, message: authConstants.responseMessages.forgotPassword.failure, data: null});
   }
 
@@ -144,7 +144,7 @@ const forgotPasswordCtrl = async (req, res) => {
   }
 
   if (!savedToken) {
-    logger.error(authConstants.labels.forgotPasswordCtrl.token.savingFailure, savedToken);
+    logger.error(authConstants.labels.forgotPasswordCtrl.token.savingError, savedToken);
     return res.status(409).json({success: 0, message: authConstants.responseMessages.generalErrorMessage, data: null});
   }
 
@@ -194,7 +194,7 @@ const resetPasswordCtrl = async (req, res) => {
   const [err, user] = await to(User.findById(decoded.id));
 
   if (!user || err) {
-    logger.error(authConstants.labels.resetPasswordCtrl.findingUser.error, err, decoded, req.params);
+    logger.error(authConstants.labels.resetPasswordCtrl.findingUser.failure, err, decoded, req.params);
     return res.status(409).send(authConstants.responseMessages.generalErrorMessage);
   }
 
@@ -205,7 +205,7 @@ const resetPasswordCtrl = async (req, res) => {
   const [userSavingErr, savedUser] = await to(user.save());
 
   if (userSavingErr || !savedUser) {
-    logger.error(authConstants.labels.resetPasswordCtrl.savingPassword.error, userSavingErr, savedUser);
+    logger.error(authConstants.labels.resetPasswordCtrl.savingPassword.failure, userSavingErr, savedUser);
     return res.status(409).send({success: 0, message: authConstants.responseMessages.forgotPassword.resetPassword.failure, data: userSavingErr});
   } else {
     return res.status(200).send(authConstants.responseMessages.forgotPassword.resetPassword.success);
@@ -248,7 +248,7 @@ const updateProfileCtrl = async (req, res) => {
   const [updatingUserErr, updatedUser]= await to(User.findByIdAndUpdate(user._id, {...req.body}, {new: true}));
 
   if (updatingUserErr) {
-    logger.error(authConstants.labels.updateProfileDataCtrl.updatingUser.error, updatingUserErr);
+    logger.error(authConstants.labels.updateProfileDataCtrl.updatingUser.failure, updatingUserErr);
     return res.status(409).send({success: 0, message: authConstants.responseMessages.updateUserProfile.failure, data: updatingUserErr});
   }
 

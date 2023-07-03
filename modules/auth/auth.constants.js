@@ -53,36 +53,34 @@ module.exports = {
       noUserInReq: 'user is not found in request. login() problem. (signupCtrl)',
     },
     logoutCtrl: {
-      error: 'Error while logging out the user (logoutCtrl)',
+      failure: 'Error while logging out the user (logoutCtrl)',
     },
     changePasswordCtrl: {
       noUserInReq: 'user is not found in request. login() problem. (changePasswrodCtrl)',
       findingUser: {
-        error: 'Error while finding user (changePasswordCtrl)',
+        failure: 'Error while finding user (changePasswordCtrl)',
       },
       savingNewPassword: {
-        error: 'Error while saving new password (changePasswordCtrl)',
-        failure: 'New password could not be saved despite having no error (savingNewPassword',
+        failure: 'Error while saving new password (changePasswordCtrl)',
       },
     },
     forgotPasswordCtrl: {
       findingUser: {
-        error: 'Error while finding user (forgotPasswordCtrl)',
+        failure: 'Error while finding user (forgotPasswordCtrl)',
       },
       token: {
         generatingError: 'Error in generating token through model defined method. (forgotPasswordCtrl)',
         savingError: 'Error in saving user after generating token. (forgotPasswordCtrl)',
-        savingFailure: 'Token could not be saved despite having no error (forgotPasswordCtrl)',
       },
       emailSendingError: 'Error while sending email (forgotPasswordCtrl)',
       emailSendingUnkownError: 'Check info (forgotPasswordCtrl)',
     },
     resetPasswordCtrl: {
       findingUser: {
-        error: 'Error while finding user (resetPasswordCtrl)',
+        failure: 'Error while finding user (resetPasswordCtrl)',
       },
       savingPassword: {
-        error: 'Something wrong while saving the reset password (resetPasswordCtrl)',
+        failure: 'Something wrong while saving the reset password (resetPasswordCtrl)',
       },
     },
     getProfileDataCtrl: {
@@ -91,8 +89,7 @@ module.exports = {
     updateProfileDataCtrl: {
       noUserInReq: 'user is not found in request. login() problem. (changePasswrodCtrl)',
       updatingUser: {
-        error: 'error in saving user profile. login() problem. (updateProfileCtrl)',
-        failure: 'user is not saved despite having not error. login() problem. (updateProfileCtrl)',
+        failure: 'error in saving user profile. login() problem. (updateProfileCtrl)',
       },
     },
     iaAuthenticatedMiddleware: {
