@@ -52,7 +52,7 @@ router.get(
 // api endpoint to get the user data
 router.get(
     '/user',
-    isAuthenticated,
+    authMiddleware.isAuthenticated,
     authController.getProfileData,
 );
 
