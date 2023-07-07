@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Import packages
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// Import components
+import PrivateRoute from "./ui/components/PrivateRoute";
+
+// Import pages
+import Signin from "./ui/pages/Signin/Signin";
+import Signup from "./ui/pages/Signup/Signup";
+import ForgotPassword from "./ui/pages/ForgotPassword/ForgotPassword";
+import Dashboard from "./ui/pages/Dashboard/Dashboard";
+
+const App = () => {
+  
+    return (
+      <section>
+        <Routes>
+          <Route
+            path="/dashboard"
+            element={<PrivateRoute Component={Dashboard} />}
+          />
+          <Route
+            path="/"
+            element={<PrivateRoute Component={Dashboard} />}
+          />
+          <Route path="/signin" element=<Signin /> />
+          <Route path="/signup" element=<Signup /> />
+          <Route path="/forgotpassword" element=<ForgotPassword /> />
+        </Routes>
+        <Toaster />
+      </section>
+    );
+};
 
 export default App;
