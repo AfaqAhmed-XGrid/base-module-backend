@@ -1,10 +1,10 @@
 // Package imports
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const mongoose = require( 'mongoose' );
+const bcrypt = require( 'bcrypt' );
+const jwt = require( 'jsonwebtoken' );
 
 // Developing user schema
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema( {
   googleId: {
     type: String,
     default: undefined,
@@ -34,21 +34,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
-});
+} );
 
 // Hashig pasword before saving into db
-userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) {
+userSchema.pre( 'save', async function( next ) {
+  if ( !this.isModified( 'password' ) ) {
     next();
   }
-  const salt = await bcrypt.genSaltSync(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  const salt = await bcrypt.genSaltSync( 10 );
+  this.password = await bcrypt.hash( this.password, salt );
   next();
-});
+} );
 
 // Adding password checking method
-userSchema.methods.isPasswordMatched = async function(enteredPassword) {
-  return bcrypt.compare(enteredPassword, this.password);
+userSchema.methods.isPasswordMatched = async function( enteredPassword ) {
+  return bcrypt.compare( enteredPassword, this.password );
 };
 
 // Adding token generating method
@@ -66,6 +66,6 @@ userSchema.methods.generatePasswordResetToken = async function() {
   return resetToken;
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model( 'User', userSchema );
 
 module.exports = User;
