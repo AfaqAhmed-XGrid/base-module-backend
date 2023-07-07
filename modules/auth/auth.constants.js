@@ -1,5 +1,5 @@
 // Package imports
-const env = require( 'dotenv' ).config();
+const env = require('dotenv').config();
 
 module.exports = {
   responseMessages: {
