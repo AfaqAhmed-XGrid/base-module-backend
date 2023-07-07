@@ -1,29 +1,25 @@
 // Package imports
-const env = require( 'dotenv' ).config();
-const to = require( 'await-to-js' ).default;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const env = require('dotenv').config();
+const to = require('await-to-js').default;
 
-// Passport Strategy import
-const GoogleStrategy = require( 'passport-google-oauth20' ).Strategy;
 // Constant imports
-const responseMsgs = require( '../../constants/constants' ).responseMessages;
+const constants = require('../../constants/constants');
+const googleConstants = require('../constants');
 
 // Model imports
-const User = require( '../../modules/auth/auth.model' );
+const User = require('../../modules/auth/auth.model');
 
 // Logger import
-const logger = require( '../logger/logger' );
+const logger = require('../logger/logger');
 
-/**
- * Defining passport google strategy
- * @param {any} passport
- */
-const passportGoogleConfig = ( passport ) => {
-  passport.serializeUser( ( user, cb ) => {
-    cb( null, user.id );
-  } );
-  passport.deserializeUser( ( id, cb ) => {
-    User.findOne( { _id: id } ).then( ( user ) => cb( null, user ) );
-  } );
+const passportGoogleConfig = (passport) => {
+  passport.serializeUser((user, cb) => {
+    cb(null, user.id);
+  });
+  passport.deserializeUser((id, cb) => {
+    User.findOne({_id: id}).then((user) => cb(null, user));
+  });
 
   // Adding middleware
   passport.use(
@@ -33,40 +29,43 @@ const passportGoogleConfig = ( passport ) => {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             callbackURL: process.env.GOOGLE_CALLBACK_URL,
           },
-          async ( accessToken, refreshToken, profile, done ) => {
-            logger.info( 'Started authenticating user through google (Google Strategy)' );
-
-            if ( !profile.id ) {
-              logger.error( 'No id is found in profile (Google Strategy)', { profile: profile } );
-              return done( null, false, { message: responseMsgs.logInUser.socialLogin.failure } );
+          async (accessToken, refreshToken, profile, done) => {
+            if (!profile.id) {
+              logger.error(googleConstants.labels.googlePassportStrategy.googleProfile.failure, profile);
+              return done(null, false, {message: constants.responseMessages.logInUser.socialLogin.networkError});
             }
 
-            const [ existingUserError, existingUser ] = await to( User.findOne( { googleId: profile.id } ) );
+            const [existingUserError, existingUser] = await to(User.findOne({googleId: profile.id}));
 
-            if ( existingUserError ) {
-              logger.error( 'Error in finding if user is alreadty in db (Google Strategy)', { error: existingUserError } );
-              done( null, false, { message: responseMsgs.logInUser.failure } );
-            } else if ( existingUser ) {
-              logger.info( 'User is already existed in db (Google Strategy)', { userId: existingUser._id } );
-              return done( null, existingUser, { message: responseMsgs.logInUser.success } );
+            if (existingUserError) {
+              logger.error(googleConstants.labels.googlePassportStrategy.findingUser.failure, existingUserError);
+              done(null, false, {message: constants.responseMessages.logInUser.failure});
             }
 
-            const newUser = new User( {
+            // If user is already existed in database, just log it in without saving it in db
+            if (existingUser) {
+              logger.info(googleConstants.labels.googlePassportStrategy.findingUser.success, existingUser);
+              return done(null, existingUser, {message: constants.responseMessages.logInUser.success});
+            }
+
+            const newUser = new User({
               googleId: profile?.id,
               displayName: profile?.displayName,
               profilePicture: profile?.photos[0]?.value,
-            } );
-            const [ newUserSavedError, newUserSaved ] = await to( newUser.save() );
+            });
+            const [newUserSavedError, newUserSaved] = await to(newUser.save());
 
-            if ( newUserSavedError ) {
-              logger.error( 'Error in saving new user to db (Google Strategy)', { error: newUserSavedError } );
-              done( null, false, { message: responseMsgs.logInUser.failure } );
-            } else if ( newUserSaved ) {
-              logger.info( 'New user is saved in db (Google Strategy)', { userId: newUserSaved._id } );
-              done( null, newUser, { message: responseMsgs.logInUser.success } );
+            if (newUserSavedError) {
+              logger.error(googleConstants.labels.googlePassportStrategy.savingNewUser.failure, newUserSavedError);
+              done(null, false, {message: constants.responseMessages.logInUser.failure});
+            }
+
+            if (newUserSaved) {
+              logger.info(googleConstants.labels.googlePassportStrategy.savingNewUser.success, newUserSaved);
+              done(null, newUser, {message: constants.responseMessages.logInUser.success});
             } else {
-              logger.error( 'No user no error was return while saving user in db (Google Strategy)', { user: newUserSaved } );
-              done( null, false, { message: responseMsgs.logInUser.failure } );
+              logger.error(googleConstants.labels.googlePassportStrategy.savingNewUser.failure, newUserSaved);
+              done(null, false, {message: constants.responseMessages.logInUser.failure});
             }
           },
       ),
