@@ -15,7 +15,7 @@ type Props = {
 const SimpleLink = ({ link, title, color }: Props) => {
   return (
     <div>
-      <Link to={link} style={{ color: `${color}` }} className='text-decoration'>
+      <Link to={link} style={{ color: `${color}` }} className='simple-link-text-decoration'>
         <p className='simple-link-title'>{title}</p>
       </Link>
     </div>

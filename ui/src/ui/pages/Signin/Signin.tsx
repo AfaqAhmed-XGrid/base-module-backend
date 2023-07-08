@@ -21,6 +21,7 @@ import { useSignInUserMutation } from '../../../store/api';
 // Import css
 import './Signin.css';
 import '../../../App.css';
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 // Defining Signin page
 const Signin = () => {
@@ -30,6 +31,7 @@ const Signin = () => {
   });
   const { email, password } = formData;
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [signInUser] = useSignInUserMutation();
 
@@ -65,7 +67,8 @@ const Signin = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container signin-position-relative">
+      {isModalOpen && <ForgotPassword setisModalOpen={setIsModalOpen}/>}
       <div className="form-container">
         <div className='flex-column-between'>
           <img src="/assets/logo.png" alt="" width={150}/>
@@ -93,7 +96,10 @@ const Signin = () => {
           />
           <div className='flex-row-between'>
             <SimpleLink link={'/signup'} title={'Dont have an account? Signup!'} color='blue' />
-            <SimpleLink link={'/forgotpassword'} title={'Forgot Password?'} color='red'/>
+            {/* <SimpleLink link={'/forgotpassword'} title={'Forgot Password?'} color='red'/> */}
+            <button onClick={() => setIsModalOpen(!isModalOpen)} className='signin-text-btn' type='button'>
+              Forgot Password?
+            </button>
           </div>
           <div className='w-full'>
             <SpecialButton

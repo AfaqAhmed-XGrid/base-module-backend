@@ -7,8 +7,24 @@
 .signin-title {
   line-height: 0 !important;
   margin-top: 1.6rem;
+  text-transform: capitalize;
 }
 
+.signin-text-btn {
+  cursor: pointer;
+  color: red;
+  font-size: 0.85rem;
+  background: none;
+  border: none;
+}
+
+.signin-text-btn:hover {
+  text-decoration: underline;
+}
+
+.signin-position-relative {
+  position: relative;
+}
 
 @media screen and (min-width: 1440px) {
 }
