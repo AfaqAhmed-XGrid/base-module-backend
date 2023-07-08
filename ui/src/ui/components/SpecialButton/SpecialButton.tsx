@@ -1,12 +1,12 @@
 // Import packages
-import React from "react";
+import React from 'react';
 
 // Import css
-import "./SpecialButton.css";
+import './SpecialButton.css';
 
 // Defining type
 type Props = {
-  onClick: () => any;
+  onClick: () => void;
   title: string;
   id: string
 };
@@ -15,7 +15,7 @@ const SpecialButton = ({ onClick, title, id }: Props) => {
   return (
     <div>
       <button
-      id={id}
+        id={id}
         className="btn"
         onClick={(e) => {
           e.preventDefault();

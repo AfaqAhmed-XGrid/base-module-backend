@@ -29,7 +29,6 @@ const login = async (req, res) => {
     return res.status(200).json({ success: 0, message: globalConstants.responseMessages.logInUser.failure, data: null });
   }
 };
-
 /**
  * Created signup controller to send response to the user on signup
  * @param {Object} req
