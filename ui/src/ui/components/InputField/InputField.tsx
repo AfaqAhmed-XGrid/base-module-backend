@@ -1,26 +1,26 @@
 // Import packages
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // Import react icon type
-import type { IconType } from "react-icons";
+import type { IconType } from 'react-icons';
 
 // Import css
-import './InputField.css'
+import './InputField.css';
+import '../../../App.css';
 
 // Defining prop type
 type Props = {
   title: string;
   id: string;
   type: string;
-  value: string;
-  setData: React.Dispatch<React.SetStateAction<any>>;
+  value?: string;
   placeHolder: string;
   Icon: IconType;
-  data: any,
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   disabled: boolean
 };
 
-export default function InputField({ title, id, type,setData, value, placeHolder, Icon, data, disabled}: Props) {
+export default function InputField({ title, id, type, onChange, value, placeHolder, Icon, disabled }: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -32,21 +32,21 @@ export default function InputField({ title, id, type,setData, value, placeHolder
   };
 
   return (
-    <div className="input-main-container">
+    <div className="w-full input-margin-top">
       <p className="input-title">{title}</p>
       <div
-      className="input-box"
+        className="input-container"
         style={{
-          borderBottom: `${isFocused ? "0.125rem solid red" : "0.125rem solid #707070"}`, color: `${isFocused ? '#6F11F5': '#707070'}`
+          borderBottom: `${isFocused ? '0.125rem solid red' : '0.125rem solid #707070'}`, color: `${isFocused ? '#6F11F5': '#707070'}`,
         }}
       >
-        <Icon style={{ fontSize: "1.3rem" }} />
+        <Icon className='input-icon-size' />
         <input
           className="input-field"
           type={type}
           id={id}
-          value={value}
-          onChange={(e) => setData({...data, [e.target.id]: e.target.value})}
+          value={value ? value : ''}
+          onChange={onChange}
           placeholder={placeHolder}
           onFocus={handleFocus}
           onBlur={handleBlur}

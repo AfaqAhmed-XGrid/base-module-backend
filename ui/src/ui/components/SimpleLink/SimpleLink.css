@@ -1,0 +1,13 @@
+.simple-link-text-decoration {
+    text-decoration-line: none;
+    margin-top: 0.7rem !important;
+    cursor: pointer;
+}
+
+.simple-link-text-decoration:hover {
+    text-decoration: underline;
+}
+
+.simple-link-title {
+    font-size: 0.85rem;
+}

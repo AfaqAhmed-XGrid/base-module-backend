@@ -1,158 +1,139 @@
 // Import packges
-import React, { useState } from "react";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 // Import react icons
-import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
-import { HiUser, HiUserAdd } from "react-icons/hi";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
+import { AiOutlineUser, AiOutlineLock } from 'react-icons/ai';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 // Import components
-import SignButton from "../../components/SimpleButton/SignButton";
-import SimpleLink from "../../components/SimpleLink/SimpleLink";
-import SpecialButton from "../../components/SpecialButton/SpecialButton";
-import IconButton from "../../components/IconButton/IconButton";
-import InputField from "../../components/InputField/InputField";
-import PasswordField from "../../components/PasswordField/PasswordField";
+import SimpleLink from '../../components/SimpleLink/SimpleLink';
+import SpecialButton from '../../components/SpecialButton/SpecialButton';
+import IconButton from '../../components/IconButton/IconButton';
+import InputField from '../../components/InputField/InputField';
+import PasswordField from '../../components/PasswordField/PasswordField';
 
 // Import rtk query
-import { useSignInUserMutation } from "../../../store/api";
+import { useSignInUserMutation } from '../../../store/api';
 
 // Import css
-import "./Signin.css";
+import './Signin.css';
+import '../../../App.css';
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 // Defining Signin page
 const Signin = () => {
   const [formData, setFormData] = useState({
-    email: ""
-    password: "",
+    email: '',
+    password: '',
   });
   const { email, password } = formData;
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [signInUser] = useSignInUserMutation();
-  
+
+  /**
+   * Function to signin user
+   */
   const onSignIn = async () => {
     const res = await signInUser(formData);
     const response = (
-      "data" in res ? res.data : "data" in res.error ? res.error.data : null
-    ) as any;
+      'data' in res ? res.data : 'data' in res.error ? res.error.data : null
+    );
 
     if (response.success) {
       toast.success(`${response.message}`, {
         duration: 3000,
-        position: "bottom-center",
+        position: 'bottom-center',
         ariaProps: {
-          role: "status",
-          "aria-live": "polite",
+          'role': 'status',
+          'aria-live': 'polite',
         },
       });
-      navigate("/dashboard");
+      navigate('/dashboard');
     } else {
       toast.error(`${response.message}`, {
         duration: 3000,
-        position: "bottom-center",
+        position: 'bottom-center',
         ariaProps: {
-          role: "status",
-          "aria-live": "polite",
+          'role': 'status',
+          'aria-live': 'polite',
         },
       });
     }
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: "url(/assets/bg01.jpg)",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center top",
-      }}
-    >
-      <div className="signin-main-container">
-        <div className="signin-child-container">
-          <div className="signin-box">
-            <SignButton
-              link={"/signin"}
-              title={"Sign in"}
-              Icon={HiUser}
-              active={true}
-            />
-            <SignButton
-              link={"/signup"}
-              title={"Sign up"}
-              Icon={HiUserAdd}
-              active={false}
-            />
-          </div>
+    <div className="container signin-position-relative">
+      {isModalOpen && <ForgotPassword setisModalOpen={setIsModalOpen}/>}
+      <div className="form-container">
+        <div className='flex-column-between'>
+          <img src="/assets/logo.png" alt="" width={150}/>
+          <h2 className='signin-title'>Welcome Back!</h2>
+        </div>
+        <form className='flex-column-center w-full'>
           <InputField
-            title={"Email Address"}
-            id={"email"}
-            type={"text"}
-            setData={setFormData}
+            title={'Email Address'}
+            id={'email'}
+            type={'text'}
             value={email}
-            placeHolder={"Your Email Address"}
+            placeHolder={'Your Email Address'}
             Icon={AiOutlineUser}
-            data={formData}
             disabled={false}
+            onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
           />
           <PasswordField
-            title={"Password"}
-            id={"password"}
-            setData={setFormData}
+            title={'Password'}
+            id={'password'}
+            onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
             value={password}
-            placeHolder={"Your Password"}
+            placeHolder={'Your Password'}
             Icon={AiOutlineLock}
-            data={formData}
             disabled={false}
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginRight: "0.313rem",
-            }}
-          >
-            <SimpleLink link={"/forgotpassword"} title={"Forgot Password?"} />
+          <div className='flex-row-between'>
+            <SimpleLink link={'/signup'} title={'Dont have an account? Signup!'} color='blue' />
+            {/* <SimpleLink link={'/forgotpassword'} title={'Forgot Password?'} color='red'/> */}
+            <button onClick={() => setIsModalOpen(!isModalOpen)} className='signin-text-btn' type='button'>
+              Forgot Password?
+            </button>
           </div>
-          <div style={{ marginTop: "1.875rem" }}>
+          <div className='w-full'>
             <SpecialButton
               onClick={onSignIn}
-              title={"Sign In"}
+              title={'Sign In'}
               id="signInBtn"
             />
           </div>
-          <p className="signin-para">
-            Dont have an account? Please sign up!
-            <br /> OR <br /> use your google/github account
-          </p>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "1.25rem",
-              gap: "3rem",
-            }}
-          >
+        </form>
+        <div className='w-full'>
+          <div>
+            <p className="signin-para">
+            Or
+            </p>
+          </div>
+          <div className='flex-row-between  '>
             <IconButton
               id="googleSignInBtn"
+              title='google'
               Icon={FcGoogle}
-              color={"#922724"}
-              borderColor={"#922724"}
+              color={'#922724'}
+              borderColor={'#922724'}
               onClick={() =>
-                (window.location.href = "http://localhost:4000/api/auth/google")
+                (window.location.href = 'http://localhost:4000/api/auth/google')
               }
             />
             <IconButton
               id="githubSignInBtn"
+              title='github'
               Icon={FaGithub}
-              color={"black"}
-              borderColor={"black"}
+              color={'black'}
+              borderColor={'black'}
               onClick={() =>
-                (window.location.href = "http://localhost:4000/api/auth/github")
+                (window.location.href = 'http://localhost:4000/api/auth/github')
               }
             />
           </div>

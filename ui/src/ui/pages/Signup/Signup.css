@@ -1,194 +1,24 @@
-.signup-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-bottom: 3.125rem;
-  }
-  
-  .signup-para {
-    font-size: 0.7rem;
-    margin-top: 1.25rem;
-    flex-wrap: nowrap;
-    text-align: center;
-  }
+.signup-para {
+  font-size: 0.9rem;
+  text-align: center;
+  text-transform: uppercase;
+}
 
-  .signup-main-container {
-    padding: 1rem;
-  }
-  
-  @media screen and (min-width: 1440px) {
-    .signup-main-container {
-      display: flex;
-      justify-content: flex-end;
-      min-height: 100vh;
-      max-width: 110.875rem;
-      margin: 0 auto;
-    }
-  
-    .signup-child-container {
-      width: 35.875rem;
-      padding: 2.5rem;
-      border-radius: 1rem;
-      margin-top: 5rem;
-      background-color: white;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-  
-    .signup-title {
-      font-size: 1.5rem;
-    }
-  
-    .signup-para {
-      font-size: 1.1rem;
-      margin-top: 1.25rem;
-    }
-  }
-  
-  @media screen and (max-width: 1439px) and (min-width: 1250px) {
-    .signup-main-container {
-      display: flex;
-      justify-content: flex-end;
-      min-height: 100vh;
-      max-width: 70rem;
-      margin: 0 auto;
-    }
-  
-    .signup-child-container {
-      width: 23.875rem;
-      padding: 2.5rem;
-      border-radius: 1rem;
-      margin-top: 3.5rem;
-      background-color: white;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-  
-    .signup-title {
-      font-size: 1.3rem;
-    }
-  
-    .signup-para {
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-  }
-  
-  @media screen and (max-width: 1249px) and (min-width: 876px) {
-    .signup-main-container {
-      display: flex;
-      justify-content: flex-end;
-      min-height: 100vh;
-      max-width: 60rem;
-      margin: 0 auto;
-    }
-  
-    .signup-child-container {
-      width: 24.875rem;
-      padding: 2.5rem;
-      border-radius: 1rem;
-      margin-top: 5rem;
-      background-color: white;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-  
-    .signup-title {
-      font-size: 1.2rem;
-    }
-  
-    .signup-para {
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-  }
-  
-  @media screen and (max-width: 875px) and (min-width: 676px) {
-    .signup-main-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      max-width: 40rem;
-      margin: 0 auto;
-    }
-  
-    .signup-child-container {
-      width: 25.875rem;
-      padding: 2.5rem;
-      border-radius: 1rem;
-      margin-top: 3rem;
-      background-color: white;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-  
-    .signup-title {
-      font-size: 1.1rem;
-    }
-  
-    .signup-para {
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-  }
-  
-  @media screen and (max-width: 675px) and (min-width: 450px) {
-    .signup-main-container {
-      display: flex;
-      justify-content: flex-end;
-      min-height: 100vh;
-      max-width: 40rem;
-      margin: 0 auto;
-    }
-  
-    .signup-child-container {
-      width: 17.875rem;
-      padding: 2.5rem;
-      border-radius: 1rem;
-      margin-top: 5rem;
-      background-color: white;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-  
-    .signup-title {
-      font-size: 1.1rem;
-    }
-  
-    .signup-para {
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-  }
-  
-  @media screen and (max-width: 449px) {
-    .signup-main-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      max-width: 40rem;
-      margin: 0 auto;
-    }
-  
-    .signup-child-container {
-      width: 18rem;
-      padding: 1rem;
-      border-radius: 1rem;
-      margin-top: 4rem;
-      background-color: white;
-      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    }
-  
-    .signup-title {
-      font-size: 1.1rem;
-    }
-  
-    .signup-para {
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-  }
-  
+
+@media screen and (min-width: 1440px) {
+}
+
+@media screen and (max-width: 1439px) and (min-width: 1250px) {
+}
+
+@media screen and (max-width: 1249px) and (min-width: 876px) {
+}
+
+@media screen and (max-width: 875px) and (min-width: 676px) {
+}
+
+@media screen and (max-width: 675px) and (min-width: 450px) {
+}
+
+@media screen and (max-width: 449px) {
+}

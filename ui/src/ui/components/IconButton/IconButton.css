@@ -2,6 +2,20 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  max-width: 200px;
+  width: 100%;
+}
+
+.iconButton-container:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.icon-button-title {
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .icon {

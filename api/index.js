@@ -16,16 +16,12 @@ const constants = require('./constants/constants');
 
 // Routes import
 const authRouter = require('./modules/auth/auth.route');
-const movieRouter = require('./modules/movie/movie.route');
 
 // Logger imports
 const logger = require('./config/logger/logger');
 
 // Swagger document import
 const swaggerDocument = require('./swagger.json');
-
-// Seed movies function import
-const seedMovies = require('./modules/movie/movie.seed');
 
 // creating instance
 const app = express();
@@ -64,10 +60,6 @@ app.use(
 
 // Configuring Routes
 app.use('/api/auth/', authRouter);
-app.use('/api/movie/', movieRouter);
-
-// Uplaoding movies data to db
-seedMovies();
 
 // Starting the application on port 4000
 const PORT = process.env.PORT || 4000;
