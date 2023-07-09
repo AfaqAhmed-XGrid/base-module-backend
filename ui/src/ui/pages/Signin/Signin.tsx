@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { BiError } from 'react-icons/bi';
 
 // Import react icons
 import { AiOutlineUser, AiOutlineLock } from 'react-icons/ai';
@@ -16,8 +17,11 @@ import InputField from '../../components/InputField/InputField';
 import PasswordField from '../../components/PasswordField/PasswordField';
 import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
 
+// Import servics
+
 // Import rtk query
 import { useSignInUserMutation } from '../../../store/api';
+import { validateInputField } from '../../../services/formValidation';
 
 // Import css
 import './Signin.css';
@@ -32,6 +36,8 @@ const Signin = () => {
   const { email, password } = formData;
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string | null>(null);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string | null>(null);
 
   const [signInUser] = useSignInUserMutation();
 
@@ -39,6 +45,13 @@ const Signin = () => {
    * Function to signin user
    */
   const onSignIn = async () => {
+    const emailError = validateInputField('email', email);
+    setEmailErrorMessage(emailError);
+    const passwordError = validateInputField('password', password);
+    setPasswordErrorMessage(passwordError);
+    if (emailError || passwordError) {
+      return;
+    }
     const res = await signInUser(formData);
     const response = (
       'data' in res ? res.data : 'data' in res.error ? res.error.data : null
@@ -75,25 +88,37 @@ const Signin = () => {
           <h2 className='form-title'>Welcome Back!</h2>
         </div>
         <form className='flex-column-center w-full signin-gap-1rem'>
-          <InputField
-            title={'Email Address'}
-            id={'email'}
-            type={'text'}
-            value={email}
-            placeHolder={'Your Email Address'}
-            Icon={AiOutlineUser}
-            disabled={false}
-            onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
-          />
-          <PasswordField
-            title={'Password'}
-            id={'password'}
-            onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
-            value={password}
-            placeHolder={'Your Password'}
-            Icon={AiOutlineLock}
-            disabled={false}
-          />
+          <div className='w-full'>
+            <InputField
+              title={'Email Address'}
+              id={'email'}
+              type={'text'}
+              value={email}
+              placeHolder={'Your Email Address'}
+              Icon={AiOutlineUser}
+              disabled={false}
+              onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
+            />
+            <div className={`error-message-container ${emailErrorMessage ? 'visible' : 'hidden'}`}>
+              <BiError className="error-message-icon" />
+              <p className="error-message">{emailErrorMessage}</p>
+            </div>
+          </div>
+          <div className='w-full'>
+            <PasswordField
+              title={'Password'}
+              id={'password'}
+              onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
+              value={password}
+              placeHolder={'Your Password'}
+              Icon={AiOutlineLock}
+              disabled={false}
+            />
+            <div className={`error-message-container ${passwordErrorMessage ? 'visible' : 'hidden'}`}>
+              <BiError className="error-message-icon" />
+              <p className="error-message">{passwordErrorMessage}</p>
+            </div>
+          </div>
           <div className='flex-row-between'>
             <SimpleLink link={'/signup'} title={'Dont have an account? Signup!'} color='blue' />
             {/* <SimpleLink link={'/forgotpassword'} title={'Forgot Password?'} color='red'/> */}

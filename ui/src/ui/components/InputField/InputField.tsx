@@ -16,11 +16,20 @@ type Props = {
   value?: string;
   placeHolder: string;
   Icon: IconType;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  disabled: boolean
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled: boolean;
 };
 
-export default function InputField({ title, id, type, onChange, value, placeHolder, Icon, disabled }: Props) {
+export default function InputField({
+  title,
+  id,
+  type,
+  onChange,
+  value,
+  placeHolder,
+  Icon,
+  disabled,
+}: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -31,22 +40,29 @@ export default function InputField({ title, id, type, onChange, value, placeHold
     setIsFocused(false);
   };
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e);
+  };
+
   return (
     <div className="w-full input-margin-top">
       <p className="input-title">{title}</p>
       <div
         className="input-container"
         style={{
-          borderBottom: `${isFocused ? '0.125rem solid red' : '0.125rem solid #707070'}`, color: `${isFocused ? '#6F11F5': '#707070'}`,
+          borderBottom: `${
+            isFocused ? '0.125rem solid red' : '0.125rem solid #707070'
+          }`,
+          color: `${isFocused ? '#6F11F5' : '#707070'}`,
         }}
       >
-        <Icon className='input-icon-size' />
+        <Icon className="input-icon-size" />
         <input
           className="input-field"
           type={type}
           id={id}
           value={value ? value : ''}
-          onChange={onChange}
+          onChange={handleOnChange}
           placeholder={placeHolder}
           onFocus={handleFocus}
           onBlur={handleBlur}

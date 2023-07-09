@@ -2,19 +2,13 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-// Import types
-import { AppDispatch } from '../../../store/types';
-
-// Import auth slice
-import { setAuthenticated, setUnauthenticated } from '../../../store/authSlice';
 
 // Import react icons
 import { AiOutlineUser, AiOutlineLock } from 'react-icons/ai';
 import { CgNametag } from 'react-icons/cg';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
+import { BiError } from 'react-icons/bi';
 
 // Import components
 import SpecialButton from '../../components/SpecialButton/SpecialButton';
@@ -22,6 +16,9 @@ import IconButton from '../../components/IconButton/IconButton';
 import InputField from '../../components/InputField/InputField';
 import PasswordField from '../../components/PasswordField/PasswordField';
 import SimpleLink from '../../components/SimpleLink/SimpleLink';
+
+// Import services
+import { validateInputField } from '../../../services/formValidation';
 
 // Import rtk query
 import { useSignUpUserMutation } from '../../../store/api';
@@ -39,7 +36,8 @@ const Signup = () => {
   });
   const { email, password, displayName } = formData;
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string | null>(null);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string | null>(null);
 
   const [signUpUser] = useSignUpUserMutation();
 
@@ -47,13 +45,19 @@ const Signup = () => {
    * Function to signup user using email, displayName and password
    */
   const onSignup = async () => {
+    const emailError = validateInputField('email', email);
+    setEmailErrorMessage(emailError);
+    const passwordError = validateInputField('password', password);
+    setPasswordErrorMessage(passwordError);
+    if (emailError || passwordError) {
+      return;
+    }
     const res = await signUpUser(formData);
     const response = (
       'data' in res ? res.data : 'data' in res.error ? res.error.data : null
     );
 
     if (response.success) {
-      dispatch(setAuthenticated());
       toast.success(`${response.message}`, {
         duration: 3000,
         position: 'bottom-center',
@@ -64,7 +68,6 @@ const Signup = () => {
       });
       navigate('/dashboard');
     } else {
-      dispatch(setUnauthenticated());
       toast.error(`${response.message}`, {
         duration: 3000,
         position: 'bottom-center',
@@ -84,16 +87,22 @@ const Signup = () => {
           <h2 className='form-title'>Create an Account</h2>
         </div>
         <form className='flex-column-between w-full h-full'>
-          <InputField
-            title={'Email Address'}
-            id={'email'}
-            type={'text'}
-            onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
-            value={email}
-            placeHolder={'Your Email Address'}
-            Icon={AiOutlineUser}
-            disabled={false}
-          />
+          <div className='w-full'>
+            <InputField
+              title={'Email Address'}
+              id={'email'}
+              type={'text'}
+              onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
+              value={email}
+              placeHolder={'Your Email Address'}
+              Icon={AiOutlineUser}
+              disabled={false}
+            />
+            <div className={`error-message-container ${emailErrorMessage ? 'visible' : 'hidden'}`}>
+              <BiError className="error-message-icon" />
+              <p className="error-message">{emailErrorMessage}</p>
+            </div>
+          </div>
           <InputField
             title={'User Name'}
             id={'displayName'}
@@ -104,15 +113,21 @@ const Signup = () => {
             Icon={CgNametag}
             disabled={false}
           />
-          <PasswordField
-            title={'Password'}
-            id={'password'}
-            onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
-            value={password}
-            placeHolder={'Your Password'}
-            Icon={AiOutlineLock}
-            disabled={false}
-          />
+          <div className='w-full'>
+            <PasswordField
+              title={'Password'}
+              id={'password'}
+              onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
+              value={password}
+              placeHolder={'Your Password'}
+              Icon={AiOutlineLock}
+              disabled={false}
+            />
+            <div className={`error-message-container ${passwordErrorMessage ? 'visible' : 'hidden'}`}>
+              <BiError className="error-message-icon" />
+              <p className="error-message">{passwordErrorMessage}</p>
+            </div>
+          </div>
           <div className='flex-row-between'>
             <SimpleLink link={'/signin'} title={'Already a member? Signin!'} color='blue' />
             <SimpleLink link={'/forgotpassword'} title={'Forgot Password?'} color='red'/>

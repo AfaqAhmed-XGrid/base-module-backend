@@ -51,6 +51,14 @@
   width: 100%;
 }
 
+.flex-row-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.313rem;
+  width: 100%;
+}
+
 .w-full {
   width: 100%;
 }
@@ -83,4 +91,33 @@ button {
   outline: none;
   padding: 0;
   margin: 0;
+}
+
+.error-message-container {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding-left: 0.4rem;
+  padding-top: 0.2rem;
+
+}
+
+.error-message-icon {
+  color: red !important;
+  font-size: 1rem;
+  
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.hidden {
+  visibility: hidden !important;
+}
+
+.error-message {
+  color: red !important;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
