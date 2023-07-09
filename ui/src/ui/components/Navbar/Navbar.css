@@ -1,247 +1,33 @@
-.nav-link {
-  color: black;
-  text-decoration-line: none;
-}
-
-.nav-link.active {
-  color: red;
-  text-decoration-line: underline;
-}
-
-@media screen and (min-width: 1440px) {
-  .nav-main-container {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 1rem 0;
-    position: relative;
-  }
-
-  .nav-box {
-    max-width: 110.875rem;
-    padding: 0 1rem;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .mobile-nav {
-    display: none;
-}
-
-  .logo {
-    width: 10rem;
-  }
-
-  li {
-    display: inline;
-    margin: 0 7.125rem;
-    font-size: 1.6rem;
-    letter-spacing: 0.025em;
-  }
-
-  .profile-image {
-    border-radius: 1000px;
-    width: 3.5rem;
-    cursor: pointer;
-  }
-}
-
-@media screen and (max-width: 1439px) and (min-width: 1250px) {
-  .nav-main-container {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 0.6rem 0;
-    position: relative;
-  }
-
-  .nav-box {
-    max-width: 70rem;
-    padding: 0 1rem;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .mobile-nav {
-    display: none;
-}
-
-  .logo {
-    width: 7rem;
-  }
-
-  li {
-    display: inline;
-    margin: 0 3.5rem;
-    font-size: 1rem;
-    letter-spacing: 0.025em;
-  }
-
-  .profile-image {
-    border-radius: 1000px;
-    width: 2.25rem;
-    cursor: pointer;
-  }
-}
-
-@media screen and (max-width: 1249px) and (min-width: 876px) {
-  .nav-main-container {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 1rem 0;
-    position: relative;
-  }
-
-  .nav-box {
-    max-width: 60rem;
-    padding: 0 1rem;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .mobile-nav {
-    display: none;
-}
-
-  .logo {
-    width: 7rem;
-  }
-
-  li {
-    display: inline;
-    margin: 0 3.2rem;
-    font-size: 1rem;
-    letter-spacing: 0.025em;
-  }
-
-  .profile-image {
-    border-radius: 1000px;
-    width: 2.5rem;
-    cursor: pointer;
-  }
-}
-
-@media screen and (max-width: 875px) and (min-width: 676px) {
-  .nav-main-container {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 0.75rem 0;
-    position: relative;
-  }
-
-  .nav-box {
-    max-width: 40rem;
-    padding: 0 1rem;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .mobile-nav {
-    display: none;
-}
-
-  .logo {
-    width: 6rem;
-  }
-
-  li {
-    display: inline;
-    margin: 0 2.5rem;
-    font-size: 0.9rem;
-    letter-spacing: 0.025em;
-  }
-
-  .profile-image {
-    border-radius: 1000px;
-    width: 2.1rem;
-    cursor: pointer;
-  }
-}
-
-@media screen and (max-width: 675px) and (min-width: 450px) {
-  .nav-main-container {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 0.35rem 0;
-    position: relative;
-  }
-
-  .nav-box {
-    max-width: 40rem;
-    padding: 0 1rem;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .normal-nav {
-    display: none;
-  }
-  
- .mobile-nav {
-    display: flex;
-    justify-content: center;
+.nav-main-container {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  position: relative;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
-    width: 6rem;
+  width: 4.5rem;
+  background-color: #01645F;
+  padding: 0.5rem 0;
 }
 
-li {
-    display: inline;
-    margin: 0 2.5rem;
-    font-size: 0.9rem;
-    letter-spacing: 0.025em;
-  }
-
-  .profile-image {
-    border-radius: 1000px;
-    width: 2.1rem;
-    cursor: pointer;
-  }
+.profile-image {
+  border-radius: 1000px;
+  width: 2.5rem;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 449px){
-    .nav-main-container {
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-      padding: 0.35rem 0;
-      position: relative;
-    }
-  
-    .nav-box {
-      max-width: 40rem;
-      padding: 0 1rem;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-  
-    .normal-nav {
-      display: none;
-    }
-    
-   .mobile-nav {
-      display: flex;
-      justify-content: center;
-  }
-  
-  .logo {
-      width: 4rem;
-  }
-  
-  li {
-      display: inline;
-      margin: 0 1rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.025em;
-    }
-  
-    .profile-image {
-      border-radius: 1000px;
-      width: 1.8rem;
-      cursor: pointer;
-    }
-  }
+.profile-icon {
+  font-size: 1.75rem;
+  margin-right: 1.2rem;
+}
+
+.nav-title {
+  text-transform: uppercase;
+  margin: 0 !important;
+  color: #D3D3D3;
+  font-weight: 500 !important;
+  font-size: 1rem;
+}

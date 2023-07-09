@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
 
 // Import components
-import SpecialButton from '../../components/SpecialButton/SpecialButton';
-import InputField from '../../components/InputField/InputField';
+import SpecialButton from '../SpecialButton/SpecialButton';
+import InputField from '../InputField/InputField';
 
 // import rtk query
 import { useForgotPasswordMutation } from '../../../store/api';

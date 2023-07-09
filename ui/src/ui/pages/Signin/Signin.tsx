@@ -14,6 +14,7 @@ import SpecialButton from '../../components/SpecialButton/SpecialButton';
 import IconButton from '../../components/IconButton/IconButton';
 import InputField from '../../components/InputField/InputField';
 import PasswordField from '../../components/PasswordField/PasswordField';
+import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
 
 // Import rtk query
 import { useSignInUserMutation } from '../../../store/api';
@@ -21,7 +22,6 @@ import { useSignInUserMutation } from '../../../store/api';
 // Import css
 import './Signin.css';
 import '../../../App.css';
-import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 // Defining Signin page
 const Signin = () => {
@@ -69,12 +69,12 @@ const Signin = () => {
   return (
     <div className="container signin-position-relative">
       {isModalOpen && <ForgotPassword setisModalOpen={setIsModalOpen}/>}
-      <div className="form-container">
+      <div className="form-container signin-gap">
         <div className='flex-column-between'>
           <img src="/assets/logo.png" alt="" width={150}/>
-          <h2 className='signin-title'>Welcome Back!</h2>
+          <h2 className='form-title'>Welcome Back!</h2>
         </div>
-        <form className='flex-column-center w-full'>
+        <form className='flex-column-center w-full signin-gap-1rem'>
           <InputField
             title={'Email Address'}
             id={'email'}

@@ -1,103 +1,52 @@
 // Import packages
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 
 // Import react icons
-import { FaUserCircle } from "react-icons/fa";
-
-// Import components
-import IconButton from "../IconButton/IconButton";
-import ProfileBar from "../ProfileBar/ProfileBar";
+import { FaUserCircle } from 'react-icons/fa';
 
 // Import css
-import "./Navbar.css";
+import './Navbar.css';
 
 // Import custom hook
-import { useAuthStatus } from "../../../hooks/useAuthStatus";
+import { useAuthStatus } from '../../../hooks/useAuthStatus';
 
-const Navbar = ({auth}: any) => {
+// Import type
+import { User } from '../../../app.types';
+
+const Navbar = () => {
   // const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
-  const [user, setUser] = useState<any>(undefined);
-  const authStatus = useAuthStatus()
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const authStatus = useAuthStatus();
 
   useEffect(() => {
     const fetchProfileData = () => {
-      const {user} = authStatus;
-      setUser(user)
+      const { user } = authStatus;
+      setUser(user);
     };
     fetchProfileData();
-  }, [authStatus])
+  }, [authStatus]);
 
-    return (
-      <div className="nav-main-container">
-        <div className="nav-box">
-          <div>
-            <img src="/assets/logo.png" alt="" className="logo"/>
-          </div>
-          <div>
-            <ul className="normal-nav">
-              <li>
-                <NavLink
-                  to="/dashboard"
-                  className='nav-link'
-                  >
-                  Dashboard
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/charts"
-                  className='nav-link'
-                  >
-                  Charts
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/users"
-                  className='nav-link'
-                >
-                  Users
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-          {
-            user?.profilePicture ? <div onClick={() => setShowProfile(!showProfile)}><img src={user?.profilePicture} alt="" className="profile-image"/></div> : <IconButton id="profileBtn" Icon={FaUserCircle} color={'black'} borderColor={'transparent'} onClick={() => setShowProfile(!showProfile)}/>
-          }
-        </div>
-        <ul className="mobile-nav">
-              <li>
-                <NavLink
-                  to="/dashboard"
-                  className='nav-link'
-                  >
-                  Dashboard
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/charts"
-                  className='nav-link'
-                  >
-                  Charts
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/users"
-                  className='nav-link'
-                >
-                  Users
-                </NavLink>
-              </li>
-            </ul>
-        {
-          showProfile && <ProfileBar user={user} />
-        }
+  return (
+    <div className="nav-main-container">
+      <div style={{ backgroundColor: '#01645F' }}>
+        <img src="/assets/logo.png" alt="" className="logo" />
       </div>
-    );
+      <h2 className='nav-title'>
+      Cine-Info:  Connecting You to the Movie Universe
+      </h2>
+      {user?.profilePicture ? (
+          <div onClick={() => setShowProfile(!showProfile)}>
+            <img src={user?.profilePicture} alt="" className="profile-image" />
+          </div>
+        ) : (
+          <FaUserCircle
+            className='profile-icon'
+            onClick={() => setShowProfile(!showProfile)}
+          />
+        )}
+    </div>
+  );
 };
 
 export default Navbar;
