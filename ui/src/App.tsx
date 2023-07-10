@@ -1,10 +1,12 @@
 // Import packages
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { Route, Routes } from 'react-router';
 
 // Import components
 import PrivateRoute from './ui/components/PrivateRoute';
+import Navbar from './ui/components/Navbar/Navbar';
+import SideNavbar from './ui/components/SideNavbar/SideNavbar';
 
 // Import pages
 import Signin from './ui/pages/SignIn/SignIn';
@@ -21,6 +23,8 @@ import './App.css';
 const App = () => {
   return (
     <section>
+      <Navbar />
+      <SideNavbar />
       <Routes>
         <Route
           path={constants.pagelinks.dashbaord}
