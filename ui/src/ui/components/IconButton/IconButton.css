@@ -1,0 +1,59 @@
+.iconButton-container {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  max-width: 200px;
+  width: 100%;
+  border: 1px solid #D3D3D3;
+  border-radius: 0.2rem;
+}
+
+.iconButton-container:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.icon-button-title {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.icon {
+  font-size: 1.563rem;
+  border-radius: 62.5rem;
+  padding: 0.188rem;
+}
+
+@media screen and (min-width: 1640px) {
+  .iconButton-container {
+    justify-content: space-evenly;
+    max-width: 15rem !important;
+    padding: 1rem 0;
+  }
+
+  .icon-button-title {
+    font-size: 1rem;
+  }
+  
+  .icon {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 1639px) and (min-width: 1250px) {
+  
+}
+
+@media screen and (max-width: 1249px) and (min-width: 876px) {
+}
+
+@media screen and (max-width: 875px) and (min-width: 676px) {
+}
+
+@media screen and (max-width: 675px) and (min-width: 450px) {
+}
+
+@media screen and (max-width: 449px) {
+}

@@ -1,26 +1,41 @@
+// Import packages
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+
+// Import components
+import PrivateRoute from './ui/components/PrivateRoute';
+
+// Import pages
+import Signin from './ui/pages/SignIn/SignIn';
+import Signup from './ui/pages/SignUp/SignUp';
+import Dashboard from './ui/pages/Dashboard/Dashboard';
+
+// Import constants
+import constants from './app.constants';
+
+// Import css
 import './App.css';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section>
+      <Routes>
+        <Route
+          path={constants.pagelinks.dashbaord}
+          element={<PrivateRoute Component={Dashboard} />}
+        />
+        <Route
+          path={constants.pagelinks.home}
+          element={<PrivateRoute Component={Dashboard} />}
+        />
+        <Route path={constants.pagelinks.signin} element=<Signin /> />
+        <Route path={constants.pagelinks.signup} element=<Signup /> />
+      </Routes>
+      <Toaster />
+    </section>
   );
-}
+};
 
 export default App;

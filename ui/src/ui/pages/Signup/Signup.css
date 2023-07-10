@@ -1,0 +1,33 @@
+.signup-para {
+  font-size: 0.9rem;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0.9rem 0 !important;
+}
+
+
+@media screen and (min-width: 1640px) {
+}
+
+@media screen and (max-width: 1639px) and (min-width: 1250px) {
+}
+
+@media screen and (max-width: 1249px) and (min-width: 876px) {
+}
+
+@media screen and (max-width: 875px) and (min-width: 676px) {
+}
+
+@media screen and (max-width: 675px) and (min-width: 450px) {
+  .signup-para {
+    font-size: 0.8rem;
+    margin: 0.35rem 0 !important;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .signup-para {
+    font-size: 0.75rem;
+    margin: 0.4rem 0 !important;
+  }
+}
