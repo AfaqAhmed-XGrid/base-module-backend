@@ -1,90 +1,159 @@
 .side-nav-main-container {
-    position: fixed;
-    min-height: 100vh;
-    background-color: #292A2C;
-    width: 4.5rem;
-    justify-content: flex-start;
-    transition: width 0.3s ease;
+  position: fixed;
+  min-height: 100vh;
+  background-color: #292A2C;
+  width: 4.5rem;
+  justify-content: flex-start;
+  transition: width 0.3s ease;
 }
 
 .side-nav-items-list {
-    padding-top: 0.5rem;
-    display: flex;
-    flex-direction: column;
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .side-nav-item {
-    color: white;
-    margin: 0.6rem 0 0.6rem 0rem;
-    padding: 0.8rem 0 0.8rem 1.1rem;
-    display: flex;
-    align-items: center;
+  color: white;
+  margin: 0.6rem 0 0.6rem 0rem;
+  padding: 0.8rem 0 0.8rem 1.1rem;
+  display: flex;
+  align-items: center;
+  text-decoration-line: none !important;
 }
 
 .side-nav-item-icon {
-    cursor: pointer;
-    flex-shrink: 0;
-    font-size: 2rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 2rem;
 }
 
 .side-nav-item-title {
-    cursor: pointer;
-    font-size: 0.85rem;
-    padding: 0 0 0 1.2rem;
-    visibility: hidden;
-    font-weight: 300 !important;
-    transition: visibility 0.3s each;
-    text-transform: capitalize;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0 0 0 1.2rem;
+  visibility: hidden;
+  font-weight: 300 !important;
+  transition: visibility 0.3s each;
+  text-transform: capitalize;
 }
 
 .side-nav-main-container:hover {
-    width: 10rem;
+  width: 10rem;
 }
 
 .side-nav-main-container:hover .side-nav-item-title {
-    visibility: visible;
+  visibility: visible;
 }
 
 .side-nav-item:hover {
-    background-color: #B2BEB5;
+  background-color: #B2BEB5;
 }
 
 .side-nav-sub-menu {
-    background-color: #B2BEB5;
-    position: absolute;
-    top: 0rem;
-    left: 10rem;
-    width: 0rem;
-    height: 100vh;
-    transition: width 0.2s ease-in;
-    display: inline-block;
-    overflow: hidden;
-    padding: 0.3rem 1.5rem;
-    visibility: hidden;
+  background-color: #B2BEB5;
+  position: absolute;
+  top: 0rem;
+  left: 10rem;
+  width: 0rem;
+  height: 100vh;
+  transition: width 0.2s ease-in;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.3rem 1.5rem;
+  visibility: hidden;
 }
 
 .side-nav-item:hover .side-nav-sub-menu {
-    visibility: visible;
-    width: 11rem;
-    background-color: #B2BEB5;
+  visibility: visible;
+  width: 11rem;
+  background-color: #B2BEB5;
 }
 
 .side-nav-sub-menu-item {
-    flex-shrink: 0;
-    white-space: nowrap;
-    cursor: pointer;
-    margin: 1.6rem 0;
-    display: block;
-    color: white;
-    text-decoration-line: none;
-    border: none;
-    background: none;
-    font-size: 0.95rem !important;
-    padding: 0;
-    font-weight: 300 !important;
-    text-transform: capitalize;
+  flex-shrink: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  margin: 1.6rem 0;
+  display: block;
+  color: white;
+  text-decoration-line: none;
+  border: none;
+  background: none;
+  font-size: 0.95rem !important;
+  padding: 0;
+  font-weight: 300 !important;
+  text-transform: capitalize;
 }
 
 .side-nav-sub-menu-item:hover {
-    text-decoration-line: underline;
+  text-decoration-line: underline;
+}
+
+@media screen and (min-width: 1440px) {
+  .side-nav-main-container {
+    width: 9rem;
+  }
+
+  .side-nav-main-container:hover {
+    width: 19rem;
+  }
+
+  .side-nav-item {
+    padding: 0.8rem 0 0.8rem 2.8rem;
+  }
+
+  .side-nav-item-icon {
+    font-size: 3.6rem;
+  }
+
+  .side-nav-item-title {
+    font-size: 1.5rem;
+  }
+
+  .side-nav-sub-menu {
+    left: 18.5rem;
+  }
+
+  .side-nav-item:hover .side-nav-sub-menu {
+    width: 15rem;
+  }
+
+  .side-nav-sub-menu-item {
+    font-size: 1.55rem !important;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .side-nav-main-container {
+    width: 3.5rem;
+  }
+
+  .side-nav-main-container:hover {
+    width: 12rem;
+  }
+
+  .side-nav-item {
+    padding: 0.8rem 0 0.8rem 1rem;
+  }
+
+  .side-nav-item-icon {
+    font-size: 2rem;
+  }
+
+  .side-nav-item-title {
+    font-size: 0.9rem;
+  }
+
+  .side-nav-sub-menu {
+    left: 12rem;
+  }
+
+  .side-nav-item:hover .side-nav-sub-menu {
+    width: 7rem;
+  }
+
+  .side-nav-sub-menu-item {
+    font-size: 0.9rem !important;
+  }
 }
