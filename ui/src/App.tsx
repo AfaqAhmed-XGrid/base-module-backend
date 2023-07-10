@@ -7,24 +7,31 @@ import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './ui/components/PrivateRoute';
 
 // Import pages
-import Signin from './ui/pages/Signin/Signin';
-import Signup from './ui/pages/Signup/Signup';
+import Signin from './ui/pages/SignIn/SignIn';
+import Signup from './ui/pages/SignUp/SignUp';
 import Dashboard from './ui/pages/Dashboard/Dashboard';
+
+// Import constants
+import constants from './app.constants';
+
+// Import css
+import './App.css';
+
 
 const App = () => {
   return (
     <section>
       <Routes>
         <Route
-          path="/dashboard"
+          path={constants.pagelinks.dashbaord}
           element={<PrivateRoute Component={Dashboard} />}
         />
         <Route
-          path="/"
+          path={constants.pagelinks.home}
           element={<PrivateRoute Component={Dashboard} />}
         />
-        <Route path="/signin" element=<Signin /> />
-        <Route path="/signup" element=<Signup /> />
+        <Route path={constants.pagelinks.signin} element=<Signin /> />
+        <Route path={constants.pagelinks.signup} element=<Signup /> />
       </Routes>
       <Toaster />
     </section>

@@ -12,3 +12,32 @@
     margin: 0.9rem 0;
     font-size: 0.85rem;
 }
+
+@media screen and (min-width: xl) {
+    .simple-link-title {
+        font-size: 1.2rem !important;
+    }
+  }
+  
+  @media screen and (max-width: 1639px) and (min-width: lg) {
+  }
+  
+  @media screen and (max-width: 1249px) and (min-width: md) {
+  }
+  
+  @media screen and (max-width: 875px) and (min-width: sm) {
+  }
+  
+  @media screen and (max-width: 675px) and (min-width: xs) {
+    .simple-link-title {
+        font-size: 0.8rem !important;
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 449px) {
+    .simple-link-title {
+        white-space: nowrap;
+        font-size: 0.7rem !important;
+    }
+  }

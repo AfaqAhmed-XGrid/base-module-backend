@@ -5,12 +5,17 @@ import { Navigate } from 'react-router-dom';
 // Import custom hooks
 import { useAuthStatus } from '../../hooks/useAuthStatus';
 
+// Import constants
+import constants from '../../app.constants';
 
-export default function PrivateRoute({ Component }: {Component: () => JSX.Element}) {
+
+const PrivateRoute = ({ Component }: {Component: () => JSX.Element}) => {
   const { loggedIn, checkingStatus } = useAuthStatus();
   if (window.location.pathname === '/') return <Navigate to="/dashboard" />;
   if (checkingStatus) {
     return <div>Loading...</div>;
   }
-  return loggedIn? <Component />:<Navigate to="/signin" />;
-}
+  return loggedIn? <Component />:<Navigate to={constants.pagelinks.signin} />;
+};
+
+export default PrivateRoute;

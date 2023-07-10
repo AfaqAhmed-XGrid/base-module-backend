@@ -1,12 +1,11 @@
 // Import packages
-import React, { useState } from 'react';
+import React from 'react';
 
 // Import react icon type
 import type { IconType } from 'react-icons';
 
 // Import css
 import './InputField.css';
-import '../../../App.css';
 
 // Defining prop type
 type Props = {
@@ -20,7 +19,7 @@ type Props = {
   disabled: boolean;
 };
 
-export default function InputField({
+const InputField = ({
   title,
   id,
   type,
@@ -29,17 +28,11 @@ export default function InputField({
   placeHolder,
   Icon,
   disabled,
-}: Props) {
-  const [isFocused, setIsFocused] = useState(false);
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
+}: Props) => {
+  /**
+   * Function to handle change in input field value
+   * @param {React.ChangeEvent<HTMLInputElement>} e
+   */
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e);
   };
@@ -47,15 +40,7 @@ export default function InputField({
   return (
     <div className="w-full input-margin-top">
       <p className="input-title">{title}</p>
-      <div
-        className="input-container"
-        style={{
-          borderBottom: `${
-            isFocused ? '0.125rem solid red' : '0.125rem solid #707070'
-          }`,
-          color: `${isFocused ? '#6F11F5' : '#707070'}`,
-        }}
-      >
+      <div className="input-container" >
         <Icon className="input-icon-size" />
         <input
           className="input-field"
@@ -64,11 +49,11 @@ export default function InputField({
           value={value ? value : ''}
           onChange={handleOnChange}
           placeholder={placeHolder}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
           disabled={disabled}
         />
       </div>
     </div>
   );
-}
+};
+
+export default InputField;

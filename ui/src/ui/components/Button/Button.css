@@ -30,10 +30,14 @@
   background-position: right center;
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1640px) {
+  .btn {
+    padding: 1.2rem 1.6rem;
+    font-size: 1.35rem;
+  }
 }
 
-@media screen and (max-width: 1439px) and (min-width: 1250px) {
+@media screen and (max-width: 1639px) and (min-width: 1250px) {
 }
 
 @media screen and (max-width: 1249px) and (min-width: 876px) {

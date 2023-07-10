@@ -20,8 +20,7 @@ type Props = {
 // Defining IconButton component
 const IconButton = ({ Icon, color, onClick, id, title }: Props) => {
   return (
-    <button id={id} className='iconButton-container' style={{ border: `${title ? '1px solid #D3D3D3': 'none'}`,
-      borderRadius: `${title ? '0.2rem': '0'}` }} onClick={(e) => {
+    <button id={id} className='iconButton-container' onClick={(e) => {
       e.preventDefault(); onClick();
     }}>
       <Icon style={{ color: `${color}` }} className='icon'/>

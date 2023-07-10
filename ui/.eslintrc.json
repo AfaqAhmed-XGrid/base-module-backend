@@ -35,7 +35,15 @@
           "FunctionDeclaration": false
         }
       }
-    ]
+    ],
+    "react/jsx-uses-react": "error",
+    "react/jsx-fragments": ["error", "syntax"],
+    "react/jsx-no-undef": "error",
+    "react/prop-types": "error",
+    "react/display-name": "error",
+    "react/self-closing-comp": "error",
+    "react/no-unescaped-entities": "error",
+    "react-hooks/rules-of-hooks": "error"
   },
   "settings": {
     "react": {

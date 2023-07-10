@@ -6,20 +6,28 @@
 }
 
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: xl) {
 }
 
-@media screen and (max-width: 1439px) and (min-width: 1250px) {
+@media screen and (max-width: 1639px) and (min-width: lg) {
 }
 
-@media screen and (max-width: 1249px) and (min-width: 876px) {
+@media screen and (max-width: 1249px) and (min-width: md) {
 }
 
-@media screen and (max-width: 875px) and (min-width: 676px) {
+@media screen and (max-width: 875px) and (min-width: sm) {
 }
 
-@media screen and (max-width: 675px) and (min-width: 450px) {
+@media screen and (max-width: 675px) and (min-width: xs) {
+  .signup-para {
+    font-size: 0.8rem;
+    margin: 0.35rem 0 !important;
+  }
 }
 
 @media screen and (max-width: 449px) {
+  .signup-para {
+    font-size: 0.75rem;
+    margin: 0.4rem 0 !important;
+  }
 }

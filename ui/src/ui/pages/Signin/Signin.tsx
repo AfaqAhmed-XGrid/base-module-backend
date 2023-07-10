@@ -11,24 +11,26 @@ import { FaGithub } from 'react-icons/fa';
 
 // Import components
 import SimpleLink from '../../components/SimpleLink/SimpleLink';
-import SpecialButton from '../../components/SpecialButton/SpecialButton';
+import SpecialButton from '../../components/Button/Button';
 import IconButton from '../../components/IconButton/IconButton';
 import InputField from '../../components/InputField/InputField';
 import PasswordField from '../../components/PasswordField/PasswordField';
 import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
 
 // Import servics
+import { validateInputField } from '../../../services/formValidation';
 
 // Import rtk query
 import { useSignInUserMutation } from '../../../store/api';
-import { validateInputField } from '../../../services/formValidation';
+
+// Import constants
+import constants from '../../../app.constants';
 
 // Import css
-import './Signin.css';
-import '../../../App.css';
+import './SignIn.css';
 
 // Defining Signin page
-const Signin = () => {
+const SignIn = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -59,17 +61,17 @@ const Signin = () => {
 
     if (response.success) {
       toast.success(`${response.message}`, {
-        duration: 3000,
+        duration: 3000, // Toast duration is set to 3s
         position: 'bottom-center',
         ariaProps: {
           'role': 'status',
           'aria-live': 'polite',
         },
       });
-      navigate('/dashboard');
+      navigate(constants.pagelinks.dashbaord);
     } else {
       toast.error(`${response.message}`, {
-        duration: 3000,
+        duration: 3000, // Toast duration is set to 3s
         position: 'bottom-center',
         ariaProps: {
           'role': 'status',
@@ -84,17 +86,17 @@ const Signin = () => {
       {isModalOpen && <ForgotPassword setisModalOpen={setIsModalOpen}/>}
       <div className="form-container signin-gap">
         <div className='flex-column-between'>
-          <img src="/assets/logo.png" alt="" width={150}/>
+          <img src="/assets/logo.png" alt="" className='form-logo'/>
           <h2 className='form-title'>Welcome Back!</h2>
         </div>
         <form className='flex-column-center w-full signin-gap-1rem'>
           <div className='w-full'>
             <InputField
-              title={'Email Address'}
-              id={'email'}
-              type={'text'}
+              title='Email Address'
+              id='email'
+              type='email'
               value={email}
-              placeHolder={'Your Email Address'}
+              placeHolder='Your Email Address'
               Icon={AiOutlineUser}
               disabled={false}
               onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
@@ -106,11 +108,11 @@ const Signin = () => {
           </div>
           <div className='w-full'>
             <PasswordField
-              title={'Password'}
-              id={'password'}
+              title='Password'
+              id='password'
               onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
               value={password}
-              placeHolder={'Your Password'}
+              placeHolder='Your Password'
               Icon={AiOutlineLock}
               disabled={false}
             />
@@ -120,8 +122,7 @@ const Signin = () => {
             </div>
           </div>
           <div className='flex-row-between'>
-            <SimpleLink link={'/signup'} title={'Dont have an account? Signup!'} color='blue' />
-            {/* <SimpleLink link={'/forgotpassword'} title={'Forgot Password?'} color='red'/> */}
+            <SimpleLink link={constants.pagelinks.signup} title='Dont have an account? Signup!' color='blue' />
             <button onClick={() => setIsModalOpen(!isModalOpen)} className='signin-text-btn' type='button'>
               Forgot Password?
             </button>
@@ -129,7 +130,7 @@ const Signin = () => {
           <div className='w-full'>
             <SpecialButton
               onClick={onSignIn}
-              title={'Sign In'}
+              title='Sign In'
               id="signInBtn"
             />
           </div>
@@ -140,25 +141,25 @@ const Signin = () => {
             Or
             </p>
           </div>
-          <div className='flex-row-between  '>
+          <div className='flex-row-between icon-button-gap'>
             <IconButton
               id="googleSignInBtn"
               title='google'
               Icon={FcGoogle}
-              color={'#922724'}
-              borderColor={'#922724'}
+              color='#922724'
+              borderColor='#922724'
               onClick={() =>
-                (window.location.href = 'http://localhost:4000/api/auth/google')
+                (window.location.href = constants.socialAuthorization.google)
               }
             />
             <IconButton
               id="githubSignInBtn"
               title='github'
               Icon={FaGithub}
-              color={'black'}
-              borderColor={'black'}
+              color='black'
+              borderColor='black'
               onClick={() =>
-                (window.location.href = 'http://localhost:4000/api/auth/github')
+                (window.location.href = constants.socialAuthorization.github)
               }
             />
           </div>
@@ -169,4 +170,4 @@ const Signin = () => {
 };
 
 // Exporting page
-export default Signin;
+export default SignIn;

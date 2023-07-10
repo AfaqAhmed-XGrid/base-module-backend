@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
 
 // Import components
-import SpecialButton from '../SpecialButton/SpecialButton';
+import Button from '../Button/Button';
 import InputField from '../InputField/InputField';
 
 // import rtk query
@@ -15,7 +15,6 @@ import { useForgotPasswordMutation } from '../../../store/api';
 
 // Import css
 import './ForgotPassword.css';
-import '../../../App.css';
 
 // Defining ForgotPassword Page
 const ForgotPassword = ({ setisModalOpen }: {setisModalOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
@@ -36,7 +35,7 @@ const ForgotPassword = ({ setisModalOpen }: {setisModalOpen: React.Dispatch<Reac
 
     if (response.success) {
       toast.success(`${response.message}`, {
-        duration: 3000,
+        duration: 3000, // Toast duration is set to 3s
         position: 'bottom-center',
         ariaProps: {
           'role': 'status',
@@ -46,7 +45,7 @@ const ForgotPassword = ({ setisModalOpen }: {setisModalOpen: React.Dispatch<Reac
       navigate('/signin');
     } else {
       toast.error(`${response.message}`, {
-        duration: 3000,
+        duration: 3000, // Toast duration is set to 3s
         position: 'bottom-center',
         ariaProps: {
           'role': 'status',
@@ -64,19 +63,19 @@ const ForgotPassword = ({ setisModalOpen }: {setisModalOpen: React.Dispatch<Reac
         </div>
         <h2 className='signin-title'>Enter Your Email</h2>
         <InputField
-          title={'Email Address'}
-          id={'email'}
-          type={'text'}
+          title='Email Address'
+          id='email'
+          type='email'
           onChange={(e) => setFormData({ ...formData, [e.target.id]: e.target.value })}
           value={email}
-          placeHolder={'Your Email Address'}
+          placeHolder='Your Email Address'
           Icon={AiOutlineUser}
           disabled={false}
         />
         <div className='w-full'>
-          <SpecialButton
+          <Button
             onClick={onForgotPassword}
-            title={'Send Email'}
+            title='Send Email'
             id="forgotPasswordBtn"
           />
         </div>

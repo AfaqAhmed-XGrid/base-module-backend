@@ -1,6 +1,14 @@
+// Import constants
+import constants from '../app.constants';
+
+/**
+ * Function to validate the value of input field
+ * @param {string} inputType
+ * @param {string | undefined} inputValue
+ * @return {string | null}
+ */
 const validateInputField = (inputType:string, inputValue:string | undefined):string | null => {
   let errorMessage = null;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!inputValue) {
     errorMessage = `${inputType} is required`;
@@ -8,37 +16,24 @@ const validateInputField = (inputType:string, inputValue:string | undefined):str
   }
 
   switch (inputType) {
-    case 'email':
-      switch (true) {
-        case inputValue === '':
-          errorMessage = 'Email is required';
-          break;
-        case !emailRegex.test(inputValue):
-          errorMessage = 'Invalid email format';
-          break;
-        default:
-          break;
+    case constants.validateInputField.email:
+      if (inputValue === '') {
+        errorMessage = 'Email is required';
+      } else if (!constants.regex.isEmail.test(inputValue)) {
+        errorMessage = 'Invalid email format';
       }
       break;
-    case 'password':
-      switch (true) {
-        case inputValue.length < 8:
-          errorMessage = 'password must be at least 8 characters long';
-          break;
-        case !/[a-z]/.test(inputValue):
-          errorMessage = 'password must contain at least one lowercase letter';
-          break;
-        case !/[A-Z]/.test(inputValue):
-          errorMessage = 'password must contain at least one uppercase letter';
-          break;
-        case !/\d/.test(inputValue):
-          errorMessage = 'password must contain at least one digit';
-          break;
-        case !/[!@#$%^&*]/.test(inputValue):
-          errorMessage = 'password must contain at least one special char (!@#$%^&*)';
-          break;
-        default:
-          break;
+    case constants.validateInputField.password:
+      if (inputValue.length < 8) {
+        errorMessage = 'Password must be at least 8 characters long';
+      } else if (!constants.regex.hasLowerCaseAlpha.test(inputValue)) {
+        errorMessage = 'Password must contain at least one lowercase letter';
+      } else if (!constants.regex.hasUpperCaseAlpha.test(inputValue)) {
+        errorMessage = 'Password must contain at least one uppercase letter';
+      } else if (!constants.regex.hasNum.test(inputValue)) {
+        errorMessage = 'Password must contain at least one digit';
+      } else if (!constants.regex.hasSpecialChar.test(inputValue)) {
+        errorMessage = 'Password must contain at least one special char (!@#$%^&*)';
       }
       break;
     default:

@@ -4,6 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 // Constant import
 import constants from '../app.constants';
 
+// Creating endpoints for rtk query to make http requests
 const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: constants.apiUrl }),
@@ -19,7 +20,7 @@ const api = createApi({
     signUpUser: builder.mutation({
       query: (formData) => ({
         url: constants.auth + '/signup',
-        method: 'POST',
+        method: constants.httpMethods.post,
         body: formData,
         credentials: 'include',
       }),
@@ -27,7 +28,7 @@ const api = createApi({
     forgotPassword: builder.mutation({
       query: (formData) => ({
         url: constants.auth + '/forgot-password',
-        method: 'POST',
+        method: constants.httpMethods.post,
         body: formData,
         credentials: 'include',
       }),
@@ -35,7 +36,7 @@ const api = createApi({
     updateUserData: builder.mutation({
       query: (userFormData) => ({
         url: constants.auth + '/update-profile',
-        method: 'PUT',
+        method: constants.httpMethods.put,
         body: userFormData,
         credentials: 'include',
       }),
@@ -43,7 +44,7 @@ const api = createApi({
     changePassword: builder.mutation({
       query: (passwordFormData) => ({
         url: constants.auth + '/change-password',
-        method: 'PUT',
+        method: constants.httpMethods.put,
         body: passwordFormData,
         credentials: 'include',
       }),
@@ -51,7 +52,14 @@ const api = createApi({
     logoutUser: builder.mutation({
       query: () => ({
         url: constants.auth + '/logout',
-        method: 'GET',
+        method: constants.httpMethods.get,
+        credentials: 'include',
+      }),
+    }),
+    checkAuthStatus: builder.mutation({
+      query: () => ({
+        url: constants.auth + '/user',
+        method: constants.httpMethods.get,
         credentials: 'include',
       }),
     }),
@@ -66,4 +74,5 @@ export const {
   useUpdateUserDataMutation,
   useChangePasswordMutation,
   useLogoutUserMutation,
+  useCheckAuthStatusMutation,
 } = api;

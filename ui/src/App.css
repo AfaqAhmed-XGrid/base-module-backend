@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   overflow: hidden;
   margin: 0 auto;
 }
@@ -14,6 +13,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
   height: 100%;
   padding: 0 2.5rem;
   border-radius: 0.4rem;
@@ -29,6 +29,10 @@
   text-align: center;
 }
 
+.form-logo {
+  width: 10rem;
+}
+
 .flex-column-center {
   display: flex;
   align-items: center;
@@ -36,7 +40,7 @@
   flex-direction: column;
 }
 
-.flex-column-between  {
+.flex-column-between {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -68,7 +72,7 @@
 }
 
 .border-test {
-  border: 1px solid black
+  border: 1px solid black;
 }
 
 a {
@@ -99,13 +103,11 @@ button {
   gap: 0.3rem;
   padding-left: 0.4rem;
   padding-top: 0.2rem;
-
 }
 
 .error-message-icon {
   color: red !important;
   font-size: 1rem;
-  
 }
 
 .visible {
@@ -120,4 +122,38 @@ button {
   color: red !important;
   font-size: 0.8rem;
   white-space: nowrap;
+}
+
+@media screen and (min-width: xl) {
+  .form-container {
+    max-width: 38rem;
+    justify-content: space-evenly;
+  }
+
+  .form-title {
+    font-size: 3rem !important;
+    letter-spacing: 2px !important;
+  }
+
+  .form-logo {
+    width: 15rem;
+  }
+}
+
+@media screen and (max-width: 675px) and (min-width: xs) {
+  .form-title {
+    font-size: 1.2rem !important;
+  }
+  .form-container {
+    padding: 0 2rem;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .form-title {
+    font-size: 1.2rem !important;
+  }
+  .form-container {
+    padding: 0 1rem;
+  }
 }

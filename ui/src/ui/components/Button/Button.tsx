@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Import css
-import './SpecialButton.css';
+import './Button.css';
 
 // Defining type
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   id: string
 };
 
-const SpecialButton = ({ onClick, title, id }: Props) => {
+const Button = ({ onClick, title, id }: Props) => {
   return (
     <div>
       <button
@@ -28,4 +28,4 @@ const SpecialButton = ({ onClick, title, id }: Props) => {
   );
 };
 
-export default SpecialButton;
+export default Button;
