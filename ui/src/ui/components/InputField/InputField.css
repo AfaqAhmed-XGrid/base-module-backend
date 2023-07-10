@@ -37,7 +37,7 @@
   font-size: 1.3rem;
 }
 
-@media screen and (min-width: xl) {
+@media screen and (min-width: 1640px) {
   .input-title {
     font-size: 1.65rem !important;
     margin-bottom: 1rem !important;
@@ -53,16 +53,16 @@
   }
 }
 
-@media screen and (max-width: 1639px) and (min-width: lg) {
+@media screen and (max-width: 1639px) and (min-width: 1250px) {
 }
 
-@media screen and (max-width: 1249px) and (min-width: md) {
+@media screen and (max-width: 1249px) and (min-width: 876px) {
 }
 
-@media screen and (max-width: 875px) and (min-width: sm) {
+@media screen and (max-width: 875px) and (min-width: 676px) {
 }
 
-@media screen and (max-width: 675px) and (min-width: xs) {
+@media screen and (max-width: 675px) and (min-width: 450px) {
   .input-title {
     font-size: 0.85rem !important;
     margin-bottom: 5px !important;

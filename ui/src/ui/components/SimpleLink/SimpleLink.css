@@ -1,43 +1,43 @@
 .simple-link-text-decoration {
-    text-decoration-line: none;
-    margin-top: 0.7rem !important;
-    cursor: pointer;
+  text-decoration-line: none;
+  margin-top: 0.7rem !important;
+  cursor: pointer;
 }
 
 .simple-link-text-decoration:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .simple-link-title {
-    margin: 0.9rem 0;
-    font-size: 0.85rem;
+  margin: 0.9rem 0;
+  font-size: 0.85rem;
 }
 
-@media screen and (min-width: xl) {
-    .simple-link-title {
-        font-size: 1.2rem !important;
-    }
+@media screen and (min-width: 1640px) {
+  .simple-link-title {
+    font-size: 1.2rem !important;
   }
-  
-  @media screen and (max-width: 1639px) and (min-width: lg) {
+}
+
+@media screen and (max-width: 1639px) and (min-width: 1250px) {
+}
+
+@media screen and (max-width: 1249px) and (min-width: 876px) {
+}
+
+@media screen and (max-width: 875px) and (min-width: 676px) {
+}
+
+@media screen and (max-width: 675px) and (min-width: 450px) {
+  .simple-link-title {
+    font-size: 0.8rem !important;
+    white-space: nowrap;
   }
-  
-  @media screen and (max-width: 1249px) and (min-width: md) {
-  }
-  
-  @media screen and (max-width: 875px) and (min-width: sm) {
-  }
-  
-  @media screen and (max-width: 675px) and (min-width: xs) {
-    .simple-link-title {
-        font-size: 0.8rem !important;
-        white-space: nowrap;
-    }
 }
 
 @media screen and (max-width: 449px) {
-    .simple-link-title {
-        white-space: nowrap;
-        font-size: 0.7rem !important;
-    }
+  .simple-link-title {
+    white-space: nowrap;
+    font-size: 0.7rem !important;
   }
+}

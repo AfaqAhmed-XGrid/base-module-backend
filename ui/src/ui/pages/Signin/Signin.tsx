@@ -121,7 +121,7 @@ const SignIn = () => {
               <p className="error-message">{passwordErrorMessage}</p>
             </div>
           </div>
-          <div className='flex-row-between'>
+          <div className='flex-row-between signin-margin'>
             <SimpleLink link={constants.pagelinks.signup} title='Dont have an account? Signup!' color='blue' />
             <button onClick={() => setIsModalOpen(!isModalOpen)} className='signin-text-btn' type='button'>
               Forgot Password?
