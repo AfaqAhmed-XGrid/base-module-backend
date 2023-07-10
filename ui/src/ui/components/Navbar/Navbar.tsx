@@ -1,70 +1,35 @@
 // Import packages
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 
 // Import react icons
 import { FaUserCircle } from 'react-icons/fa';
 import { BsFillInfoCircleFill } from 'react-icons/bs';
 import { AiOutlineLogout } from 'react-icons/ai';
 
-// Import rtk query
-import { useLogoutUserMutation } from '../../../store/api';
-
 // Import css
 import './Navbar.css';
 
-// Import custom hook
-import { useAuthStatus } from '../../../hooks/useAuthStatus';
-
-// Import type
-import { User } from '../../../app.types';
-
 const Navbar = () => {
-  // const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const authStatus = useAuthStatus();
-  const navigate = useNavigate();
 
-  const [logoutUser] = useLogoutUserMutation();
-
-  useEffect(() => {
-    const fetchProfileData = () => {
-      const { user } = authStatus;
-      setUser(user);
-    };
-    fetchProfileData();
-  }, [authStatus]);
+  const user: {email: string, displayName: string, profilePicture?: string} = {
+    email: 'afaq.ahmed@xgrid.co',
+    displayName: 'Afaq Ahmed',
+  };
 
   /**
    * Function logout user
    */
   const onLogout = async () => {
-    const res = await logoutUser(null);
-    const response =
-      'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
-
-    if (response.success) {
-      toast.success(`${response.message}`, {
-        duration: 3000,
-        position: 'bottom-center',
-        ariaProps: {
-          'role': 'status',
-          'aria-live': 'polite',
-        },
-      });
-      navigate('/signin');
-    } else {
-      toast.error(`${response.message}`, {
-        duration: 3000,
-        position: 'bottom-center',
-        ariaProps: {
-          'role': 'status',
-          'aria-live': 'polite',
-        },
-      });
-    }
+    toast.success('You are logged out successfully', {
+      duration: 3000,
+      position: 'bottom-center',
+      ariaProps: {
+        'role': 'status',
+        'aria-live': 'polite',
+      },
+    });
   };
 
   return (
@@ -94,7 +59,7 @@ const Navbar = () => {
           <div
             className="nav-profile-main-container"
             onClick={() => setShowProfile(false)}
-          ></div>
+          />
           <div className="nav-profile-container">
             {user?.profilePicture ? (
               <img
