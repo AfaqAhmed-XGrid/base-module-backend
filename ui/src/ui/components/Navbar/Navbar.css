@@ -84,7 +84,7 @@
   text-transform: capitalize;
 }
 
-.profile-info-button {
+.nav-info-button {
   background: transparent;
   text-transform: capitalize;
   width: 89%;
@@ -96,55 +96,45 @@
   margin-bottom: 0.4rem;
 }
 
-.profile-info-button-icon {
+.nav-info-button-icon {
   opacity: 60%;
   font-size: 1.2rem;
 }
 
-.hover {
+.nav-info-hover {
   width: 100%;
   margin: 0;
   padding: 0;
 }
 
-.profile-info-container {
-  height: 0;
+.nav-info-container {
+  max-height: 0;
   overflow: hidden;
-  transition: 0.3s ease;
+  transition: max-height 0.3s ease;
 }
 
-.table-head-column {
-  background-color: #DBE9E8;
-}
-
-.table-content-column {
-  background-color: #F6F6F6;
-  width: 100%;
-}
-
-.info-table td {
-  margin: 0.1rem 0;
-}
-
-.table-heading {
-  font-weight: 500 !important;
-  font-size: 0.9rem !important;
-}
-
-.table-content {
-  margin: 100rem;
-  padding: 1rem 0 !important;
-  font-weight: 300 !important;
-  font-size: 0.85rem !important;
-  width: 100%;
-}
-
-.profile-info-button:hover {
+.nav-info-button:hover {
   background-color: #EBEBEB;
 }
 
-.hover:hover .profile-info-container {
-  height: auto;
+.nav-info-hover:hover .nav-info-container {
+  max-height: 5rem;
+}
+
+.nav-info-table td {
+  padding: 0.5rem;
+  font-size: 0.85rem ;
+}
+
+.nav-info-table-heading {
+  font-weight: 500;
+  background-color: #DBE9E8;
+  text-transform: capitalize;
+}
+
+.nav-info-table-content {
+  background-color: #F6F6F6;
+  width: 100%;
 }
 
 @media screen and (min-width: 1440px) {

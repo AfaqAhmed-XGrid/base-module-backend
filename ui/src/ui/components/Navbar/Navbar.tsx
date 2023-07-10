@@ -13,10 +13,11 @@ import './Navbar.css';
 const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
 
-  const user: {email: string, displayName: string, profilePicture?: string} = {
-    email: 'afaq.ahmed@xgrid.co',
-    displayName: 'Afaq Ahmed',
-  };
+  const user: { email: string; displayName: string; profilePicture?: string } =
+    {
+      email: 'afaq.ahmed@xgrid.co',
+      displayName: 'Afaq Ahmed',
+    };
 
   /**
    * Function logout user
@@ -74,28 +75,26 @@ const Navbar = () => {
               />
             )}
             <p className="profile-displayName">{user?.displayName}</p>
-            <div className="hover">
-              <div className="profile-info-button">
-                <BsFillInfoCircleFill className="profile-info-button-icon" />
+            <div className="nav-info-hover">
+              <div className="nav-info-button">
+                <BsFillInfoCircleFill className="nav-info-button-icon" />
                 Info
               </div>
-              <div className="profile-info-container">
-                <table className='info-table'>
-                  <tr className='table-head-column'>
-                    <td className='table-heading'>Email: </td>
-                    <td className='table-content'>{user?.email}</td>
+              <div className="nav-info-container">
+                <table className='nav-info-table'>
+                  <tr>
+                    <td className='nav-info-table-heading'>Email</td>
+                    <td className='nav-info-table-content'>{user.email}</td>
                   </tr>
-                  <tr className='table-content-column'>
-                    <td className='table-heading'>Name: </td>
-                    <td className='table-content'>{user?.displayName}</td>
+                  <tr>
+                    <td className='nav-info-table-heading'>Name</td>
+                    <td className='nav-info-table-content'>{user.displayName}</td>
                   </tr>
                 </table>
               </div>
             </div>
-            <div className="profile-info-button" onClick={onLogout}>
-              <AiOutlineLogout
-                className="profile-info-button-icon"
-              />
+            <div className="nav-info-button" onClick={onLogout}>
+              <AiOutlineLogout className="nav-info-button-icon" />
               logout
             </div>
           </div>
