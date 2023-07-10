@@ -41,7 +41,7 @@ const PasswordField = ({
         <InputField
           title={title}
           id={id}
-          type='email'
+          type={showPassword ? 'text' : 'password'}
           value={value}
           placeHolder={placeHolder}
           Icon={Icon}

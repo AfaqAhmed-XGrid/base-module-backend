@@ -1,36 +1,72 @@
 // Import packages
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 // Import react icons
 import { FaUserCircle } from 'react-icons/fa';
 import { BsFillInfoCircleFill } from 'react-icons/bs';
 import { AiOutlineLogout } from 'react-icons/ai';
 
+// Import rtk query
+import { useCheckAuthStatusMutation, useLogoutUserMutation } from '../../../store/api';
+
+// Import type
+import { User } from '../../../app.model';
+
 // Import css
 import './Navbar.css';
 
 const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const navigate = useNavigate();
 
-  const user: { email: string; displayName: string; profilePicture?: string } =
-    {
-      email: 'afaq.ahmed@xgrid.co',
-      displayName: 'Afaq Ahmed',
+  const [checkAuthStatus] = useCheckAuthStatusMutation();
+  const [logoutUser] = useLogoutUserMutation();
+
+
+  useEffect(() => {
+    const fetchAuthStatus = async () => {
+      const res = await checkAuthStatus(null);
+      const response =
+        'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
+
+      if (response.success) {
+        setUser(response.data);
+      }
     };
+    fetchAuthStatus();
+  }, [checkAuthStatus]);
 
   /**
    * Function logout user
    */
   const onLogout = async () => {
-    toast.success('You are logged out successfully', {
-      duration: 3000,
-      position: 'bottom-center',
-      ariaProps: {
-        'role': 'status',
-        'aria-live': 'polite',
-      },
-    });
+    const res = await logoutUser(null);
+    const response =
+      'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
+
+    if (response.success) {
+      toast.success(`${response.message}`, {
+        duration: 3000,
+        position: 'bottom-center',
+        ariaProps: {
+          'role': 'status',
+          'aria-live': 'polite',
+        },
+      });
+      navigate('/signin');
+    } else {
+      toast.error(`${response.message}`, {
+        duration: 3000,
+        position: 'bottom-center',
+        ariaProps: {
+          'role': 'status',
+          'aria-live': 'polite',
+        },
+      });
+    }
   };
 
   return (
@@ -84,11 +120,11 @@ const Navbar = () => {
                 <table className='nav-info-table'>
                   <tr>
                     <td className='nav-info-table-heading'>Email</td>
-                    <td className='nav-info-table-content'>{user.email}</td>
+                    <td className='nav-info-table-content'>{user?.email}</td>
                   </tr>
                   <tr>
                     <td className='nav-info-table-heading'>Name</td>
-                    <td className='nav-info-table-content'>{user.displayName}</td>
+                    <td className='nav-info-table-content'>{user?.displayName}</td>
                   </tr>
                 </table>
               </div>

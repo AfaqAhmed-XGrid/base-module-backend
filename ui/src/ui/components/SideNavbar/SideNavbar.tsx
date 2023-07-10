@@ -1,6 +1,6 @@
 // Import package
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 // Import react icons
@@ -11,22 +11,44 @@ import {
   AiOutlineUsergroupAdd,
 } from 'react-icons/ai';
 
+// Import rtk query
+import { useLogoutUserMutation } from '../../../store/api';
+
 // Import css
 import './SideNavbar.css';
 
 const SideNavbar = () => {
+  const [logoutUser] = useLogoutUserMutation();
+  const navigate = useNavigate();
+
   /**
    * Function logout user
    */
   const onLogout = async () => {
-    toast.success('You are logged out successfully', {
-      duration: 3000,
-      position: 'bottom-center',
-      ariaProps: {
-        'role': 'status',
-        'aria-live': 'polite',
-      },
-    });
+    const res = await logoutUser(null);
+    const response =
+      'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
+
+    if (response.success) {
+      toast.success(`${response.message}`, {
+        duration: 3000,
+        position: 'bottom-center',
+        ariaProps: {
+          'role': 'status',
+          'aria-live': 'polite',
+        },
+      });
+      navigate('/signin');
+    } else {
+      toast.error(`${response.message}`, {
+        duration: 3000,
+        position: 'bottom-center',
+        ariaProps: {
+          'role': 'status',
+          'aria-live': 'polite',
+        },
+      });
+    }
   };
 
   const data = [

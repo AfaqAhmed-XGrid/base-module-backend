@@ -1,7 +1,7 @@
 // Import packages
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Route, Routes } from 'react-router';
+import { Route, Routes, useLocation } from 'react-router';
 
 // Import components
 import PrivateRoute from './ui/components/PrivateRoute';
@@ -21,10 +21,12 @@ import './App.css';
 
 
 const App = () => {
+  const location = useLocation();
+  const showNavbar = ['/dashboard', '/edit-profile', '/change-password', '/charts', '/users'].includes(location.pathname);
   return (
     <section>
-      <Navbar />
-      <SideNavbar />
+      {showNavbar && <Navbar />}
+      {showNavbar && <SideNavbar />}
       <Routes>
         <Route
           path={constants.pagelinks.dashbaord}
