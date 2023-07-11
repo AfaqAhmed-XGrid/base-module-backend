@@ -38,6 +38,24 @@ const constants = {
     google: 'http://localhost:4000/api/auth/google',
     github: 'http://localhost:4000/api/auth/github',
   },
+  recordsPerPage: [
+    {
+      key: '10',
+      value: 10,
+    },
+    {
+      key: '15',
+      value: 15,
+    },
+    {
+      key: '20',
+      value: 20,
+    },
+    {
+      key: '25',
+      value: 25,
+    },
+  ],
 };
 
 export default constants;

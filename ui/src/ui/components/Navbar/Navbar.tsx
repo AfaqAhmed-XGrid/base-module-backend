@@ -70,14 +70,15 @@ const Navbar = () => {
   };
 
   return (
-    <div className="nav-main-container">
-      <div style={{ backgroundColor: '#01645F' }}>
-        <img src="/assets/logo.png" alt="" className="logo" />
-      </div>
-      <h2 className="nav-title">
+    <>
+      <div className="nav-main-container">
+        <div style={{ backgroundColor: '#01645F' }}>
+          <img src="/assets/logo.png" alt="" className="logo" />
+        </div>
+        <h2 className="nav-title">
         Cine-Info: Connecting You to the Movie Universe
-      </h2>
-      {user?.profilePicture ? (
+        </h2>
+        {user?.profilePicture ? (
         <div onClick={() => setShowProfile(!showProfile)}>
           <img
             src={user?.profilePicture}
@@ -91,6 +92,7 @@ const Navbar = () => {
           onClick={() => setShowProfile(!showProfile)}
         />
       )}
+      </div>
       {showProfile && (
         <>
           <div
@@ -136,7 +138,7 @@ const Navbar = () => {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 

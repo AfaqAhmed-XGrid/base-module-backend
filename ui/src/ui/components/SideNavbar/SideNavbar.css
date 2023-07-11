@@ -1,10 +1,12 @@
 .side-nav-main-container {
   position: fixed;
-  min-height: 100vh;
+  height: 100%;
   background-color: #292A2C;
   width: 4.5rem;
   justify-content: flex-start;
   transition: width 0.3s ease;
+  top: 2.8rem;
+  z-index: 100;
 }
 
 .side-nav-items-list {
@@ -93,6 +95,7 @@
 @media screen and (min-width: 1440px) {
   .side-nav-main-container {
     width: 9rem;
+  top: 4.8rem;
   }
 
   .side-nav-main-container:hover {
@@ -126,7 +129,8 @@
 
 @media screen and (max-width: 449px) {
   .side-nav-main-container {
-    width: 3.5rem;
+    width: 3.45rem;
+  top: 1.7rem;
   }
 
   .side-nav-main-container:hover {

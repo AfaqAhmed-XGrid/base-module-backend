@@ -1,6 +1,9 @@
 // Package import
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+// Import buildqueryparam function
+import buildQueryParams from '../services/buildQueryParams';
+
 // Constant import
 import constants from '../app.constants';
 
@@ -63,6 +66,13 @@ const api = createApi({
         credentials: 'include',
       }),
     }),
+    getMovies: builder.mutation({
+      query: (params) => ({
+        url: constants.movie + '/getallmovies' + buildQueryParams(params),
+        method: constants.httpMethods.get,
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 export { api };
@@ -75,4 +85,5 @@ export const {
   useChangePasswordMutation,
   useLogoutUserMutation,
   useCheckAuthStatusMutation,
+  useGetMoviesMutation,
 } = api;
