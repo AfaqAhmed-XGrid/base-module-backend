@@ -141,11 +141,11 @@ const Dashboard = () => {
                       <tr key={ind}>
                         <td>{movieItem.title}</td>
                         <td>
-                          {movieItem.releaseDate?.toString().slice(0, 10)}
+                          {movieItem.releaseDate?.toString().slice(0, 10) || 'Not Available'}
                         </td>
-                        <td>{movieItem.productionBudget}</td>
-                        <td>{movieItem.domesticGross}</td>
-                        <td>{movieItem.worldWideGross}</td>
+                        <td>{movieItem.productionBudget || 'Not Available'}</td>
+                        <td>{movieItem.domesticGross || 'Not Available'}</td>
+                        <td>{movieItem.worldWideGross || 'Not Available'}</td>
                       </tr>
                     ))
                   ) : (
