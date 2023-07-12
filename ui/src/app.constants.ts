@@ -3,6 +3,13 @@ const constants = {
   user: 'user',
   movie: 'movie',
   auth: 'auth',
+  dummyUser: {
+    email: 'afaq.ahmed@xgrid.com',
+    displayName: 'Afaq Ahmed',
+  },
+  paths: {
+    logo: '/assets/logo.png',
+  },
 };
 
 export default constants;

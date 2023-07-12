@@ -1,9 +1,16 @@
+// Import packages
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+
+// Import report web vitals
+import reportWebVitals from './reportWebVitals';
+
+// Import App page
+import App from './App';
+
+// Import css
+import './index.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

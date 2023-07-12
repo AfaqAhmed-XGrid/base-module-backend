@@ -1,11 +1,16 @@
 // Import packages
 import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
 
 // Import react icons
 import { FaUserCircle } from 'react-icons/fa';
 import { BsFillInfoCircleFill } from 'react-icons/bs';
 import { AiOutlineLogout } from 'react-icons/ai';
+
+// Import constants
+import constants from '../../../app.constants';
+
+// Import components
+import showToast from '../showToast';
 
 // Import css
 import './Navbar.css';
@@ -15,28 +20,21 @@ const Navbar = () => {
 
   const user: { email: string; displayName: string; profilePicture?: string } =
     {
-      email: 'afaq.ahmed@xgrid.co',
-      displayName: 'Afaq Ahmed',
+      email: constants.dummyUser.email,
+      displayName: constants.dummyUser.displayName,
     };
 
   /**
    * Function logout user
    */
   const onLogout = async () => {
-    toast.success('You are logged out successfully', {
-      duration: 3000,
-      position: 'bottom-center',
-      ariaProps: {
-        'role': 'status',
-        'aria-live': 'polite',
-      },
-    });
+    showToast({ message: 'You are logged out successfully', type: 'success' });
   };
 
   return (
     <div className="nav-main-container">
-      <div style={{ backgroundColor: '#01645F' }}>
-        <img src="/assets/logo.png" alt="" className="logo" />
+      <div className='logo-container'>
+        <img src={constants.paths.logo} alt="" className="logo" />
       </div>
       <h2 className="nav-title">
         Cine-Info: Connecting You to the Movie Universe

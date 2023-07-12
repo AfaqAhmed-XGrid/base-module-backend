@@ -1,7 +1,7 @@
 .side-nav-main-container {
   position: fixed;
-  height: 100%;
-  background-color: #292A2C;
+  min-height: 100vh;
+  background-color: var(--side-nav-bg-color);
   width: 4.5rem;
   justify-content: flex-start;
   transition: width 0.3s ease;
@@ -16,12 +16,17 @@
 }
 
 .side-nav-item {
-  color: white;
-  margin: 0.6rem 0 0.6rem 0rem;
+  color: var(--side-nav-text-color);
+  text-decoration-line: none !important;
   padding: 0.8rem 0 0.8rem 1.1rem;
+  margin: 0.6rem 0 0.6rem 0rem;
+}
+
+.test {
   display: flex;
   align-items: center;
-  text-decoration-line: none !important;
+  width: 100%;
+  height: 100%;
 }
 
 .side-nav-item-icon {
@@ -49,11 +54,11 @@
 }
 
 .side-nav-item:hover {
-  background-color: #B2BEB5;
+  background-color: var(--side-nav-item-hover-bg-color);
 }
 
 .side-nav-sub-menu {
-  background-color: #B2BEB5;
+  background-color: var(--side-nav-sub-menu-bg-color);
   position: absolute;
   top: 0rem;
   left: 10rem;
@@ -66,10 +71,35 @@
   visibility: hidden;
 }
 
+.side-nav-sub-menu-mobile {
+  max-height: 0;
+  overflow: hidden;
+  background-color: var(--side-nav-sub-menu-bg-color);
+  transition: 0.3s ease;
+  padding-left: 1rem;
+}
+
+.side-nav-sub-menu-item-mobile {
+  white-space: nowrap;
+  display: block !important;
+  font-size: 0.75rem !important;
+  color: var(--side-nav-text-color) !important;
+  text-decoration-line: underline !important;
+  margin-top: 0.6rem !important;
+  padding: 0 !important;
+  text-transform: capitalize;
+  background: none !important;
+  border: none !important;
+}
+
 .side-nav-item:hover .side-nav-sub-menu {
   visibility: visible;
   width: 11rem;
-  background-color: #B2BEB5;
+}
+
+.side-nav-item:hover .side-nav-sub-menu-mobile {
+  max-height: 6rem;
+  padding-bottom: 0.4rem;
 }
 
 .side-nav-sub-menu-item {
@@ -78,7 +108,7 @@
   cursor: pointer;
   margin: 1.6rem 0;
   display: block;
-  color: white;
+  color: var(--side-nav-sub-item-text-color);
   text-decoration-line: none;
   border: none;
   background: none;
@@ -95,7 +125,7 @@
 @media screen and (min-width: 1440px) {
   .side-nav-main-container {
     width: 9rem;
-  top: 4.8rem;
+    top: 4.8rem;
   }
 
   .side-nav-main-container:hover {
@@ -129,8 +159,8 @@
 
 @media screen and (max-width: 449px) {
   .side-nav-main-container {
-    width: 3.45rem;
-  top: 1.7rem;
+    width: 3rem;
+    top: 1.7rem;
   }
 
   .side-nav-main-container:hover {
@@ -138,11 +168,11 @@
   }
 
   .side-nav-item {
-    padding: 0.8rem 0 0.8rem 1rem;
+    padding: 0rem 0 0rem 0.85rem;
   }
 
   .side-nav-item-icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .side-nav-item-title {

@@ -17,15 +17,15 @@
   height: 100%;
   padding: 0 2.5rem;
   border-radius: 0.4rem;
-  background-color: white;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  background-color: var(--form-container-bg-color);
+  box-shadow: var(--form-container-shadow-color-one) 0rem 0.375rem 0.75rem -0.125rem,
+    var(--form-container-shadow-color-two ) 0rem 0.188rem 0.438rem -0.188rem;
 }
 
 .form-title {
   text-transform: uppercase;
   font-size: 1.6rem !important;
-  letter-spacing: 2px !important;
+  letter-spacing: 0.125rem !important;
   text-align: center;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .border-test {
-  border: 1px solid black
+  border: 0.063rem solid var(--border-test-color);
 }
 
 a {
@@ -103,7 +103,7 @@ button {
 }
 
 .error-message-icon {
-  color: red !important;
+  color: var(--form-validation-error-message) !important;
   font-size: 1rem;
   
 }
@@ -117,7 +117,7 @@ button {
 }
 
 .error-message {
-  color: red !important;
+  color: var(--form-validation-error-message) !important;
   font-size: 0.8rem;
   white-space: nowrap;
 }

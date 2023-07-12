@@ -1,7 +1,6 @@
 // Import package
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
 
 // Import react icons
 import {
@@ -11,22 +10,22 @@ import {
   AiOutlineUsergroupAdd,
 } from 'react-icons/ai';
 
+// Import components
+import showToast from '../showToast';
+
 // Import css
 import './SideNavbar.css';
 
 const SideNavbar = () => {
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
+  useEffect(() => {
+    setIsMobileScreen(window.innerWidth < 500);
+  }, []);
   /**
    * Function logout user
    */
   const onLogout = async () => {
-    toast.success('You are logged out successfully', {
-      duration: 3000,
-      position: 'bottom-center',
-      ariaProps: {
-        'role': 'status',
-        'aria-live': 'polite',
-      },
-    });
+    showToast({ message: 'You are logged out successfully', type: 'success' });
   };
 
   const data = [
@@ -62,34 +61,36 @@ const SideNavbar = () => {
         data.map((navItem, ind) => (
           <div key={ind} className="side-nav-items-list">
             {navItem?.mainLink ? (
-                <Link to={navItem.mainLink} className="side-nav-item">
+              <Link to={navItem.mainLink} className="side-nav-item">
+                <div className='test'>
                   <navItem.Icon className="side-nav-item-icon" />
-                  <p className="side-nav-item-title">
-                    {navItem.title}
-                  </p>
-                </Link>
+                  <p className="side-nav-item-title">{navItem.title}</p>
+                </div>
+              </Link>
             ) : (
               <div className="side-nav-item">
-                <navItem.Icon className="side-nav-item-icon" />
-                <p className="side-nav-item-title">{navItem.title}</p>
-                <div className="side-nav-sub-menu">
+                <div className='test'>
+                  <navItem.Icon className="side-nav-item-icon" />
+                  <p className="side-nav-item-title">{navItem.title}</p>
+                </div>
+                <div className={`${isMobileScreen? 'side-nav-sub-menu-mobile' : 'side-nav-sub-menu'}`}>
                   {navItem?.subLinks?.map((navSubItem, subInd) => (
                     <div key={subInd}>
                       {navSubItem?.link ? (
-                    <Link
-                      to={navSubItem?.link}
-                      className="side-nav-sub-menu-item"
-                    >
-                      {navSubItem.title}
-                    </Link>
-                  ) : (
-                    <button
-                      onClick={navSubItem?.onClick}
-                      className="side-nav-sub-menu-item"
-                    >
-                      {navSubItem.title}
-                    </button>
-                  )}
+                        <Link
+                          to={navSubItem?.link}
+                          className={`${isMobileScreen? 'side-nav-sub-menu-item-mobile' : 'side-nav-sub-menu-item'}`}
+                        >
+                          {navSubItem.title}
+                        </Link>
+                      ) : (
+                        <button
+                          onClick={navSubItem?.onClick}
+                          className={`${isMobileScreen? 'side-nav-sub-menu-item-mobile' : 'side-nav-sub-menu-item'}`}
+                        >
+                          {navSubItem.title}
+                        </button>
+                      )}
                     </div>
                   ))}
                 </div>
