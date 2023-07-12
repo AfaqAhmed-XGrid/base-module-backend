@@ -66,7 +66,7 @@ const Dashboard = () => {
             data
           </p>
           <div className="dashboard-query-container">
-            <div style={{ whiteSpace: 'nowrap' }}>
+            <div className='dashboard-input-fields-container'>
               <input
                 type="text"
                 id="search"
