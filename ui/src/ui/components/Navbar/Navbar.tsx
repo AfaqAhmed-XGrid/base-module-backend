@@ -1,84 +1,45 @@
 // Import packages
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router';
+import React, { useState } from 'react';
 
 // Import react icons
 import { FaUserCircle } from 'react-icons/fa';
 import { BsFillInfoCircleFill } from 'react-icons/bs';
 import { AiOutlineLogout } from 'react-icons/ai';
 
-// Import rtk query
-import { useCheckAuthStatusMutation, useLogoutUserMutation } from '../../../store/api';
+// Import constants
+import constants from '../../../app.constants';
 
-// Import type
-import { User } from '../../../app.model';
+// Import components
+import showToast from '../showToast';
 
 // Import css
 import './Navbar.css';
 
 const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const navigate = useNavigate();
 
-  const [checkAuthStatus] = useCheckAuthStatusMutation();
-  const [logoutUser] = useLogoutUserMutation();
-
-
-  useEffect(() => {
-    const fetchAuthStatus = async () => {
-      const res = await checkAuthStatus(null);
-      const response =
-        'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
-
-      if (response.success) {
-        setUser(response.data);
-      }
+  const user: { email: string; displayName: string; profilePicture?: string } =
+    {
+      email: constants.dummyUser.email,
+      displayName: constants.dummyUser.displayName,
     };
-    fetchAuthStatus();
-  }, [checkAuthStatus]);
 
   /**
    * Function logout user
    */
   const onLogout = async () => {
-    const res = await logoutUser(null);
-    const response =
-      'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
-
-    if (response.success) {
-      toast.success(`${response.message}`, {
-        duration: 3000,
-        position: 'bottom-center',
-        ariaProps: {
-          'role': 'status',
-          'aria-live': 'polite',
-        },
-      });
-      navigate('/signin');
-    } else {
-      toast.error(`${response.message}`, {
-        duration: 3000,
-        position: 'bottom-center',
-        ariaProps: {
-          'role': 'status',
-          'aria-live': 'polite',
-        },
-      });
-    }
+    showToast({ message: 'You are logged out successfully', type: 'success' });
   };
 
   return (
-    <>
-      <div className="nav-main-container">
-        <div style={{ backgroundColor: '#01645F' }}>
-          <img src="/assets/logo.png" alt="" className="logo" />
-        </div>
-        <h2 className="nav-title">
+    <div className="nav-main-container">
+      <div className='logo-container'>
+        <img src={constants.paths.logo} alt="" className="logo" />
+      </div>
+      <h2 className="nav-title">
         Cine-Info: Connecting You to the Movie Universe
-        </h2>
-        {user?.profilePicture ? (
+      </h2>
+      {user?.profilePicture ? (
         <div onClick={() => setShowProfile(!showProfile)}>
           <img
             src={user?.profilePicture}
@@ -92,7 +53,6 @@ const Navbar = () => {
           onClick={() => setShowProfile(!showProfile)}
         />
       )}
-      </div>
       {showProfile && (
         <>
           <div
@@ -122,11 +82,11 @@ const Navbar = () => {
                 <table className='nav-info-table'>
                   <tr>
                     <td className='nav-info-table-heading'>Email</td>
-                    <td className='nav-info-table-content'>{user?.email}</td>
+                    <td className='nav-info-table-content'>{user.email}</td>
                   </tr>
                   <tr>
                     <td className='nav-info-table-heading'>Name</td>
-                    <td className='nav-info-table-content'>{user?.displayName}</td>
+                    <td className='nav-info-table-content'>{user.displayName}</td>
                   </tr>
                 </table>
               </div>
@@ -138,7 +98,7 @@ const Navbar = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

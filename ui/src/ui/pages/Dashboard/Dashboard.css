@@ -106,7 +106,19 @@
 
 .dashboard-table-container {
   width: 100%;
+  overflow-x: scroll;
+  scrollbar-width: 0 !important;
+  scrollbar-color: transparent !important;
 }
+
+.dashboard-table {
+  width: 100%;
+  display: table;
+  padding: 0 0 8em 0;
+  overflow: scroll;
+  padding-bottom: 2rem !important;
+}
+
 
 .dashboard-table th h1 {
   font-weight: bold;
@@ -121,14 +133,6 @@
   font-size: 0.85em;
   box-shadow: 0 2px 2px -2px #0e1119;
   text-align: center;
-}
-
-.dashboard-table {
-  width: 100%;
-  display: table;
-  padding: 0 0 8em 0;
-  overflow: scroll;
-  padding-bottom: 2rem !important;
 }
 
 .dashboard-table td,
