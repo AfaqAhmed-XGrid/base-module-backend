@@ -1,12 +1,25 @@
+/* Copyright (c) 2023, Xgrid Inc, http://xgrid.co
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
 .nav-main-container {
   box-shadow: var(--navbar-shadow-color) 0rem 0.188rem 0.5rem;
-  position: relative;
   background-color: var(--top-navbar-bg-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 10000000 !important;
   position: fixed;
+  z-index: 2 !important;
   width: 100%;
 }
 
@@ -42,11 +55,11 @@
 
 .nav-profile-main-container {
   position: fixed;
-  top: 0;
+  top: 2.9rem;
   width: 100vw !important;
   height: 100vh !important;
   background-color: var(--navbar-profile-info-parent-color);
-  z-index: 1;
+  z-index: 0;
 }
 
 .nav-profile-container {
@@ -161,6 +174,15 @@
     font-size: 3.3rem;
     margin-right: 2rem;
   }
+
+  .nav-profile-container {
+    top: 4.9rem;
+    max-width: 23rem;
+  }
+
+  .nav-profile-main-container {
+    top: 4.9rem;
+  }
 }
 
 @media screen and (max-width: 674px) and (min-width: 450px) {
@@ -177,5 +199,16 @@
   .logo {
     width: 3rem;
     padding: 0.5rem 0;
+  }
+
+  .nav-profile-container {
+    top: 2.5rem;
+    max-width: 15.5rem;
+    overflow-y: scroll;
+    min-height: 100% !important;
+  }
+
+  .nav-profile-main-container {
+    top: 2.5rem;
   }
 }
