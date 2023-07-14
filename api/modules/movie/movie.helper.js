@@ -11,10 +11,10 @@ const constructPagination = (req) => {
 };
 
 /**
- * Function to cosntruct search query
- * @param {Object} req
- * @return {Object}
- */
+   * Function to cosntruct search query
+   * @param {Object} req
+   * @return {Object}
+   */
 const constructsearchquery = (req) => {
   const search = req.query.search || {};
   const searchQuery = req.query && req.query.search ? { title: { $regex: search, $options: 'i' } } : {};
@@ -23,30 +23,34 @@ const constructsearchquery = (req) => {
 };
 
 /**
- * Function to cosntruct filter query
- * @param {Object} req
- * @return {Object}
- */
+   * Function to cosntruct filter query
+   * @param {Object} req
+   * @return {Object}
+   */
 const constructFilterQueryObj = (req) => {
   const queryObj = { ...req.query };
+
   const excludedFields = ['pageNo', 'limit', 'search', 'sort'];
-  excludedFields.forEach((queryElement) => delete queryObj[queryElement]);
+  const filteringFields = Object.keys(queryObj).filter((field) => !excludedFields.includes(field));
 
-  const filteringField = '$' + Object.keys(queryObj)[0];
+  if (filteringFields.length === 0) {
+    return { filteringConditions: null, filteringValues: null, filteringFields: null };
+  }
 
-  if (filteringField.includes('undefined')) return { filteringCondition: null, filteringValue: null, filteringField: null };
+  const filterObj = filteringFields.flatMap((field) => {
+    return Object.entries(queryObj[field]).map(([key, value]) => ({
+      [key]: ['$' + field, Number(value)],
+    }));
+  });
 
-  const filteringCondition = Object.keys(queryObj[filteringField.slice(1)])[0];
-  const filteringValue = queryObj[filteringField.slice(1)][filteringCondition];
-
-  return { filteringCondition, filteringValue, filteringField };
+  return filterObj;
 };
 
 /**
- * Function construct the sorting query
- * @param {Object} req
- * @return {Object}
- */
+   * Function construct the sorting query
+   * @param {Object} req
+   * @return {Object}
+   */
 const constructSorting = (req) => {
   const sort = req.query.sort ? req.query.sort.split(',').join(' ') : ('-releaseDate');
   const sortingField = sort.slice(1);

@@ -23,7 +23,7 @@ const getAllMovies = async (req, res) => {
   logger.info(' Started getting movies data');
 
   // Filtering
-  const { filteringCondition, filteringValue, filteringField } = constructFilterQueryObj(req);
+  const filterObj = constructFilterQueryObj(req);
 
   // Searching
   const searchQuery = constructsearchquery(req);
@@ -41,7 +41,7 @@ const getAllMovies = async (req, res) => {
             $and: [
               { ...searchQuery },
               { $expr: {
-                [filteringCondition]: [filteringField, Number(filteringValue)],
+                $and: filterObj,
               },
               },
             ],
