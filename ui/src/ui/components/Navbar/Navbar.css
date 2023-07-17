@@ -1,0 +1,214 @@
+/* Copyright (c) 2023, Xgrid Inc, http://xgrid.co
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. */
+
+.nav-main-container {
+  box-shadow: var(--navbar-shadow-color) 0rem 0.188rem 0.5rem;
+  background-color: var(--top-navbar-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 2 !important;
+  width: 100%;
+}
+
+.logo {
+  width: 4.5rem;
+  padding: 0.5rem 0;
+}
+
+.logo-container {
+  background-color: var(--logo-bg-color);
+}
+
+.nav-profile-image {
+  border-radius: 62.5rem;
+  width: 2.2rem;
+  cursor: pointer;
+  margin-right: 1.2rem;
+}
+
+.nav-profile-icon {
+  font-size: 1.75rem;
+  margin-right: 1.2rem;
+  cursor: pointer;
+}
+
+.nav-title {
+  text-transform: uppercase;
+  margin: 0 !important;
+  color: var(--navbar-title-color);
+  font-weight: 500 !important;
+  font-size: 1rem;
+}
+
+.nav-profile-main-container {
+  position: fixed;
+  top: 2.9rem;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: var(--navbar-profile-info-parent-color);
+  z-index: 0;
+}
+
+.nav-profile-container {
+  position: fixed;
+  z-index: 2;
+  top: 2.9rem;
+  right: 0;
+  max-width: 17rem;
+  width: 100%;
+  padding: 2rem 0;
+  height: 100%;
+  background-color: var(--navbar-profile-info-bg-color) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-image {
+  border-radius: 62.5rem;
+  width: 8rem;
+  padding: 0.2rem;
+  cursor: pointer;
+  border: 0.125rem solid var(--navbar-profile-image-border-color);
+}
+
+.profile-icon {
+  font-size: 11.5rem;
+  opacity: 20%;
+  border-radius: 62.5rem;
+  border: 0.063rem solid var(--navbar-profile-image-border-color);
+}
+
+.profile-displayName {
+  color: var(--navbar-profile-info-username-color);
+  font-weight: 600;
+  letter-spacing: 0.063rem;
+  margin: 1rem 0 !important;
+  padding: 0 !important;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+}
+
+.nav-info-button {
+  background: transparent;
+  text-transform: capitalize;
+  width: 89%;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  cursor: pointer;
+  margin-bottom: 0.4rem;
+}
+
+.nav-info-button-icon {
+  opacity: 60%;
+  font-size: 1.2rem;
+}
+
+.nav-info-hover {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-info-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.nav-info-button:hover {
+  background-color: var(--navbar-profile-info-button-hover-bg-color);
+}
+
+.nav-info-hover:hover .nav-info-container {
+  max-height: 5rem;
+}
+
+.nav-info-table td {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.nav-info-table-heading {
+  font-weight: 500;
+  background-color: var(--navbar-profile-info-heading-bg-color);
+  text-transform: capitalize;
+}
+
+.nav-info-table-content {
+  background-color: var(--navbar-profile-info-content-bg-color);
+  width: 100%;
+}
+
+@media screen and (min-width: 1440px) {
+  .nav-title {
+    font-size: 1.8rem;
+  }
+
+  .logo {
+    width: 9rem;
+    padding: 0.7rem 0;
+  }
+
+  .nav-profile-image {
+    width: 3.8rem;
+    margin-right: 2rem;
+  }
+
+  .nav-profile-icon {
+    font-size: 3.3rem;
+    margin-right: 2rem;
+  }
+
+  .nav-profile-container {
+    top: 4.9rem;
+    max-width: 23rem;
+  }
+
+  .nav-profile-main-container {
+    top: 4.9rem;
+  }
+}
+
+@media screen and (max-width: 674px) and (min-width: 450px) {
+  .nav-title {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .nav-title {
+    display: none;
+  }
+
+  .logo {
+    width: 3rem;
+    padding: 0.5rem 0;
+  }
+
+  .nav-profile-container {
+    top: 2.5rem;
+    max-width: 15.5rem;
+    overflow-y: scroll;
+    min-height: 100% !important;
+  }
+
+  .nav-profile-main-container {
+    top: 2.5rem;
+  }
+}

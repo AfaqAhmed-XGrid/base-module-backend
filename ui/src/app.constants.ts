@@ -14,25 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// npm modules
-const swaggerAutogen = require( 'swagger-autogen' )();
-
-// App dependencies
-const outputFile = './swagger.json';
-const endpointsFiles = ['./modules/auth/auth.route.js'];
-
-const doc = {
-  'info': {
-    'version': '1.0.0',
-    'title': 'My User Project CRUD',
-    'description': 'My User Project Application API',
-    'license': {
-      'name': 'MIT',
-      'url': 'https://opensource.org/licenses/MIT',
-    },
+const constants = {
+  apiUrl: 'http://localhost:4000/api/',
+  user: 'user',
+  movie: 'movie',
+  auth: 'auth',
+  dummyUser: {
+    email: 'afaq.ahmed@xgrid.com',
+    displayName: 'Afaq Ahmed',
   },
-  'host': 'localhost:4000',
-  'basePath': '/api/user',
+  paths: {
+    logo: '/assets/logo.png',
+  },
 };
 
-swaggerAutogen( outputFile, endpointsFiles, doc );
+export default constants;

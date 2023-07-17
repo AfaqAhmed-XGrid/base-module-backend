@@ -1,0 +1,40 @@
+/*
+Copyright (c) 2023, Xgrid Inc, http://xgrid.co
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+:root {
+    --app-bg-color: #E2E5E7;
+    --top-navbar-bg-color: white;
+    --logo-bg-color: #01645f;
+    --navbar-title-color: #d3d3d3;
+    --navbar-shadow-color: rgba(0, 0, 0, 0.24);
+    --navbar-profile-info-parent-color: rgba(0, 0, 0, 0.4);
+    --navbar-profile-info-bg-color: white;
+    --navbar-profile-info-username-color: #888080;
+    --navbar-profile-info-button-hover-bg-color: #ebebeb;
+    --navbar-profile-info-heading-bg-color: #dbe9e8;
+    --navbar-profile-info-content-bg-color: #f6f6f6;
+    --navbar-profile-image-border-color: #00645f;
+    --side-nav-bg-color: #1d1f22;
+    --side-nav-text-color: white;
+    --side-nav-item-hover-bg-color: #b2beb5;
+    --side-nav-sub-menu-bg-color: #b2beb5;
+    --side-nav-sub-item-text-color: white;
+    --form-container-bg-color: white;
+    --form-validation-error-message: red;
+    --form-container-shadow-color-one: rgba(50, 50, 93, 0.25);
+    --form-container-shadow-color-two: rgba(0, 0, 0, 0.3);
+    --border-test-color: black;
+}

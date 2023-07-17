@@ -14,25 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// npm modules
-const swaggerAutogen = require( 'swagger-autogen' )();
+// Import package
+import { toast } from 'react-hot-toast';
 
-// App dependencies
-const outputFile = './swagger.json';
-const endpointsFiles = ['./modules/auth/auth.route.js'];
-
-const doc = {
-  'info': {
-    'version': '1.0.0',
-    'title': 'My User Project CRUD',
-    'description': 'My User Project Application API',
-    'license': {
-      'name': 'MIT',
-      'url': 'https://opensource.org/licenses/MIT',
+const showToast = ({ message, type }: {message: string, type: 'success' | 'error'}) => {
+  if (type === 'error') {
+    toast.error(message, {
+      duration: 3000,
+      position: 'bottom-center',
+      ariaProps: {
+        'role': 'status',
+        'aria-live': 'polite',
+      },
+    });
+    return;
+  }
+  toast.success(message, {
+    duration: 3000,
+    position: 'bottom-center',
+    ariaProps: {
+      'role': 'status',
+      'aria-live': 'polite',
     },
-  },
-  'host': 'localhost:4000',
-  'basePath': '/api/user',
+  });
+  return;
 };
 
-swaggerAutogen( outputFile, endpointsFiles, doc );
+export default showToast;
