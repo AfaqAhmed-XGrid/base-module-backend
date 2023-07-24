@@ -12,6 +12,7 @@ import SideNavbar from './ui/components/SideNavbar/SideNavbar';
 import Signin from './ui/pages/SignIn/SignIn';
 import Signup from './ui/pages/SignUp/SignUp';
 import Dashboard from './ui/pages/Dashboard/Dashboard';
+import EditProfile from './ui/pages/EditProfile/EditProfile';
 
 // Import constants
 import constants from './app.constants';
@@ -35,6 +36,10 @@ const App = () => {
         <Route
           path={constants.pagelinks.home}
           element={<PrivateRoute Component={Dashboard} />}
+        />
+        <Route
+          path={constants.pagelinks.editProfile}
+          element={<PrivateRoute Component={EditProfile} />}
         />
         <Route path={constants.pagelinks.signin} element=<Signin /> />
         <Route path={constants.pagelinks.signup} element=<Signup /> />

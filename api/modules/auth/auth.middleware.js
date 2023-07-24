@@ -1,5 +1,7 @@
 // Package imports
 const passport = require('passport');
+const { body, param, query, validationResult } = require('express-validator');
+
 
 // Constant imports
 const authConstants = require('./auth.constants');
@@ -154,4 +156,10 @@ const logout = (req, res, next) => {
   });
 };
 
-module.exports = { isAuthenticated, login, signup, google, github, logout };
+module.exports = {
+  isAuthenticated, login, signup, google, github, logout,
+  validateLogIn: [
+    body('email').isEmail().withMessage('Email is required.'),
+    query('test').isNumeric().withMessage('Validation error. Not a number'),
+  ],
+};

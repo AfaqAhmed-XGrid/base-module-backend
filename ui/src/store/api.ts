@@ -68,7 +68,14 @@ const api = createApi({
     }),
     getMovies: builder.mutation({
       query: (params) => ({
-        url: constants.movie + '/getallmovies' + buildQueryParams(params),
+        url: constants.movie + '/get-all-movies' + buildQueryParams(params),
+        method: constants.httpMethods.get,
+        credentials: 'include',
+      }),
+    }),
+    getGraphData: builder.mutation({
+      query: () => ({
+        url: constants.movie + '/get-graph-data',
         method: constants.httpMethods.get,
         credentials: 'include',
       }),
@@ -86,4 +93,5 @@ export const {
   useLogoutUserMutation,
   useCheckAuthStatusMutation,
   useGetMoviesMutation,
+  useGetGraphDataMutation,
 } = api;

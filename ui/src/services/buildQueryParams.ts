@@ -8,13 +8,14 @@ const buildQueryParams = (params: Record<string, string | number>) => {
       .map((key) => {
         const value = params[key];
         if (value !== undefined) {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+          return `${key}=${value}`;
         }
         return '';
       })
       .filter((param) => param !== '')
       .join('&');
 
+  console.log(query);
   return query ? `?${query}` : '';
 };
 

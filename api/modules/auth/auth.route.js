@@ -13,6 +13,8 @@ const router = express.Router();
 router.post(
     '/login',
     authMiddleware.login,
+    authMiddleware.validateLogIn,
+    
     authController.login,
 );
 

@@ -1,0 +1,258 @@
+.data-table-main-container {
+  background-color: white;
+  margin: 1rem;
+  padding: 2rem 1rem;
+  border-radius: 1rem;
+}
+
+.data-input-main-container {
+  padding: 0 2rem;
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  align-items: center;
+  justify-content: space-between;
+}
+
+.data-input-main-container > div {
+  width: 100%;
+}
+
+.data-input-fields-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  white-space: nowrap;
+  gap: 1rem;
+}
+
+.data-input-title {
+  font-size: 0.9rem !important;
+}
+
+.data-input-field {
+  max-width: 300px !important;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.data-input-field:focus {
+  max-width: 300px !important;
+  width: 100%;
+  padding: 0.5rem;
+  background: white;
+  border: 1px solid gray;
+}
+
+.data-non-input-container {
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.data-filter-button {
+  background-color: blue;
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.data-table-container {
+  width: 100%;
+  scrollbar-width: 0 !important;
+  scrollbar-color: transparent !important;
+  overflow-x: hidden;
+  margin-bottom: 2rem !important;
+}
+
+.data-table {
+  width: 100%;
+  display: table;
+}
+
+.data-table th {
+  background-color: white;
+}
+
+.data-table th h1 {
+  font-weight: bold;
+  font-size: 0.9em;
+  color: black;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.heading-icons-container {
+  display: flex;
+  font-size: 0.8rem;
+  color: cadetblue;
+}
+
+.data-table td {
+  font-weight: normal;
+  font-size: 0.85em;
+  box-shadow: 0 2px 2px -2px #0e1119;
+  text-align: center;
+  margin: 0 !important;
+  padding: 0.8rem 0;
+}
+
+.data-table td,
+.data-table th {
+  border: 1px solid #E9ECEF !important;
+}
+
+.data-table tr:nth-child(odd) {
+  background-color: #F0F8FF;
+  border: none !important;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: white;
+}
+
+.data-table td:first-child {
+  color: red;
+}
+
+.data-table tr:hover {
+  background-color: #B2FFFF;
+  box-shadow: 0 6px 6px -6px #0e1119;
+}
+
+.data-pagination-key {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0rem !important;
+  margin: 0rem !important;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.data-pagination-key li {
+  border: 1px solid #d3d3d3;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  color: blue;
+  white-space: nowrap;
+}
+
+.data-pagination-key li:hover {
+  background-color: #d3d3d3;
+}
+
+@media screen and (max-width: 1130px) {
+  .data-input-main-container {
+    grid-template-columns: repeat(1, minmax(100px, 1fr));
+  }
+  .data-non-input-container {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .data-input-fields-container {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 875px) and (min-width: 676px) {
+  .data-table th h1 {
+    font-size: 0.7em;
+  }
+
+  .data-table td {
+    font-size: 0.65em;
+  }
+}
+
+@media screen and (max-width: 675px) and (min-width: 450px) {
+  .data-table th h1 {
+    font-size: 0.6em;
+  }
+  .data-table td {
+    font-size: 0.55em;
+  }
+  .data-non-input-container {
+    font-size: 0.8rem !important;
+  }
+}
+
+@media screen and (max-width: 449px) {
+  .data-input-main-container {
+    padding: 0;
+  }
+  .data-input-fields-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .data-filter-button {
+    gap: 0.3rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+  }
+  .data-input-field {
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 0.75rem !important;
+  }
+  .data-input-title {
+    font-size: 0.75rem !important;
+  }
+  .data-table-container {
+    overflow-x: scroll !important;
+  }
+  .data-table {
+    padding-bottom: 1rem !important;
+  }
+  .data-table th {
+    padding: 0 0.2rem;
+  }
+  .data-table th h1 {
+    font-weight: 500;
+    font-size: 0.65rem;
+    white-space: pre-line;
+  }
+  .heading {
+    justify-content: space-between;
+    gap: 0.7rem !important;
+  }
+  .heading-icons-container {
+    font-size: 0.5rem;
+  }
+  .data-table td {
+    font-size: 0.6rem;
+    box-shadow: 0 2px 2px -2px #0e1119;
+    text-align: center;
+    margin: 0 !important;
+    padding: 0.6rem 0.15rem;
+  }
+  .data-pagination-key {
+    font-size: 0.55rem !important;
+    overflow-x: scroll !important;
+    justify-content: center;
+    width: fit-content;
+  }
+  .data-pagination-key li {
+    padding: 0.2rem 0.2rem;
+    white-space: nowrap;
+  }
+}

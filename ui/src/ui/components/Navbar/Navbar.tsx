@@ -1,5 +1,6 @@
 // Import packages
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 // Import react icons
 import { FaUserCircle } from 'react-icons/fa';
@@ -12,23 +13,50 @@ import constants from '../../../app.constants';
 // Import components
 import showToast from '../showToast';
 
+// Import rtk query
+import { useCheckAuthStatusMutation, useLogoutUserMutation } from '../../../store/api';
+
+// Import type
+import { User } from '../../../app.model';
+
 // Import css
 import './Navbar.css';
 
 const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
-  const user: { email: string; displayName: string; profilePicture?: string } =
-    {
-      email: constants.dummyUser.email,
-      displayName: constants.dummyUser.displayName,
+  const [logoutUser] = useLogoutUserMutation();
+  const [checkAuthStatus] = useCheckAuthStatusMutation();
+
+  useEffect(() => {
+    const fetchAuthStatus = async () => {
+      const res = await checkAuthStatus(null);
+      const response =
+          'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
+
+      if (response.success) {
+        setUser(response.data);
+      }
     };
+    fetchAuthStatus();
+  }, [checkAuthStatus]);
 
   /**
    * Function logout user
    */
   const onLogout = async () => {
-    showToast({ message: 'You are logged out successfully', type: 'success' });
+    const res = await logoutUser(null);
+    const response =
+      'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
+
+    if (response.success) {
+      showToast({ message: `${response.message}`, type: 'success' });
+      navigate('/signin');
+    } else {
+      showToast({ message: `${response.message}`, type: 'error' });
+    }
   };
 
   return (
@@ -53,7 +81,7 @@ const Navbar = () => {
           onClick={() => setShowProfile(!showProfile)}
         />
       )}
-      {showProfile && (
+      {showProfile && user && (
         <>
           <div
             className="nav-profile-main-container"
