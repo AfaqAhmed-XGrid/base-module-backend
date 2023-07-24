@@ -18,59 +18,103 @@ limitations under the License.
 const jwt = require('jsonwebtoken');
 const env = require('dotenv').config();
 const { default: to } = require('await-to-js');
+const passport = require('passport');
 
 // Constant Imports
 const authConstants = require('./auth.constants');
 const globalConstants = require('../../constants/constants.js');
+
+// Helper Functions imports
+const { sendPasswordResetMail, createJwtPayload } = require('./auth.helper');
 
 // Model imports
 const User = require('./auth.model');
 
 // Logger import
 const logger = require('../../config/logger/logger');
-const { sendPasswordResetMail } = require('./auth.helper');
 
 /**
- * Created login controller to send response to the user on login
+ * Controller Function to login the user
  * @param {Object} req
  * @param {Object} res
- * @return {Object}
+ * @param {callback} next
  */
-const login = async (req, res) => {
-  if (req.user) {
-    logger.info('User is logged in successfully (loginController)', { userId: req.user._id });
-    return res.status(200).json({ success: 1, message: globalConstants.responseMessages.logInUser.success, data: req.user });
-  } else {
-    logger.error('No user in req. login Problem (loginController)', { req: req });
-    return res.status(200).json({ success: 0, message: globalConstants.responseMessages.logInUser.failure, data: null });
-  }
+const login = (req, res) => {
+  passport.authenticate('login', (err, user, info) => {
+    if (err) {
+      logger.error('Passport login Strategy returned error (loginController)', { error: err }, { info: info }, { user: user });
+      return res.status(409).json({ success: 0, message: info?.message, data: { err } });
+    }
+
+    if (!user) {
+      logger.error('passport login Strategy did not return the user (loginController)', { error: err }, { info: info });
+      return res.status(409).json({ success: 0, message: info?.message, data: { err } });
+    }
+
+    const payload = createJwtPayload(user);
+
+    try {
+      logger.info('Generating jwt token (loginController)', { userId: user._id });
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
+
+      logger.info('User is logged in successfully (loginController)', { userId: user._id });
+      return res.status(200).json({ success: 1, message: globalConstants.responseMessages.logInUser.success, token });
+    } catch (err) {
+      logger.error('Error in generating JWT token (loginController)', { error: err });
+      return res.status(500).json({ success: 0, message: globalConstants.responseMessages.logInUser.failure, data: { err } });
+    }
+  })(req, res);
 };
+
 /**
  * Created signup controller to send response to the user on signup
  * @param {Object} req
  * @param {Object} res
  * @param {Object} next
- * @return {Object}
 */
-const signup = async (req, res, next) => {
-  if (req.user) {
-    logger.info('User is signed up successfully (signupController)', { userId: req.user._id });
-    return res.status(200).json({ success: 1, message: globalConstants.responseMessages.signUpUser.success, data: req.user });
-  } else {
-    logger.error('No user in req. signup problem (signupController)', { req: req });
-    return res.status(200).json({ success: 0, message: globalConstants.responseMessages.signUpUser.failure, data: null });
-  }
+const signup = (req, res) => {
+  passport.authenticate('signup', (err, user, info) => {
+    if (err) {
+      logger.error('Passport signup strategy returned error (signupController)', { error: err }, { info: info }, { user: user });
+      return res.status(409).json({ success: 0, message: info?.message, data: { err } });
+    }
+
+    if (!user) {
+      logger.error('Passport signup strategy did not return user (signupController)', { error: err }, { info: info });
+      return res.status(409).json({ success: 0, message: info?.message, data: { err } });
+    }
+
+    const payload = createJwtPayload(user);
+
+    try {
+      logger.info('Generating jwt token (signupController)', { userId: user._id });
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
+
+      logger.info('User is logged in successfully (signupController)', { userId: user._id });
+      return res.status(200).json({ success: 1, message: globalConstants.responseMessages.signUpUser.success, token });
+    } catch (err) {
+      logger.error('Error in generating JWT token (signupController)', { error: err });
+      return res.status(500).json({ success: 0, message: globalConstants.responseMessages.signUpUser.failure, data: { err } });
+    }
+  })(req, res);
 };
 
 /**
  * Created logout controller to log out user
  * @param {Object} req
  * @param {Object} res
- * @return {Object}
+ * @param {callback} next
  */
-const logout = (req, res) => {
-  logger.info('User is loggedout successfully');
-  return res.status(200).json({ success: 1, message: authConstants.responseMessages.logOutUser.success, data: null });
+const logout = (req, res, next) => {
+  req.logout(function(err) {
+    if (err) {
+      logger.error('Error in req.logout() (logoutController)', { req: req, error: err });
+      return res.status(406).json({ success: 0, message: authConstants.responseMessages.logOutUser.failure, data: null });
+    }
+
+    logger.info('User is logged out successfully');
+    return res.status(200).json({ success: 1, message: authConstants.responseMessages.logOutUser.success, data: null });
+  });
 };
 
 /**
@@ -84,7 +128,7 @@ const changePassword = async (req, res) => {
 
   if (!req.user) {
     logger.error('User is not found in request. login() problem. (changePasswrodController)', { req: req });
-    return res.status(406).json({ success: 0, message: globalConstants.responseMessages.loggedInUser.failure, data: null });
+    return res.status(406).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
   }
 
   const password = req.body.password;
@@ -224,7 +268,7 @@ const getProfileData = async (req, res) => {
   const user = req.user;
   if (!user) {
     logger.error('User is not found in req. login Problem. (getProfileDataController)', { req: req });
-    return res.status(406).json({ success: 0, message: globalConstants.responseMessages.loggedInUser.failure, data: null });
+    return res.status(406).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
   }
 
   logger.info('User is not found in req. login Problem. (getProfileDataController)', { userId: user._id });
@@ -242,8 +286,8 @@ const updateProfile = async (req, res) => {
 
   const user = req.user;
   if (!user) {
-    logger.error('No user foudn in req. login Problem. (updateProfileController)', { req: req });
-    return res.status(406).json({ success: 0, message: globalConstants.responseMessages.loggedInUser.failure, data: null });
+    logger.error('No user found in req. login Problem. (updateProfileController)', { req: req });
+    return res.status(406).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
   }
 
   const profileData = { ...req.body };
@@ -273,8 +317,30 @@ const updateProfile = async (req, res) => {
  * @return {Object}
  */
 const googleAuth = async (req, res) => {
-  logger.info('User is logged in through google successfully', { userId: req.user._id });
-  res.redirect(process.env.CLIENT_URL + '/dashboard');
+  passport.authenticate('google', (err, user, info) => {
+    if (err) {
+      logger.error('Passport google strategy returned error (googleController)', { error: err }, { info: info }, { user: user });
+      return res.status(409).json({ success: 0, message: info?.message, data: { err } });
+    }
+
+    if (!user) {
+      logger.error('Passport google strategy did not return user (googleController)', { error: err }, { info: info });
+      return res.status(409).json({ success: 0, message: info?.message, data: { err } });
+    }
+
+    const payload = createJwtPayload(user);
+
+    try {
+      logger.info('Generating jwt token (googleController)', { userId: user._id });
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
+
+      logger.info('User is logged in through google successfully (googleController)', { userId: user._id });
+      return res.status(200).json({ success: 1, message: globalConstants.responseMessages.logInUser.socialLogin.success, token });
+    } catch (err) {
+      logger.error('Error in generating JWT token (googleController)', { error: err });
+      return res.status(500).json({ success: 0, message: globalConstants.responseMessages.logInUser.socialLogin.failure, data: { err } });
+    }
+  })(req, res);
 };
 
 /**
@@ -284,8 +350,30 @@ const googleAuth = async (req, res) => {
  * @return {Object}
 */
 const githubAuth = async (req, res) => {
-  logger.info('User is logged in through github successfully', { userId: req.user._id });
-  res.redirect(process.env.CLIENT_URL + '/dashboard');
+  passport.authenticate('github', (err, user, info) => {
+    if (err) {
+      logger.error('Passport github strategy returned error (githubController)', { error: err }, { info: info }, { user: user });
+      return res.status(409).json({ success: 0, message: info?.message, data: { err } });
+    }
+
+    if (!user) {
+      logger.error('Passport github strategy did not return user (githubController)', { error: err }, { info: info });
+      return res.status(409).json({ success: 0, message: info?.message, data: { err } });
+    }
+
+    const payload = createJwtPayload(user);
+
+    try {
+      logger.info('Generating jwt token (githubController)', { userId: user._id });
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
+
+      logger.info('User is logged in through github successfully (githubController)', { userId: user._id });
+      return res.status(200).json({ success: 1, message: globalConstants.responseMessages.logInUser.socialLogin.success, token });
+    } catch (err) {
+      logger.error('Error in generating JWT token (githubController)', { error: err });
+      return res.status(500).json({ success: 0, message: globalConstants.responseMessages.logInUser.socialLogin.failure, data: { err } });
+    }
+  })(req, res);
 };
 
 module.exports = { login, signup, forgotPassword, changePassword, logout, resetPassword, getProfileData, updateProfile, googleAuth, githubAuth };

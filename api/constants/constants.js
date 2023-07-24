@@ -22,6 +22,7 @@ module.exports = {
       wrongCredentails: 'Wrong Crendentials. Please try again!',
       socialLogin: {
         failure: 'An error occured! Please try again',
+        success: 'You are logged in successfully.',
       },
     },
     signUpUser: {

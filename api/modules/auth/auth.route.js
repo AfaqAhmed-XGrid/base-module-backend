@@ -17,9 +17,13 @@ limitations under the License.
 // Package imports
 const express = require('express');
 const passport = require('passport');
+const { body, query, validationResult } = require('express-validator');
 
-// constant imports
+// Controller imports
 const authController = require('./auth.controller');
+
+// Middlware imports
+const commonMiddleware = require('../../common/commonMiddleware');
 const authMiddleware = require('./auth.middleware');
 
 // Creating instance
@@ -28,27 +32,30 @@ const router = express.Router();
 // api endpoint to login user
 router.post(
     '/login',
-    authMiddleware.login,
+    authMiddleware.validateLogIn,
+    commonMiddleware.validationError,
     authController.login,
 );
 
 // api endpoint to signup user
 router.post(
     '/signup',
-    authMiddleware.signup,
+    authMiddleware.validateSignUp,
+    commonMiddleware.validationError,
     authController.signup,
 );
 
 // api endpoint to logout user
 router.get(
     '/logout',
-    authMiddleware.logout,
     authController.logout,
 );
 
 // api endpoint to change user password
 router.put(
     '/change-password',
+    authMiddleware.validateChangePassword,
+    commonMiddleware.validationError,
     authMiddleware.isAuthenticated,
     authController.changePassword,
 );
@@ -56,12 +63,16 @@ router.put(
 // api endpoint to forgot password. It send the reset mail to the user
 router.post(
     '/forgot-password',
+    authMiddleware.validateForgotPassword,
+    commonMiddleware.validationError,
     authController.forgotPassword,
 );
 
 // api endpoint to reset the user password
 router.get(
     '/reset-password/:token',
+    authMiddleware.validateResetPassword,
+    commonMiddleware.validationError,
     authController.resetPassword,
 );
 
@@ -76,6 +87,8 @@ router.get(
 router.put(
     '/update-profile',
     authMiddleware.isAuthenticated,
+    authMiddleware.validateUpdateProfile,
+    commonMiddleware.validationError,
     authController.updateProfile,
 );
 
@@ -88,7 +101,6 @@ router.get(
 // api endpoint to callback url for passport github auth
 router.get(
     '/github/callback',
-    authMiddleware.github,
     authController.githubAuth,
 );
 
@@ -100,7 +112,6 @@ router.get(
 
 // api endpoint to callback url for passport google auth
 router.get('/google/callback',
-    authMiddleware.google,
     authController.googleAuth,
 );
 

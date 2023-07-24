@@ -17,9 +17,12 @@ limitations under the License.
 // Package Imports
 const nodemailer = require('nodemailer');
 
-// Constants import
-const authConstants = require('./auth.constants');
-
+/**
+ * Function to send email to user
+ * @param {String} token
+ * @param {String} toEmail
+ * @return {nodemailer.Transporter<SMTPTransport.SentMessageInfo>}
+ */
 const sendPasswordResetMail = async (token, toEmail) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -44,4 +47,17 @@ const sendPasswordResetMail = async (token, toEmail) => {
   });
 };
 
-module.exports = { sendPasswordResetMail };
+/**
+ * Function to create jwt payload
+ * @param {Object} user
+ * @return {Object}
+ */
+const createJwtPayload = (user) => {
+  const payload = {
+    ...user,
+  };
+
+  return payload;
+};
+
+module.exports = { sendPasswordResetMail, createJwtPayload };

@@ -21,6 +21,7 @@ const { PassportStatic } = require('passport');
 
 // Passport Strategy import
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 // Constant imports
 const responseMsgs = require('../../constants/constants').responseMessages;
 

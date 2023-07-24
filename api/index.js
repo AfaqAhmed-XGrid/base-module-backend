@@ -23,12 +23,11 @@ const bodyParser = require('body-parser');
 const env = require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 
-// const imports
+// COnfig imports
 const dbConnect = require('./config/db.connect');
 const passportLocalConfigure = require('./config/passport/passport.local.config');
 const passportGoogleConfig = require('./config/passport/passport.google.config');
 const passportGithubConfig = require('./config/passport/passport.github.config');
-const constants = require('./constants/constants');
 
 // Routes import
 const authRouter = require('./modules/auth/auth.route');
