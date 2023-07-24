@@ -3,7 +3,7 @@ const swaggerAutogen = require( 'swagger-autogen' )();
 
 // App dependencies
 const outputFile = './swagger.json';
-const endpointsFiles = [ './modules/auth/auth.route.js' ];
+const endpointsFiles = ['./modules/auth/auth.route.js'];
 
 const doc = {
   'info': {

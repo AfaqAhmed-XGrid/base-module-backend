@@ -7,6 +7,9 @@ const Movie = require('./movie.model');
 // Import constants
 const movieConstants = require('./movie.constants');
 
+// Import helper functions
+const { constructPagination, constructsearchquery, constructFilterQueryObj, constructSorting } = require('./movie.helper');
+
 // Import logger
 const logger = require('../../config/logger/logger');
 
@@ -19,37 +22,100 @@ const logger = require('../../config/logger/logger');
 const getAllMovies = async (req, res) => {
   logger.info(' Started getting movies data');
 
-  const search = req.query.search || {};
-  const searchQuery = req.query && req.query.search ? { title: { $regex: search, $options: 'i' } } : {};
-  const pageNo = Number(req.query.pageNo) || 1;
-  const limit = Number(req.query.limit) || 10;
-  const skip = (pageNo - 1) * limit;
+  // Filtering
+  const filterObj = constructFilterQueryObj(req);
 
-  const [err, movies] = await to(Movie.find(searchQuery).skip(skip).limit(limit));
-  const [movieCountErr, movieCount] = await to(Movie.count(searchQuery));
+  // Searching
+  const searchQuery = constructsearchquery(req);
+
+  // Pagination
+  const { pageNo, limit, skip } = constructPagination(req);
+
+  // Sorting
+  const { sortingField, sortingOrder } = constructSorting(req);
+
+  const [err, movies] = await to(
+      Movie.aggregate([
+        {
+          $match: {
+            $and: [
+              { ...searchQuery },
+              { $expr: {
+                $and: filterObj,
+              },
+              },
+            ],
+          },
+        },
+        {
+          $sort: { [sortingField]: Number(sortingOrder) },
+        },
+        {
+          $facet: {
+            movies: [
+              { $skip: skip },
+              { $limit: limit },
+            ],
+            totalCount: [
+              { $group: { _id: null, count: { $sum: 1 } } },
+            ],
+          },
+        },
+        {
+          $project: {
+            movies: 1,
+            movieCount: { $arrayElemAt: ['$totalCount.count', 0] },
+            totalPages: { $ceil: { $divide: [{ $arrayElemAt: ['$totalCount.count', 0] }, limit] } },
+            currentPage: pageNo,
+          },
+        },
+      ]).exec(),
+  );
 
   if (err) {
     logger.error('Failed to fetch the movies data', { error: err });
-    return res.status(406).json({ success: 0, message: movieConstants.failure, data: null });
+    return res.status(406).json({ success: 0, message: movieConstants.responseMessages.getAllMovies.failure, data: null });
   };
 
-  if (movieCountErr) {
-    logger.error('Failed to fetch the movies total count', { error: movieCountErr });
-    return res.status(406).json({ success: 0, message: movieConstants.failure, data: null });
-  }
-
-  if (movieCount === 0) {
-    logger.info('No movie document found with the requested query params', { search, searchQuery, pageNo, limit, skip });
-    return res.status(200).json({ success: 1, message: movieConstants.noMovieFoun1, data: { movies: null } });
-  }
-
-  if (movieCount < skip) {
-    logger.info('requested page number does not exists that is movieCount is less than skip', { movieCount, skip });
-    return res.status(200).json({ success: 1, message: movieConstants.pageNotFound, data: { movies: null } });
+  if (movies.length === 0) {
+    logger.info('No movie document found with the requested query params', { search: req.query.search, searchQuery, pageNo, limit, skip });
+    return res.status(200).json({ success: 1, message: movieConstants.responseMessages.getAllMovies.noMovieFound, data: { movies: [], totalCount: 0 } });
   }
 
   logger.info('Movies data is fetched successfully');
-  return res.status(200).json({ success: 1, message: movieConstants.success, data: { movies, movieCount } });
+  return res.status(200).json({ success: 1, message: movieConstants.responseMessages.getAllMovies.success, data: { ...movies[0] } });
 };
 
-module.exports = { getAllMovies };
+const getAverageBudgetAndMovieCountPerYear = async (req, res) => {
+  logger.info('Started getting average production per year and movies count per year');
+  const [err, data] = await to(Movie.aggregate([
+    {
+      $group: {
+        _id: { $year: '$releaseDate' },
+        averageProductionBudget: { $avg: '$productionBudget' },
+        moviesCount: { $sum: 1 },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        year: '$_id',
+        averageProductionBudget: 1,
+        moviesCount: 1,
+      },
+    },
+    {
+      $sort: { year: 1 },
+    },
+  ]));
+
+  if (err) {
+    logger.error('Error in getting average production per year and movies count per year data', { error: err });
+    return res.status(406).json({ success: 0, message: movieConstants.responseMessages.getAverageProductionBudgetAndCountPerYear.failure, data: null });
+  };
+
+  logger.info('Got average production per year and movies count per year successfully');
+  return res.status(200).json({ success: 1, message: movieConstants.responseMessages.getAverageProductionBudgetAndCountPerYear.success, data: data });
+};
+
+module.exports = { getAllMovies, getAverageBudgetAndMovieCountPerYear };

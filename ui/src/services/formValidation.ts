@@ -36,6 +36,11 @@ const validateInputField = (inputType:string, inputValue:string | undefined):str
         errorMessage = 'Password must contain at least one special char (!@#$%^&*)';
       }
       break;
+    case constants.validateInputField.displayName:
+      if (inputValue === '') {
+        errorMessage = 'Please enter your display name';
+      }
+      break;
     default:
       break;
   }

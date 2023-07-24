@@ -17,8 +17,12 @@
   "basePath": "/api/auth",
   "tags": [
     {
-      "name": "Users",
-      "description": "API for users in the system"
+      "name": "User Authentication",
+      "description": "API for user authentication in the system"
+    },
+    {
+      "name": "Movies",
+      "description": "API for fetching movies data in the system"
     }
   ],
   "schemes": [
@@ -31,7 +35,7 @@
     "application/json"
   ],
   "paths": {
-    "/local-login": {
+    "/login": {
       "post": {
         "tags": [
           "Users"
@@ -357,6 +361,40 @@
         "responses": {
           "409": {
             "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/get-graph-data": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "406": {
+            "description": "Not Acceptable"
+          }
+        }
+      }
+    },
+    "/get-all-movies": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "406": {
+            "description": "Not Acceptable"
           }
         }
       }

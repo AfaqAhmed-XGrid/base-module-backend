@@ -1,0 +1,53 @@
+.edit-profile-main-container {
+  max-width: 32rem;
+  margin: 0 auto 0 auto;
+  padding-top: 2rem;
+}
+
+.edit-profile-title {
+  text-align: center;
+  margin: 2rem 0 0.5rem 0 !important;
+  letter-spacing: 1px;
+  font-size: 2rem !important;
+  transform: scaleY(1.05);
+  font-weight: 500 !important;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.edit-profile-title::first-letter {
+  transform: scaleY(2) !important;
+  font-weight: 600 !important;
+  font-size: 2.7rem;
+}
+
+.edit-profile-form-container {
+  margin-top: 4.5rem;
+}
+
+.edit-profile-input-title {
+  margin: 1.5rem 0 0.5rem 0.4rem !important;
+  color: #696969;
+}
+
+.edit-profile-input-field {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+  font-size: 1rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid #d0d0d0;
+  color: #989898;
+  border-radius: 5px;
+}
+
+.edit-profile-input-field:focus {
+  border: 1px solid #a9a9a9 !important;
+  outline: none;
+  color: #808080;
+}
+
+.edit-profile-button-container {
+  margin: 2rem 0;
+}

@@ -1,6 +1,6 @@
 // Import package
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Import react icons
 import {
@@ -13,19 +13,36 @@ import {
 // Import components
 import showToast from '../showToast';
 
+// Import rtk query
+import { useLogoutUserMutation } from '../../../store/api';
+
 // Import css
 import './SideNavbar.css';
 
 const SideNavbar = () => {
+  const navigate = useNavigate();
   const [isMobileScreen, setIsMobileScreen] = useState(false);
+
+  const [logoutUser] = useLogoutUserMutation();
+
   useEffect(() => {
     setIsMobileScreen(window.innerWidth < 500);
   }, []);
+
   /**
    * Function logout user
    */
   const onLogout = async () => {
-    showToast({ message: 'You are logged out successfully', type: 'success' });
+    const res = await logoutUser(null);
+    const response =
+      'data' in res ? res.data : 'data' in res.error ? res.error.data : null;
+
+    if (response.success) {
+      showToast({ message: `${response.message}`, type: 'success' });
+      navigate('/signin');
+    } else {
+      showToast({ message: `${response.message}`, type: 'error' });
+    }
   };
 
   const data = [

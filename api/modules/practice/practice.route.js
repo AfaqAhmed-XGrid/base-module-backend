@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 
 // const imports
-const {printMessage, createHTML, printName} = require('./practice.controller');
+const { printMessage, createHTML, printName } = require('./practice.controller');
 
 // Creating instances
 const router = express.Router();
