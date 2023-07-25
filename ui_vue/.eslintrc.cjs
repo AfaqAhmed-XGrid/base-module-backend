@@ -37,13 +37,14 @@ module.exports = {
       ],
       'extends': [
         'plugin:cypress/recommended'
-      ]
+      ],
     }
   ],
   parserOptions: {
     ecmaVersion: 'latest'
   },
   rules: {
+    'indent': ['error', 2],
     '@typescript-eslint/no-explicit-any': 'error',
     semi: ['error', 'always'],
     // Enforce removing unused variables in Vue components.

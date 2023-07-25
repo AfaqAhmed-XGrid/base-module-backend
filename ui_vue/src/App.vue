@@ -15,11 +15,11 @@ limitations under the License.
 -->
 
 <script setup lang="ts">
-  // Import packages
-  import { RouterView } from 'vue-router';
+// Import packages
+import { RouterView } from 'vue-router';
 
-  // Import scss
-  import './styles/quasar.variables.scss';
+// Import scss
+import './styles/quasar.variables.scss';
 </script>
 
 <template>

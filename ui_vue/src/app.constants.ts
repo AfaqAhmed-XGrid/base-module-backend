@@ -16,6 +16,6 @@ limitations under the License.
 
 const constants = {
 
-  };
+};
   
 export default constants;
