@@ -24,6 +24,7 @@ const authConstants = require('./auth.constants');
 
 // Logger import
 const logger = require('../../config/logger/logger');
+const statusCodes = require('../../constants/statusCodes');
 
 /**
  * Middleware function to check if user is loggedin or not
@@ -37,18 +38,18 @@ const isAuthenticated = (req, res, next) => {
 
   if (!token) {
     logger.info('User is trying to make request without token in header', { header: req.headers });
-    return res.status(401).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
+    return res.status(statusCodes.unAuthorized).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       logger.info('Error in verifying jwt token', { err: err });
-      return res.status(401).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
+      return res.status(statusCodes.unAuthorized).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
     }
 
     if (!decoded) {
       logger.info('Empty jwt decoded', { decoded: decoded });
-      return res.status(401).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
+      return res.status(statusCodes.unAuthorized).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
     }
 
     logger.info('User is authenticated (isAuthenticatedMiddleware)', { userId: decoded._id });
