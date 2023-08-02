@@ -30,8 +30,53 @@
   "produces": [
     "application/json"
   ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },  
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "googleId": {
+            "type": "String",
+            "default": "undefined"
+          },
+          "githubId": {
+            "type": "String",
+            "default": "undefined"
+          },
+          "displayName": {
+            "type": "String",
+            "required": true
+          },
+          "email": {
+            "type": "String",
+            "unique": true
+          },
+          "password": "String",
+          "passwordResetToken": {
+            "type": "String",
+            "default": "undefined"
+          },
+          "profilePicture": {
+            "type": "String",
+            "default": "undefined"
+          },
+          "role": {
+            "type": "String",
+            "default": "user"
+          }
+        }
+      }
+    }
+  },
   "paths": {
-    "/local-login": {
+    "/login": {
       "post": {
         "tags": [
           "Users"
@@ -74,7 +119,7 @@
         }
       }
     },
-    "/local-signup": {
+    "/signup": {
       "post": {
         "tags": [
           "Users"
@@ -130,7 +175,7 @@
         }
       }
     },
-    "/local-changepassword": {
+    "/change-password": {
       "put": {
         "tags": [
           "Users"
@@ -172,7 +217,7 @@
         }
       }
     },
-    "/local-forgotpassword": {
+    "/forgot-password": {
       "post": {
         "tags": [
           "Users"
@@ -246,8 +291,12 @@
         "tags": [
           "Users"
         ],
-        "description": "",
-        "parameters": [],
+        "description": "Retrieve user data using JWT token authentication.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -357,44 +406,6 @@
         "responses": {
           "409": {
             "description": "Conflict"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "user": {
-        "type": "object",
-        "properties": {
-          "googleId": {
-            "type": "String",
-            "default": "undefined"
-          },
-          "githubId": {
-            "type": "String",
-            "default": "undefined"
-          },
-          "displayName": {
-            "type": "String",
-            "required": true
-          },
-          "email": {
-            "type": "String",
-            "unique": true
-          },
-          "password": "String",
-          "passwordResetToken": {
-            "type": "String",
-            "default": "undefined"
-          },
-          "profilePicture": {
-            "type": "String",
-            "default": "undefined"
-          },
-          "role": {
-            "type": "String",
-            "default": "user"
           }
         }
       }

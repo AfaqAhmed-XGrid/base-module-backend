@@ -17,6 +17,9 @@ limitations under the License.
 // Package imports
 const { validationResult } = require('express-validator');
 
+// Constant imports
+const statusCodes = require('../constants/statusCodes');
+
 /**
  * Function to handle validation error
  * @param {Object} req
@@ -29,7 +32,7 @@ const validationError = (req, res, next) => {
   if (result.isEmpty()) {
     return next();
   }
-  res.send({ success: 0, message: result.array() });
+  res.status(statusCodes.badRequest).send({ success: 0, message: result.array() });
 };
 
 module.exports = { validationError };

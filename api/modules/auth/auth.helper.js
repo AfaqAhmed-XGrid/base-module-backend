@@ -41,7 +41,7 @@ const sendPasswordResetMail = async (token, toEmail) => {
     text: `Please click on the link to reset your password. The link is active for 5 minuts only!`,
     html: `<a href="http://localhost:4000/api/auth/reset-password/${token}" target="_blank">Reset my password</a>
         <h2>Your new password would be the following</h2>
-        <b style='text-align:center; color:blue'>${token.slice(token.length-10)}</b>
+        <b style='text-align:center; color:blue'>${token.slice(token.length-10)}123#</b>
         <br />
         <p>Please change it soon after logging in✨✨</p>`,
   });

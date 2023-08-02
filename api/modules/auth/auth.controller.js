@@ -52,14 +52,14 @@ const login = (req, res) => {
       return res.status(statusCodes.notFound).json({ success: 0, message: info?.message, data: { err } });
     }
 
-    const payload = createJwtPayload(user);
+    const payload = createJwtPayload(user._doc);
 
     try {
       logger.info('Generating jwt token (loginController)', { userId: user._id });
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
 
       logger.info('User is logged in successfully (loginController)', { userId: user._id });
-      return res.status(statusCodes.success).json({ success: 1, message: globalConstants.responseMessages.logInUser.success, token });
+      return res.status(statusCodes.success).json({ success: 1, message: globalConstants.responseMessages.logInUser.success, token, data: { ...user._doc } });
     } catch (err) {
       logger.error('Error in generating JWT token (loginController)', { error: err });
       return res.status(statusCodes.internalError).json({ success: 0, message: globalConstants.responseMessages.logInUser.failure, data: { err } });
@@ -85,14 +85,14 @@ const signup = (req, res) => {
       return res.status(statusCodes.internalError).json({ success: 0, message: info?.message, data: { err } });
     }
 
-    const payload = createJwtPayload(user);
+    const payload = createJwtPayload(user._doc);
 
     try {
       logger.info('Generating jwt token (signupController)', { userId: user._id });
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
 
       logger.info('User is logged in successfully (signupController)', { userId: user._id });
-      return res.status(statusCodes.createdSuccessfully).json({ success: 1, message: globalConstants.responseMessages.signUpUser.success, token });
+      return res.status(statusCodes.createdSuccessfully).json({ success: 1, message: globalConstants.responseMessages.signUpUser.success, token, data: { ...user._doc } });
     } catch (err) {
       logger.error('Error in generating JWT token (signupController)', { error: err });
       return res.status(statusCodes.internalError).json({ success: 0, message: globalConstants.responseMessages.signUpUser.failure, data: { err } });
@@ -244,7 +244,7 @@ const resetPassword = async (req, res) => {
     return res.status(statusCodes.conflict).send(authConstants.responseMessages.resetPassword.tokenExpiredMessage);
   };
 
-  user.password = token.slice(token.length-10);
+  user.password = token.slice(token.length-10) + '123#';
   user.passwordResetToken = undefined;
   const [userSavingErr, savedUser] = await to(user.save());
 
@@ -329,14 +329,14 @@ const googleAuth = async (req, res) => {
       return res.status(statusCodes.internalError).json({ success: 0, message: info?.message, data: { err } });
     }
 
-    const payload = createJwtPayload(user);
+    const payload = createJwtPayload(user._doc);
 
     try {
       logger.info('Generating jwt token (googleController)', { userId: user._id });
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
 
       logger.info('User is logged in through google successfully (googleController)', { userId: user._id });
-      return res.status(statusCodes.success).json({ success: 1, message: globalConstants.responseMessages.logInUser.socialLogin.success, token });
+      return res.status(statusCodes.success).json({ success: 1, message: globalConstants.responseMessages.logInUser.socialLogin.success, token, data: { ...user._doc } });
     } catch (err) {
       logger.error('Error in generating JWT token (googleController)', { error: err });
       return res.status(statusCodes.internalError).json({ success: 0, message: globalConstants.responseMessages.logInUser.socialLogin.failure, data: { err } });
@@ -362,14 +362,14 @@ const githubAuth = async (req, res) => {
       return res.status(statusCodes.internalError).json({ success: 0, message: info?.message, data: { err } });
     }
 
-    const payload = createJwtPayload(user);
+    const payload = createJwtPayload(user._doc);
 
     try {
       logger.info('Generating jwt token (githubController)', { userId: user._id });
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
 
       logger.info('User is logged in through github successfully (githubController)', { userId: user._id });
-      return res.status(statusCodes.success).json({ success: 1, message: globalConstants.responseMessages.logInUser.socialLogin.success, token });
+      return res.status(statusCodes.success).json({ success: 1, message: globalConstants.responseMessages.logInUser.socialLogin.success, token, data: { ...user._doc } });
     } catch (err) {
       logger.error('Error in generating JWT token (githubController)', { error: err });
       return res.status(statusCodes.internalError).json({ success: 0, message: globalConstants.responseMessages.logInUser.socialLogin.failure, data: { err } });

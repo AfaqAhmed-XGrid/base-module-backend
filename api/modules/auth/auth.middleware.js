@@ -17,7 +17,7 @@ limitations under the License.
 // Package imports
 const jwt = require('jsonwebtoken');
 const env = require('dotenv').config();
-const { body, query } = require('express-validator');
+const { body, param } = require('express-validator');
 
 // Constant imports
 const authConstants = require('./auth.constants');
@@ -62,7 +62,7 @@ module.exports = {
   isAuthenticated,
   validateLogIn: [
     body('email').isEmail().withMessage('Email is requried with correct format'),
-    body('password').isStrongPassword().withMessage('Password is requried with correct format'),
+    body('password').notEmpty().withMessage('Password is requried'),
   ],
   validateSignUp: [
     body('email').isEmail().withMessage('Email is requried with correct format'),
@@ -77,7 +77,7 @@ module.exports = {
     body('email').isEmail().withMessage('Email is requried with correct format'),
   ],
   validateResetPassword: [
-    query('token').notEmpty().withMessage('Token is required'),
+    param('token').notEmpty().withMessage('Token is required'),
   ],
   validateUpdateProfile: [
     body('email').isEmail().withMessage('Email is requried with correct format'),
