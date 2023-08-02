@@ -44,6 +44,7 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
+    'valid-jsdoc': 'error',
     'indent': ['error', 2],
     '@typescript-eslint/no-explicit-any': 'error',
     semi: ['error', 'always'],
