@@ -15,20 +15,13 @@ limitations under the License.
 */
 
 module.exports = {
-  responseMessages: {
-    logInUser: {
-      success: 'You are logged in successfully.',
-      failure: 'Login failed. Please try again!',
-      wrongCredentails: 'Wrong Crendentials. Please try again!',
-      socialLogin: {
-        failure: 'An error occured! Please try again',
-        success: 'You are logged in successfully.',
-      },
-    },
-    signUpUser: {
-      success: 'You account is created successfully.',
-      failure: 'Signup failed. Please try again!',
-      userAlreadyExisted: 'An account is already created with this email.',
-    },
-  },
+  success: 200,
+  createdSuccessfully: 201,
+  internalError: 500,
+  notFound: 404,
+  contentNotFound: 204,
+  badRequest: 400,
+  unAuthorized: 401,
+  alreadyExist: 409,
+  conflict: 409,
 };

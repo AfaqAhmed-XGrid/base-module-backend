@@ -23,12 +23,11 @@ const bodyParser = require('body-parser');
 const env = require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 
-// const imports
+// COnfig imports
 const dbConnect = require('./config/db.connect');
 const passportLocalConfigure = require('./config/passport/passport.local.config');
 const passportGoogleConfig = require('./config/passport/passport.google.config');
 const passportGithubConfig = require('./config/passport/passport.github.config');
-const constants = require('./constants/constants');
 
 // Routes import
 const authRouter = require('./modules/auth/auth.route');
@@ -56,7 +55,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, authorization');
   next();
 });
 app.use(

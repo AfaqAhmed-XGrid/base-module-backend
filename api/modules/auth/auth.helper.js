@@ -17,9 +17,12 @@ limitations under the License.
 // Package Imports
 const nodemailer = require('nodemailer');
 
-// Constants import
-const authConstants = require('./auth.constants');
-
+/**
+ * Function to send email to user
+ * @param {String} token
+ * @param {String} toEmail
+ * @return {nodemailer.Transporter<SMTPTransport.SentMessageInfo>}
+ */
 const sendPasswordResetMail = async (token, toEmail) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -38,10 +41,23 @@ const sendPasswordResetMail = async (token, toEmail) => {
     text: `Please click on the link to reset your password. The link is active for 5 minuts only!`,
     html: `<a href="http://localhost:4000/api/auth/reset-password/${token}" target="_blank">Reset my password</a>
         <h2>Your new password would be the following</h2>
-        <b style='text-align:center; color:blue'>${token.slice(token.length-10)}</b>
+        <b style='text-align:center; color:blue'>${token.slice(token.length-10)}123#</b>
         <br />
         <p>Please change it soon after logging in✨✨</p>`,
   });
 };
 
-module.exports = { sendPasswordResetMail };
+/**
+ * Function to create jwt payload
+ * @param {Object} user
+ * @return {Object}
+ */
+const createJwtPayload = (user) => {
+  const payload = {
+    ...user,
+  };
+
+  return payload;
+};
+
+module.exports = { sendPasswordResetMail, createJwtPayload };

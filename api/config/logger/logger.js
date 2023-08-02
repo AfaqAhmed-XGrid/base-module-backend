@@ -16,6 +16,8 @@ limitations under the License.
 
 // Package imports
 const { createLogger, format, transports } = require('winston');
+
+// Constant imports
 const constants = require('../constants');
 
 const logger = createLogger({
