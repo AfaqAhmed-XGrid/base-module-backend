@@ -126,7 +126,19 @@ limitations under the License.
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <q-input dense v-model="formData.email" :rules="formValidation.emailRules" autofocus @keyup.enter="forgotPasswordModal = false" placeholder="Email Address"/>
+        <q-input
+          data-cy="email"
+          outlined
+          autofocus
+          v-model="forgotPasswordEmail"
+          label="Email Address"
+          :rules="formValidation.emailRules"
+          @keyup.enter="forgotPasswordModal = false"
+        >
+          <template v-slot:prepend>
+            <q-icon name="email" />
+          </template>
+        </q-input>
       </q-card-section>
 
       <q-card-actions align="right" class="text-primary">
@@ -158,6 +170,7 @@ const formData = ref({
   email: '',
   password: ''
 });
+const forgotPasswordEmail = ref('');
 const isPwd = ref(true);
 const submitting = ref(false);
 const forgotPasswordModal = ref(false);
@@ -182,7 +195,7 @@ const onSignIn = async (): Promise<void> => {
  */
 const onResetPassword = async(): Promise<void> => {
   submitting.value = true;
-  await authHttpRequest.resetUserPassword(formData.value.email);
+  await authHttpRequest.resetUserPassword(forgotPasswordEmail.value);
   submitting.value = false;
 };
 </script>
