@@ -11,7 +11,7 @@ import { onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router';
 
 // Import composable hooks
-import { useAuthHttpRequest } from '@/composables/useAuthHttpRequest';
+import { useAuthHttpRequest } from '@/composables/useAuthHttpRequests';
 
 // Import constants
 import constants from '../app.constants';
@@ -25,9 +25,9 @@ const socialApp = route.params.app;
 onBeforeMount(async () => {
   await authHttpRequest.authCallBack(
     socialApp === constants.socialAuthorization.appNames.google
-      ? constants.apiUrl + constants.socialAuthorization.googleCallBack
+      ? constants.httpRequests.apiUrl + constants.socialAuthorization.googleCallBack
       : socialApp === constants.socialAuthorization.appNames.github
-        ? constants.apiUrl + constants.socialAuthorization.githubCallBack
+        ? constants.httpRequests.apiUrl + constants.socialAuthorization.githubCallBack
         : ''
   );
 });
