@@ -1,0 +1,73 @@
+@import './customColor.scss';
+@import './quasar.variables.scss';
+
+.heading-one {
+    margin-bottom: 1.5rem;
+}
+
+.heading-two {
+    font-weight: 600;
+    font-Size: 2rem;
+    color: $secondary;
+    margin: 0 0 1rem 0;
+}
+
+.sub-heading-one {
+    font-size: 0.95rem;
+}
+
+.sub-heading-two {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.sub-sub-heading-two {
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-light-pink {
+    color: $light-pink;
+}
+
+.text-white {
+    color: $white;
+}
+
+.text-black {
+    color: $black;
+}
+
+.text-light-gray {
+    color: $light-gray;
+}
+
+.text-accent {
+    color: $accent;
+}
+
+.text-positive {
+    color: $positive;
+}
+
+.text-primary {
+    color: $primary;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}

@@ -14,14 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Import Packages
+// Import packages
+import constants from '../app.constants';
 import { createRouter, createWebHistory } from 'vue-router';
+
+// Import constants
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-
+    {
+      path: constants.pages.signIn.link,
+      name: constants.pages.signIn.name,
+      component: () => import('../views/SignIn.vue')
+    },
+    {
+      path: constants.pages.callBack.link,
+      name: constants.pages.callBack.name,
+      component: () => import('../views/CallBack.vue')
+    },
   ]
+});
+
+router.beforeEach((to) => {
+  const isAuthenticated = localStorage.getItem(constants.localStorage.userToken);
+
+  if( !isAuthenticated && to.name !== constants.pages.signIn.name && to.name !== constants.pages.signUp.name && to.name !== constants.pages.callBack.name) {
+    return constants.pages.signIn.link;
+  }
 });
 
 export default router;

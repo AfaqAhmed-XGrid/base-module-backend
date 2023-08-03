@@ -1,0 +1,57 @@
+@import './breakpoints.scss';
+
+.minH-fullview {
+    min-height: 100vh;
+}
+
+.maxH-fullview {
+    max-height: 100vh;
+}
+
+.w-full {
+    width: 100%
+}
+
+.maxW-32rem {
+    max-width: 32rem
+}
+
+.px-1rem {
+    padding: 0 1rem;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.my-1rem {
+    margin: 1rem 0;
+}
+
+.gap-1rem {
+    gap: 1.5rem
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.no-flex-wrap {
+    flex-wrap: nowrap !important;
+}
+
+.no-white-wrap {
+    white-space: nowrap !important;
+}
+
+@media (min-width: $breakpoint-xl) {
+    .maxW-32rem {
+        max-width: 64rem;
+    }
+}
+
+@media (min-width: $breakpoint-lg-min) and (max-width: $breakpoint-lg-max) {
+    .maxW-32rem {
+        max-width: 44rem;
+    }
+}

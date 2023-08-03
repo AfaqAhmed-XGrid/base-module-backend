@@ -16,12 +16,42 @@ limitations under the License.
 
 <script setup lang="ts">
 // Import packages
-import { RouterView } from 'vue-router';
+import { RouterView, useRoute, useRouter } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
 
 // Import scss
 import './styles/quasar.variables.scss';
+
+// Import constants
+import constants from './app.constants';
+
+// Initializing hooks
+const route = useRoute();
+const router = useRouter();
+
+const showNavbar = ref(false);
+
+onMounted(async() => {
+  await router.isReady();
+  showNavbar.value = route.path !== constants.pages.signIn.link && route.path !== constants.pages.signUp.link && route.name !== constants.pages.callBack.name;
+});
+
+watch(route, () => {
+  showNavbar.value = route.path !== constants.pages.signIn.link && route.path !== constants.pages.signUp.link && route.name !== constants.pages.callBack.name;
+});
 </script>
 
 <template>
-  <RouterView />
+  <div>
+    <q-layout view="hHh Lpr lff">
+      <q-page-container>
+        <q-page>
+          <RouterView />
+          <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+            <q-btn fab icon="keyboard_arrow_up" color="accent" />
+          </q-page-scroller>
+        </q-page>
+      </q-page-container>
+    </q-layout>
+  </div>
 </template>

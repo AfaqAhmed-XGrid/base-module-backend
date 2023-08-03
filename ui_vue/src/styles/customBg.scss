@@ -1,0 +1,25 @@
+@import './breakpoints.scss';
+
+.bg-image-one {
+    background-image: url('../assets/authBg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: -2;
+}
+
+.dark-opaque-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.6;
+    z-index: -1;
+}
+
+@media (max-width: $breakpoint-sm-max) {
+    .bg-image-one {
+        display: none !important;
+    }
+}

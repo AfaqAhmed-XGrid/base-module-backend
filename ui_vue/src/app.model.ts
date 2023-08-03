@@ -14,7 +14,60 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// Import types
+import type { EmbeddedValidationRule, EmbeddedValidationRuleFn } from 'quasar';
+
+// data type to send to backend for sign in
 export interface signInFormData {
-    email: string,
-    password: string
-};
+  email: string
+  password: string
+}
+
+// data type to send to backend for sign up
+export interface signUpFormData {
+  email: string
+  password: string
+  displayName: string
+  confirmPassword: string
+}
+
+// data type returned by the function providing input fields validation rules
+export interface ValidationRules {
+  passwordRules: (
+    | ((val: string) => true | string)
+    | ((val: string) => true | string)
+    | ((val: string) => true | string)
+    | ((val: string) => true | string)
+    | ((val: string) => true | string)
+  )[]
+  emailRules: ((
+    val: string,
+    rules: Record<EmbeddedValidationRule, EmbeddedValidationRuleFn>
+  ) => true | string)[]
+  requiredRule: ((val: string) => true | string)[]
+}
+
+// User type fetched from api
+export interface User {
+  googleId?: string | undefined;
+  githubId?: string | undefined;
+  displayName: string;
+  email?: string | undefined;
+  password?: string;
+  passwordResetToken?: string | undefined;
+  profilePicture?: string | undefined;
+  role?: string;
+}
+
+// data type of auth status stored in pinia store
+export interface AuthStatus {
+  loggedIn: boolean;
+  user: null | User;
+}
+
+// data type of success response for /user endpoint
+export interface GetUserSuccessResponse {
+  success: 1;
+  message: string;
+  data: User;
+}
