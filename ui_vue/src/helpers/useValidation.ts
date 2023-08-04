@@ -25,7 +25,7 @@ import constants from '../app.constants';
  * Function to rturn input validation rules 
  * @return {ValidationRules} return validation rules for all kind of inputs like email, password and displayNames
  */
-export function useValidation(): ValidationRules {
+const useValidation = (): ValidationRules => {
   const passwordRules = [
     (val: string) => (val && val.length >= 8) || constants.validation.messages.short,
     (val: string) =>
@@ -44,4 +44,6 @@ export function useValidation(): ValidationRules {
   const requiredRule = [(val: string) => (val && val !== '') || constants.validation.messages.required];
 
   return { passwordRules, emailRules, requiredRule };
-}
+};
+
+export default useValidation;

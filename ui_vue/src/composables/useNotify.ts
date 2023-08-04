@@ -24,10 +24,10 @@ import constants from '@/app.constants';
  * Function to toastify the message on success and failure scenarios while making http requests
  * @return {Object} returns object of toast functions for success and error
  */
-export default function useNotify(): {
+const useNotify = (): {
   success: (message: string) => void
   error: (message: string) => void
-  } {
+  } => {
   const $q = useQuasar();
 
   const success = (message: string) => {
@@ -44,4 +44,6 @@ export default function useNotify(): {
   };
 
   return { success, error };
-}
+};
+
+export default useNotify;

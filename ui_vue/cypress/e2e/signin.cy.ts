@@ -1,5 +1,7 @@
+// Cypress testing for signin with local credentials
 describe('Sign In', () => {
 
+  // test case for signing in with wrong credentails
   it('wrong credentials', () => {
     cy.visit('/sign-in');
     cy.url().should('include', '/sign-in');
@@ -11,6 +13,7 @@ describe('Sign In', () => {
     cy.wait(2000);
   });
   
+  // test case for signing in with correct credentails
   it('correct credentials', () => {
     cy.visit('/sign-in');
     cy.get('[data-cy="email"]', { timeout: 10000 }).type('testuser05@gmail.com');

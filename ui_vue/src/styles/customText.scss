@@ -71,3 +71,15 @@
 .text-nowrap {
     white-space: nowrap;
 }
+
+.text-dark-mode {
+    color: $text-dark-mode;
+}
+
+.text-light-mode {
+    color: $text-light-mode;
+}
+
+.active-navlink-dark-mode {
+    color: $active-navlink-dark-mode;
+}
