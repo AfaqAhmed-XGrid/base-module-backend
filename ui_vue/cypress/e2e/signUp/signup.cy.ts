@@ -7,11 +7,10 @@ import configData from '../../config';
 // Import constants
 import constants from '../../cypress.constants';
 
-
 // Cypress testing for signin with local credentials
 describe('Sign Up', () => {
 
-  it('passwords dont match', () => {
+  it('passwords don\'t match', () => {
     cy.visit(constants.pages.signUp.link);
     cy.url().should('include', constants.pages.signUp.link);
     cy.get(domData.localSignUp.emailInput, { timeout: 10000 }).type(configData.signUp.email);
