@@ -22,7 +22,7 @@ import { useRouter, useRoute } from 'vue-router';
 import constants from '../app.constants';
 
 // Import types
-import type { signInFormData } from '@/app.model';
+import type { signInFormData, signUpFormData } from '@/app.model';
 
 // Import composables
 import useNotify from './useNotify';
@@ -60,6 +60,26 @@ export const useAuthHttpRequest = () => {
         notify.error(constants.httpRequests.generalErrorMessage);
       }
 
+    }
+  };
+
+  /**
+   * Function to make http request to sign up the user with profile data and credentials
+   * @param {signUpFormData} data user provided profile data for sign up
+   * @return {Promise<void>} returns a promise
+   */
+  const signUpUser = async(data: signUpFormData): Promise<void> => {
+    try {
+      const response = await axios.post(baseURL + authEndPoint.signUp, data);
+      notify.success(response.data.message);
+      localStorage.setItem(constants.localStorage.userToken, response.data.token);
+      router.push(constants.pages.dashboard.link);
+    } catch (error) {
+      if( error instanceof AxiosError && error?.response?.data) {
+        notify.error(error?.response?.data.message);
+      } else {
+        notify.error(constants.httpRequests.generalErrorMessage);
+      }
     }
   };
 
@@ -115,5 +135,5 @@ export const useAuthHttpRequest = () => {
     }
   };
 
-  return { signInUser, authCallBack, resetUserPassword };
+  return { signInUser, signUpUser, authCallBack, resetUserPassword };
 };
