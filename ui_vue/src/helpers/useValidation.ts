@@ -46,4 +46,4 @@ const useValidation = (): ValidationRules => {
   return { passwordRules, emailRules, requiredRule };
 };
 
-export default useValidation;
+export { useValidation };
