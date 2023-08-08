@@ -14,5 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export function useValidation() {
-}
+// Import types
+import type { EmbeddedValidationRule, EmbeddedValidationRuleFn } from 'quasar';
+import type { ValidationRules } from '@/app.model';
+
+// Import constants
+import constants from '../app.constants';
+
+/**
+ * Function to rturn input validation rules 
+ * @return {ValidationRules} return validation rules for all kind of inputs like email, password and displayNames
+ */
+const useValidation = (): ValidationRules => {
+  const passwordRules = [
+    (val: string) => (val && val.length >= 8) || constants.validation.messages.short,
+    (val: string) =>
+      constants.validation.regex.hasLowerCaseAlpha.test(val) ||
+      constants.validation.messages.noLowerAlpha,
+    (val: string) =>
+      constants.validation.regex.hasUpperCaseAlpha.test(val) ||
+      constants.validation.messages.noUpperAlpha,
+    (val: string) => constants.validation.regex.hasNum.test(val) || constants.validation.messages.noNum,
+    (val: string) =>
+      constants.validation.regex.hasSpecialChar.test(val) ||
+      constants.validation.messages.noSpecialChar
+  ];
+  
+  const emailRules = [(val: string, rules: Record<EmbeddedValidationRule, EmbeddedValidationRuleFn>) => rules.email(val) || constants.validation.messages.notEmail];
+  const requiredRule = [(val: string) => (val && val !== '') || constants.validation.messages.required];
+
+  return { passwordRules, emailRules, requiredRule };
+};
+
+export default useValidation;

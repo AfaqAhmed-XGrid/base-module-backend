@@ -16,6 +16,7 @@ limitations under the License.
 
 // Import scss
 import './assets/main.css';
+import './styles/global.styles.scss';
 import 'quasar/dist/quasar.sass';
 
 // Import Packages

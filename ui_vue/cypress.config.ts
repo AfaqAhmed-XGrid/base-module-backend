@@ -20,6 +20,17 @@ import { defineConfig } from 'cypress';
 export default defineConfig({
   e2e: {
     specPattern: 'cypress/e2e/**/*.{cy,spec}.{js,jsx,ts,tsx}',
-    baseUrl: 'http://localhost:4173'
+    baseUrl: 'baseUrl',
+    experimentalModifyObstructiveThirdPartyCode: true,
+  },
+  env: {
+    'GITHUB_ACCESS_CODE': 'GITHUB_ACCESS_CODE',
+    'VITE_API_GOOGLE_CLIENT_SECRET': 'VITE_API_GOOGLE_CLIENT_SECRET',
+    'VITE_API_GOOGLE_CLIENT_ID': 'VITE_API_GOOGLE_CLIENT_ID',
+    'VITE_API_GOOGLE_REFRESH_TOKEN': 'VITE_API_GOOGLE_REFRESH_TOKEN',
+    'VITE_API_GOOGLE_CALLBACK_URL': 'VITE_API_GOOGLE_CALLBACK_URL',
+    'VITE_API_GITHUB_CLIENT_ID': 'VITE_API_GITHUB_CLIENT_ID',
+    'VITE_API_GITHUB_CLIENT_SECRET': 'VITE_API_GITHUB_CLIENT_SECRET',
+    'VITE_API_GITHUB_CALLBACK_URL': 'VITE_API_GITHUB_CALLBACK_URL'
   }
 });
