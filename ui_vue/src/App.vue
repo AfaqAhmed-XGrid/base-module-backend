@@ -19,6 +19,9 @@ limitations under the License.
 import { RouterView, useRoute, useRouter } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
 
+// Import components
+import TheNavBar from './components/TheNavBar.vue';
+
 // Import scss
 import './styles/quasar.variables.scss';
 
@@ -44,14 +47,54 @@ watch(route, () => {
 <template>
   <div>
     <q-layout view="hHh Lpr lff">
+      <TheNavBar v-if="showNavbar" />
       <q-page-container>
-        <q-page>
+        <q-page class="overflowX-hidden">
+          <div
+            class="row justify-between items-center q-ma-lg q-pa-md borderRadius-1rem bg-v-light-gray"
+            v-if="showNavbar"
+          >
+            <div class="row items-center gap-half-rem">
+              <q-icon name="home_app_logo" class="icon-size" color="positive" />
+              <p class="m-0 route-size font-size">{{ route.name }}</p>
+            </div>
+            <p class="m-0 text-grey font-size">{{ route.path }}</p>
+          </div>
           <RouterView />
           <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-            <q-btn fab icon="keyboard_arrow_up" color="accent" />
+            <q-btn fab icon="keyboard_arrow_up" color="accent" padding="md"/>
           </q-page-scroller>
         </q-page>
       </q-page-container>
     </q-layout>
   </div>
 </template>
+
+<style scoped lang="scss">
+@import './styles/breakpoints.scss';
+.icon-size {
+  font-size: 2.1rem;
+}
+
+.font-size {
+  font-size: 1.08rem;
+}
+
+@media (max-width: $breakpoint-sm-min) {
+  .icon-size {
+    font-size: 1.75rem;
+  }
+  .font-size {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: $breakpoint-lg-min) {
+  .icon-size {
+    font-size: 3rem;
+  }
+  .font-size {
+    font-size: 1.5rem;
+  }
+}
+</style>

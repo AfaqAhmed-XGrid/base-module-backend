@@ -52,6 +52,19 @@ router.beforeEach((to) => {
   if( !isAuthenticated && to.name !== constants.pages.signIn.name && to.name !== constants.pages.signUp.name && to.name !== constants.pages.callBack.name) {
     return constants.pages.signIn.link;
   }
+
+  /**
+   * Function to check if the active route is registered or not
+   * @param {string} route active url path
+   * @return {boolean} returns true if the route is registered
+   */
+  function isValidRoute(route: string): boolean {
+    return Object.values(constants.pages).some(page => page.link === route);
+  }
+  
+  if (isAuthenticated && !isValidRoute(to.path)) {
+    return constants.pages.dashboard.link;
+  }
 });
 
 export default router;

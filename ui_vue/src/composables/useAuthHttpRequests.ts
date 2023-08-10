@@ -22,7 +22,7 @@ import { useRouter, useRoute } from 'vue-router';
 import constants from '../app.constants';
 
 // Import types
-import type { signInFormData, signUpFormData } from '@/app.model';
+import type { User, signInFormData, signUpFormData } from '@/app.model';
 
 // Import composables
 import useNotify from './useNotify';
@@ -135,5 +135,31 @@ export const useAuthHttpRequest = () => {
     }
   };
 
-  return { signInUser, signUpUser, authCallBack, resetUserPassword };
+  /**
+   * Function to make http request to sign in the user with credentials
+   * @return {Promise<GetUserSuccessResponse | void>} returns a promise
+   */
+  const getUser = async (): Promise<User | void> => {
+    try {
+      const token = localStorage.getItem(constants.localStorage.userToken);
+      const response = await axios.get(baseURL + authEndPoint.getUser, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      if( error instanceof AxiosError && error?.response?.data) {
+        notify.error(error?.response?.data.message);
+        if (error?.response?.status === 401) {
+          router.push(constants.pages.signIn.link);
+          localStorage.clear();
+        }
+      } else {
+        notify.error(constants.httpRequests.generalErrorMessage);
+      }
+    }
+  };
+
+  return { signInUser, signUpUser, authCallBack, resetUserPassword, getUser };
 };
