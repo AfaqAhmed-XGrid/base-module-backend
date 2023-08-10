@@ -26,7 +26,7 @@ const constants = {
       },
     },
     codeQuery: '?code=',
-    generalErrorMessage: 'Unkown erro occured. Please try later!'
+    generalErrorMessage: 'Unkown error occured. Please try later!'
   },
   paths: {
     logo: '/assets/logo.png',

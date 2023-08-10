@@ -29,6 +29,16 @@ const router = createRouter({
       component: () => import('../views/SignIn.vue')
     },
     {
+      path: constants.pages.signUp.link,
+      name: constants.pages.signUp.name,
+      component: () => import('../views/signUp.vue')
+    },
+    {
+      path: constants.pages.signIn.link,
+      name: constants.pages.signIn.name,
+      component: () => import('../views/SignIn.vue')
+    },
+    {
       path: constants.pages.callBack.link,
       name: constants.pages.callBack.name,
       component: () => import('../views/CallBack.vue')
