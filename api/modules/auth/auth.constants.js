@@ -19,9 +19,6 @@ const env = require('dotenv').config();
 
 module.exports = {
   responseMessages: {
-    authorizedUser: {
-      failure: 'You are not authorized. Please login first',
-    },
     logOutUser: {
       success: 'You are logged out successfully.',
       failure: 'Failed logging out. Please try again!',

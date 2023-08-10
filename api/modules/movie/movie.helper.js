@@ -47,7 +47,7 @@ const constructFilterQueryObj = (req) => {
 };
 
 /**
-   * Function construct the sorting query
+   * Function to construct the sorting query
    * @param {Object} req
    * @return {Object}
    */
@@ -59,4 +59,27 @@ const constructSorting = (req) => {
   return { sortingField, sortingOrder };
 };
 
-module.exports = { constructPagination, constructsearchquery, constructFilterQueryObj, constructSorting };
+/**
+ * Function to construct year filteration for graph data
+ * @param {Object} req
+ * @return {Object}
+ */
+const constructYearFilteration = (req) => {
+  const minYear = req?.query?.minYear;
+  const maxYear = req?.query?.maxYear;
+
+  if (!minYear || !maxYear) {
+    return { $match: {} };
+  }
+
+  return {
+    $match: {
+      releaseDate: {
+        $gte: new Date(minYear, 0, 1), // Start of startYear
+        $lte: new Date(maxYear, 11, 31), // End of endYear
+      },
+    },
+  };
+};
+
+module.exports = { constructPagination, constructsearchquery, constructFilterQueryObj, constructSorting, constructYearFilteration };

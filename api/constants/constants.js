@@ -30,5 +30,8 @@ module.exports = {
       failure: 'Signup failed. Please try again!',
       userAlreadyExisted: 'An account is already created with this email.',
     },
+    authorizedUser: {
+      failure: 'You are not authorized. Please login first',
+    },
   },
 };

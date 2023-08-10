@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    unique: true,
+    default: undefined,
   },
   password: String,
   passwordResetToken: {
@@ -50,6 +50,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
+  method: {
+    type: String,
+    default: 'local',
+  },
 });
 
 // Hashig pasword before saving into db
@@ -59,6 +63,15 @@ userSchema.pre('save', async function(next) {
   }
   const salt = await bcrypt.genSaltSync(10);
   this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+userSchema.pre('save', async function(next) {
+  if (this.googleId) {
+    this.method = 'google';
+  }
+  if (this.githubId) {
+    this.method = 'github';
+  }
   next();
 });
 

@@ -56,7 +56,7 @@ router.put(
     '/change-password',
     authMiddleware.validateChangePassword,
     commonMiddleware.validationError,
-    authMiddleware.isAuthenticated,
+    commonMiddleware.isAuthenticated,
     authController.changePassword,
 );
 
@@ -79,14 +79,14 @@ router.get(
 // api endpoint to get the user data
 router.get(
     '/user',
-    authMiddleware.isAuthenticated,
+    commonMiddleware.isAuthenticated,
     authController.getProfileData,
 );
 
 // api endpoint to update the user data
 router.put(
     '/update-profile',
-    authMiddleware.isAuthenticated,
+    commonMiddleware.isAuthenticated,
     authMiddleware.validateUpdateProfile,
     commonMiddleware.validationError,
     authController.updateProfile,

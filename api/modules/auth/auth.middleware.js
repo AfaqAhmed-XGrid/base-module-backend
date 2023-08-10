@@ -15,51 +15,9 @@ limitations under the License.
 */
 
 // Package imports
-const jwt = require('jsonwebtoken');
-const env = require('dotenv').config();
 const { body, param } = require('express-validator');
 
-// Constant imports
-const authConstants = require('./auth.constants');
-
-// Logger import
-const logger = require('../../config/logger/logger');
-const statusCodes = require('../../constants/statusCodes');
-
-/**
- * Middleware function to check if user is loggedin or not
- * @param {Object} req
- * @param {Object} res
- * @param {Object} next
- * @return {Object}
- */
-const isAuthenticated = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    logger.info('User is trying to make request without token in header', { header: req.headers });
-    return res.status(statusCodes.unAuthorized).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      logger.info('Error in verifying jwt token', { err: err });
-      return res.status(statusCodes.unAuthorized).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
-    }
-
-    if (!decoded) {
-      logger.info('Empty jwt decoded', { decoded: decoded });
-      return res.status(statusCodes.unAuthorized).json({ success: 0, message: authConstants.responseMessages.authorizedUser.failure, data: null });
-    }
-
-    logger.info('User is authenticated (isAuthenticatedMiddleware)', { userId: decoded._id });
-    req.user = decoded;
-    return next();
-  });
-};
-
 module.exports = {
-  isAuthenticated,
   validateLogIn: [
     body('email').isEmail().withMessage('Email is requried with correct format'),
     body('password').notEmpty().withMessage('Password is requried'),
@@ -80,7 +38,7 @@ module.exports = {
     param('token').notEmpty().withMessage('Token is required'),
   ],
   validateUpdateProfile: [
-    body('email').isEmail().withMessage('Email is requried with correct format'),
-    body('displayName').notEmpty().withMessage('Display name is required'),
+    body('email').optional().isEmail().withMessage('Email is requried with correct format'),
+    body('displayName').optional().notEmpty().withMessage('Display name is required'),
   ],
 };
