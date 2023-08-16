@@ -24,6 +24,15 @@ const constants = {
         forgotPassword: 'auth/forgot-password',
         getUser: 'auth/user',
       },
+      movie: {
+        graphData: 'movie/graph-data',
+        getMovieData: 'movie/all-movies',
+        saveMovie: 'movie/movie-data'
+      },
+      users: {
+        getAllUsers: 'users/all-users',
+        deleteUser: 'users/user',
+      }
     },
     codeQuery: '?code=',
     generalErrorMessage: 'Unkown error occured. Please try later!'
@@ -66,6 +75,10 @@ const constants = {
       link: '/callback/:app',
       name: 'CallBack',
     },
+    movies: {
+      link: '/movies-data',
+      name: 'TheMoviesData',
+    },
   },
   socialAuthorization: {
     google: 'auth/google',
@@ -91,7 +104,33 @@ const constants = {
     { link: '/movies-data', icon: 'table', name: 'Tabular Analysis' },
     { link: '/releases-per-year', icon: 'insights', name: 'Release Analysis' },
     { link: '/budget-per-year', icon: 'equalizer', name: 'Budget Analysis' },
-  ]
+  ],
+  userTable: {
+    headings: ['#', 'Avatar', 'email', 'user name', 'method', 'actions' ]
+  },
+  movieTable: {
+    shorterTableheadings: ['Title', 'Release Data', 'Production Budget', 'World Wide Gross'],
+    completeTableheadings: ['Title', 'Release Data', 'Production Budget', 'Domestic Gross', 'World Wide Gross'],
+    features: {
+      sort: [ '-releaseDate', '+releaseDate', '-productionBudget', '+productionBudget', '-domesticGross', '+domesticGross', '-worldWideGross', '+worldWideGross', ],
+      limit: [10, 15, 20, 25, 30 ],
+      filter: [
+        { title: 'Production Budget (Upper Range)', vModel: 'productionBudget[$lte]' },
+        { title: 'Production Budget (Lower Range)', vModel: 'productionBudget[$gte]' },
+        { title: 'Domestic Gross (Upper Range)', vModel: 'domesticGross[$lte]' },
+        { title: 'Domestic Gross (Lower Range)', vModel: 'domesticGross[$gte]' },
+        { title: 'Worldwide Gross (Upper Range)', vModel: 'worldWideGross[$lte]' },
+        { title: 'Worldwide Gross (Lower Range)', vModel: 'worldWideGross[$gte]' },
+      ]
+    },
+    newMovieInputs: [
+      { title: 'Title', cypress: 'title', icon: 'movie', vModel: 'title', type: 'text' },
+      { title: 'Release Date', cypress: 'releaseDate', icon: 'today', vModel: 'releaseDate', type: 'date' },
+      { title: 'Production Budget (USD)', cypress: 'productionBudget', icon: 'attach_money', vModel: 'productionBudget', type: 'number' },
+      { title: 'Domestic Gross (USD)', cypress: 'domesticGross', icon: 'attach_money', vModel: 'domesticGross', type: 'number' },
+      { title: 'World Wide Gross (USD)', cypress: 'worldWideGross', icon: 'attach_money', vModel: 'worldWideGross', type: 'number' },
+    ] as const,
+  },
 };
     
 export default constants;

@@ -16,6 +16,10 @@ const constants = {
       link: '/callback/:app',
       name: 'CallBack',
     },
+    movies: {
+      link: '/movies-data',
+      name: 'TheMoviesData',
+    },
   },
   localStorage: {
     userDataToken: 'token',

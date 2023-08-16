@@ -12,6 +12,14 @@
     width: 100%
 }
 
+.w-16rem {
+    width: 16rem;
+}
+
+.h-32rem {
+    height: 32rem;
+}
+
 .maxW-32rem {
     max-width: 32rem
 }
@@ -56,9 +64,75 @@
     overflow-x: hidden;
 }
 
+.flex-row-center {
+    display: flex;
+    justify-content: center;
+}
+
+.overflowX-sm-scroll {
+    overflow-x: hidden;
+}
+
+.minW-30rem {
+    min-width: 30rem;
+}
+
+.p-1rem {
+    padding: 1rem;
+}
+
+.pb-half-rem {
+    padding-bottom: 0.5rem;
+}
+
+.py-1rem {
+    padding: 0.7rem 0;
+}
+
+.data-table {
+    width: 100%;
+    display: table;
+    border-collapse: collapse;
+}
+  
+.data-table th {
+    background-color: white;
+    padding: 1rem 0;
+    text-transform: capitalize;
+    font-weight: bold;
+    white-space: nowrap;
+    margin: 0 0.8rem;
+}
+  
+.data-table td {
+    font-weight: normal;
+    font-size: 0.85em;
+    text-align: center;
+    padding: 0.8rem 0;
+    margin: 0 0.8rem;
+    border-bottom: 1px solid #eceff1;
+    outline: none;
+    background-color: white;
+    text-transform: capitalize;
+}
+
+.method {
+    color: white;
+    font-weight: 500;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10rem;
+    margin: 0 0.8rem;
+}
+
 @media (min-width: $breakpoint-xl) {
     .maxW-32rem {
         max-width: 64rem;
+    }
+}
+
+@media (max-width: $breakpoint-sm-max) {
+    .overflowX-sm-scroll {
+        overflow-x: scroll;
     }
 }
 
