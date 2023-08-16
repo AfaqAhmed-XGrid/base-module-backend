@@ -23,6 +23,10 @@
     background-color: $v-light-gray;
 }
 
+.bg-light-black {
+    background-color: #494949;
+}
+
 @media (max-width: $breakpoint-sm-max) {
     .bg-image-one {
         display: none !important;

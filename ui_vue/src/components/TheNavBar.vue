@@ -70,50 +70,16 @@
     :width="200"
     :breakpoint="500"
     elevated
-    class="drawer-bg"
+    class="text-white bg-light-black"
   >
     <q-scroll-area class="fit">
       <q-list padding>
-        <q-item clickable v-ripple :active="route.path === '/dashboard'" to="/dashboard">
+        <q-item clickable v-ripple :active="route.path === navItem.link" :to="navItem.link" v-for="(navItem, ind) in constants.navbarDrawerItems" :key="navItem.name+ind">
           <q-item-section avatar>
-            <q-icon name="dashboard" />
+            <q-icon :name="navItem.icon" />
           </q-item-section>
 
-          <q-item-section> Dashboard </q-item-section>
-        </q-item>
-
-        <q-item clickable v-ripple :active="route.path === '/movies-data'" to="/movies-data">
-          <q-item-section avatar>
-            <q-icon name="table" />
-          </q-item-section>
-
-          <q-item-section> Tabular Analysis </q-item-section>
-        </q-item>
-
-        <q-item
-          clickable
-          v-ripple
-          :active="route.path === '/releases-per-year'"
-          to="/releases-per-year"
-        >
-          <q-item-section avatar>
-            <q-icon name="insights" />
-          </q-item-section>
-
-          <q-item-section> Release Analysis </q-item-section>
-        </q-item>
-
-        <q-item
-          clickable
-          v-ripple
-          :active="route.path === '/budget-per-year'"
-          to="/budget-per-year"
-        >
-          <q-item-section avatar>
-            <q-icon name="equalizer" />
-          </q-item-section>
-
-          <q-item-section> Budget Analysis </q-item-section>
+          <q-item-section> {{ navItem.name }} </q-item-section>
         </q-item>
 
         <q-separator dark />
@@ -121,8 +87,6 @@
         <q-item
           clickable
           v-ripple
-          :active="route.path === '/budget-per-year'"
-          to="/budget-per-year"
         >
           <q-item-section avatar>
             <q-icon name="account_box" />
@@ -202,11 +166,6 @@ const logout = () => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '../styles/global.styles.scss';
-
-.drawer-bg {
-  background-color: #494949;
-  color: white;
-}
 </style>

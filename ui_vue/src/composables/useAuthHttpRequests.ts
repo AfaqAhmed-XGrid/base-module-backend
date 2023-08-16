@@ -141,12 +141,7 @@ export const useAuthHttpRequest = () => {
    */
   const getUser = async (): Promise<User | void> => {
     try {
-      const token = localStorage.getItem(constants.localStorage.userToken);
-      const response = await axios.get(baseURL + authEndPoint.getUser, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(baseURL + authEndPoint.getUser);
       return response.data.data;
     } catch (error) {
       if( error instanceof AxiosError && error?.response?.data) {

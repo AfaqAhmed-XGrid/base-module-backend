@@ -23,12 +23,16 @@ import 'quasar/dist/quasar.sass';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { Quasar } from 'quasar';
+import axios from 'axios';
 
 // Import components
 import App from './App.vue';
 
 // Import app routes
 import router from './router';
+
+// Import constants
+import constants from './app.constants';
 
 // Import quasar config options
 import quasarUserOptions from './quasar-user-options';
@@ -37,5 +41,12 @@ const app = createApp(App).use(Quasar, quasarUserOptions);
 
 app.use(createPinia());
 app.use(router);
+
+// Adding axios interceptor
+axios.interceptors.request.use(function (config) {
+  const token = localStorage.getItem(constants.localStorage.userToken);
+    config.headers!.Authorization = `bearer ${token}`;
+    return config;
+});
 
 app.mount('#app');
