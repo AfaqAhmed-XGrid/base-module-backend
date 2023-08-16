@@ -49,6 +49,7 @@ export interface ValidationRules {
 
 // User type fetched from api
 export interface User {
+  _id: string,
   googleId?: string | undefined;
   githubId?: string | undefined;
   displayName: string;
@@ -57,6 +58,7 @@ export interface User {
   passwordResetToken?: string | undefined;
   profilePicture?: string | undefined;
   role?: string;
+  method?: string;
 }
 
 // data type of auth status stored in pinia store
@@ -70,4 +72,42 @@ export interface GetUserSuccessResponse {
   success: 1;
   message: string;
   data: User;
+}
+
+// data type for movie data
+export interface MovieData {
+  releaseDate: string;
+  title: string;
+  productionBudget: number;
+  domesticGross: number;
+  worldWideGross: number;
+}
+
+// Query type for /graph-data api endpoint
+export interface GraphDataQuery {
+  minYear?: number;
+  maxYear?: number;
+}
+
+// Query type for /all-movies api endpoint
+export interface MovieQueryParams {
+  sort?: '-releaseDate' | '+releaseDate' | '-productionBudget' | '+productionBudget' |
+         '-domesticGross' | '+domesticGross' | '-worldWideGross' | '+worldWideGross';
+  search?: string;
+  limit?: number;
+  pageNo?: number;
+  'productionBudget[$lte]'?: number;
+  'productionBudget[$gte]'?: number;
+  'domesticGross[$lte]'?: number;
+  'domesticGross[$gte]'?: number;
+  'worldWideGross[$lte]'?: number;
+  'worldWideGross[$gte]'?: number;
+}
+
+// Query type for /all-users api endpoint
+export interface GetAllUsersQuery {
+  method?: 'local' | 'github' | 'google';
+  search?: string;
+  limit?: number;
+  pageNo?: number;
 }

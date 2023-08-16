@@ -43,6 +43,11 @@ const router = createRouter({
       name: constants.pages.callBack.name,
       component: () => import('../views/CallBack.vue')
     },
+    {
+      path: constants.pages.movies.link,
+      name: constants.pages.movies.name,
+      component: () => import('../views/TheMoviesTable.vue')
+    },
   ]
 });
 

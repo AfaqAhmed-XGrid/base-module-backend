@@ -27,6 +27,27 @@
     background-color: #494949;
 }
 
+.table-container {
+    background-color: white;
+    border-radius: 0.3rem;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-red {
+    background-color: #c71c22;
+}
+
+.bg-green {
+    background-color: #73a839;
+}
+
+.bg-blue {
+    background-color: #2fa4e7;
+}
+
 @media (max-width: $breakpoint-sm-max) {
     .bg-image-one {
         display: none !important;
