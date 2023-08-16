@@ -29,7 +29,7 @@ const router = express.Router();
 
 // Api endpoint to get movies data
 router.get(
-    '/get-all-movies',
+    '/all-movies',
     movieMiddleware.validateGetAllMovies,
     commonMiddleware.validationError,
     getAllMovies,
@@ -37,7 +37,7 @@ router.get(
 
 // Api endpoint to get graph data
 router.get(
-    '/get-graph-data',
+    '/graph-data',
     movieMiddleware.validateGetGraphData,
     commonMiddleware.validationError,
     getGraphData,
@@ -45,7 +45,7 @@ router.get(
 
 // Api endpoint to post movie data
 router.post(
-    '/post-movie-data',
+    '/movie-data',
     movieMiddleware.validatePostMovieData,
     commonMiddleware.validationError,
     postMovieData,
