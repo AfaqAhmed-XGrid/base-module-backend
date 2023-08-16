@@ -19,12 +19,12 @@
     z-index: -1;
 }
 
-.bg-light-mode {
-    background-color: $bg-light-mode;
+.bg-v-light-gray {
+    background-color: $v-light-gray;
 }
 
-.bg-dark-mode {
-    background-color: $bg-dark-mode;
+.bg-light-black {
+    background-color: #494949;
 }
 
 @media (max-width: $breakpoint-sm-max) {

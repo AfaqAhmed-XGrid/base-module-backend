@@ -85,7 +85,13 @@ const constants = {
       positive: 'positive',
       negative: 'negative',
     }
-  }
+  },
+  navbarDrawerItems: [
+    { link: '/dashboard', icon: 'dashboard', name: 'Dashboard' },
+    { link: '/movies-data', icon: 'table', name: 'Tabular Analysis' },
+    { link: '/releases-per-year', icon: 'insights', name: 'Release Analysis' },
+    { link: '/budget-per-year', icon: 'equalizer', name: 'Budget Analysis' },
+  ]
 };
     
 export default constants;
