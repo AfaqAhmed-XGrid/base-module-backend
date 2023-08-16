@@ -1,3 +1,19 @@
+/*
+Copyright (c) 2023, Xgrid Inc, http://xgrid.co
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 // Import package
 const { default: to } = require('await-to-js');
 
@@ -12,6 +28,9 @@ const { constructPagination, constructsearchquery, constructFilterQueryObj, cons
 
 // Import logger
 const logger = require('../../config/logger/logger');
+
+// Import statuscodes
+const statusCodes = require('../../constants/statusCodes');
 
 /**
  * Controller Function to get all movies data and to handle all queries
@@ -74,16 +93,16 @@ const getAllMovies = async (req, res) => {
 
   if (err) {
     logger.error('Failed to fetch the movies data', { error: err });
-    return res.status(406).json({ success: 0, message: movieConstants.responseMessages.getAllMovies.failure, data: null });
+    return res.status(statusCodes.internalError).json({ success: 0, message: movieConstants.responseMessages.getAllMovies.failure, data: null });
   };
 
   if (movies.length === 0) {
     logger.info('No movie document found with the requested query params', { search: req.query.search, searchQuery, pageNo, limit, skip });
-    return res.status(200).json({ success: 1, message: movieConstants.responseMessages.getAllMovies.noMovieFound, data: { movies: [], totalCount: 0 } });
+    return res.status(statusCodes.success).json({ success: 1, message: movieConstants.responseMessages.getAllMovies.noMovieFound, data: { movies: [], totalCount: 0 } });
   }
 
   logger.info('Movies data is fetched successfully');
-  return res.status(200).json({ success: 1, message: movieConstants.responseMessages.getAllMovies.success, data: { ...movies[0] } });
+  return res.status(statusCodes.success).json({ success: 1, message: movieConstants.responseMessages.getAllMovies.success, data: { ...movies[0] } });
 };
 
 /**
@@ -120,11 +139,31 @@ const getGraphData = async (req, res) => {
 
   if (err) {
     logger.error('Error in getting average production per year and movies count per year data', { error: err });
-    return res.status(406).json({ success: 0, message: movieConstants.responseMessages.getGraphData.failure, data: null });
+    return res.status(statusCodes.internalError).json({ success: 0, message: movieConstants.responseMessages.getGraphData.failure, data: null });
   };
 
   logger.info('Got average production per year and movies count per year successfully');
-  return res.status(200).json({ success: 1, message: movieConstants.responseMessages.getGraphData.success, data: data });
+  return res.status(statusCodes.success).json({ success: 1, message: movieConstants.responseMessages.getGraphData.success, data: data });
 };
 
-module.exports = { getAllMovies, getGraphData };
+/**
+ * Function to post movie data in db
+ * @param {Object} req
+ * @param {Object} res
+ * @return {Object}
+ */
+const postMovieData = async (req, res) => {
+  logger.info('Starting saving movie data');
+  const newMovie = new Movie(req.body);
+  const [err, newMovieSaved] = await to(newMovie.save());
+
+  if (err) {
+    logger.error('Error in saving movie data', { error: err });
+    return res.status(statusCodes.internalError).json({ success: 0, message: movieConstants.responseMessages.postMovieData.failure, data: null });
+  };
+
+  logger.info('Movie data is saved successfully', { data: newMovieSaved });
+  return res.status(statusCodes.success).json({ success: 1, message: movieConstants.responseMessages.postMovieData.success, data: newMovieSaved });
+};
+
+module.exports = { getAllMovies, getGraphData, postMovieData };
