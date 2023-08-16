@@ -32,6 +32,7 @@ const passportGithubConfig = require('./config/passport/passport.github.config')
 // Routes import
 const authRouter = require('./modules/auth/auth.route');
 const movieRouter = require('./modules/movie/movie.route');
+const userRouter = require('./modules/users/users.route');
 
 // Logger imports
 const logger = require('./config/logger/logger');
@@ -80,6 +81,7 @@ app.use(
 // Configuring Routes
 app.use('/api/auth/', authRouter);
 app.use('/api/movie/', movieRouter);
+app.use('/api/users/', userRouter);
 
 // Uplaoding movies data to db
 seedMovies();
